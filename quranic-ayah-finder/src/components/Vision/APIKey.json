@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "avid-booster-392509",
+  "private_key_id": "7e3bc51ad73d3ba9ac3eb075061aa24fee85008e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2iHSokVZWAw7i\nacIkfO0BUnRJYrQKWaZ7qUSqjhg0u8FwhyiRsKIGfPWliXhYffbeV6Q8PKh2hCRH\nDXlHUH0XWQHgjaAHa5pduVD7Xn2D5qvDROT/xDWRK08RoRFIoyMWYAKb3h6BSkVB\nWbO9A0yK1a5YXkCFsaoLXPFM89sg/5flxmdyfsZBG9+6WZKaWT2QGLl+1eydQLxn\nJ296ilvWNb2IxB8vifxNZ86Bn7u/gvB8v8cK11zcm4GfFatXyaFp7N3gTWCQaltQ\n6DCJgrWXl/CGNLI3rJtG9LvOUyb3faC4SGqWrgTOsC3Mx0yV+5FOlNbJmqITdxag\nVn0qyAldAgMBAAECggEADSt2Q01NLeKFmedohwpubTh+RGc3N0H1pZl2Z1nePDvJ\nvq05y50za4VrkdiD0tqvy6YGJwR3YSmyll/N/su7YspcvM9rGu30EswSoDhWlQQ5\nI1serKeC9+joiQyWeyeuGeiud4GEsO5jZc4rjjklNiUpsZ2HST4i1zQLAvLbPhuj\ndeRoIrImb/NVwnL45WCU5/arXCWN0pHz6Pi/ohRgbkKQFpMHyL5CTLuGGI3HU8MO\nExUWzFtcH+Ub1c3ROFghjFYQW1h4pEzYOt9YctSp/EEYdtQSClOx/2eN3DM2qOTo\nepLBn2fvpj4jX+0bVrGaQ4glO+w5IPmmLc3BUHO8zwKBgQDz3En7LvuGUaRRtOkY\nSyn4J+piZ44Jgl8Nm5FfEvI7F+5XRdCkr2GX2AnX5NVlg3v4YbP7vU8VHu+6BcBt\n8P1re+o1nMW6OIzanwSpXf2nqiekBj1/EyH9NADOfpR/hW/BAjqcFlxVup6zIjtL\nDW/SEZZXKFiCrP/cFkdJpPfjmwKBgQC/np8LNmwm4+ula9v7D9ehakLlU30pj6xb\nLjF3eBRMBUiZR+YBYAYC5iZYD1R0MtteUGtGsLwlrFVqDNT7O+ZkoIe/36a6CRDF\nfqsfwOKlHgZV3sM0oxuIOSVJxLyhpZCFIuOl8RbNywSkROaDbPASAr6gU5/IHb2u\n6lLQwrDCZwKBgQCLcWTwd/4l4VtnyV4coSZfm1uAZ5ylvWHjIxjuV6QhvF5ykx5q\nfUr+C/Ac/uIziQsDjcLgaXDmL+l+4rkVZN9UbegQPhQmlx2cCaAdxPw9uqOuPE8/\n8c3WvrzTVzhM7x1nLYIcLQEhmHQVFLb5BLbzVVE1h4GNP6WS0T50UxvYjwKBgDye\ntNf6PprLDhiGF9DEQUZKdKFSGU2Vq0QpR/LwpRMrtLzxNv2GYEB4iPbg2qnsEOQ0\ncsupS8xrSZZEOvjECW4aLvfvjDJcfdbM7NwdzFXKOtzdnUnAtAwTcA13VOmalC7a\nS8SKkdlG+c/yEC7Rvt0jyySzb+ACMKjuboamoP7PAoGBAMd/OL3wmtZZLrB32CbG\nj5J4hDnVCOwDHH44whWJ3Wkk2wYKAy6NGS7wzaXqYKP73ta7vbV5EFAS2xAI8YrE\niLdgHLDeWZllLVsibFUvyPdzAjpzVeGSkB9rVpIoDidFFhAgv4xcYlqVE4ZPbnUR\nkgkVk2Rwxt4co2Sj8oXPwcwL\n-----END PRIVATE KEY-----\n",
+  "client_email": "quranic-ayah-finder@avid-booster-392509.iam.gserviceaccount.com",
+  "client_id": "104927946243352550763",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/quranic-ayah-finder%40avid-booster-392509.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
