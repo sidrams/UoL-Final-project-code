@@ -18,17 +18,18 @@ body {
 }
 
 nav {
-    background-color: #333;
-    color: white;
+    background-color: white;
+    color: #000000;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     gap: 2rem;
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
+    padding: 0.5rem;
 }
 
 .site-title {
-    font-size: 2rem;
+    font-size: 16px;
 }
 .nav ul {
     padding: 0;
@@ -48,10 +49,12 @@ nav a{
 }
 
 .nav li.active {
-    background-color: #555;
+    /* background-color: #555; */
+    color: #55BDB3;
 }
 
 .nav li:hover {
-    background-color: #777;
+    /* background-color: #777; */
+    color: #55BDB3;
 }
 
