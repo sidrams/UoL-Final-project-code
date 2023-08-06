@@ -8,36 +8,23 @@ import Guides from './pages/Guides/Guides'
 import FAQ from './pages/FAQs/FAQ'
 import DiscussionForum from './pages/DiscussionForum/DiscussionForum'
 import SignUp from './pages/SignUp/SignUp'
+import { Route, Routes } from 'react-router-dom'
 
 
 function App() {
-  // const [count, setCount] = useState(0)
-  let Component
-  switch (window.location.pathname) {
-    case "/":
-      Component = Home
-      break
-    case "/guides":
-      Component = Guides
-      break
-    case "/faq":
-      Component = FAQ
-      break
-    case "/discussionForums":
-      Component = DiscussionForum
-      break
-    case "/signup":
-      Component = SignUp
-      break
-    case "/login":
-      Component = SignUp
-      break
-  }
+  
   return (
     <>
       <Navbar />
       <div className='container'>
-        <Component />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/guides" element={<Guides />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/discussionForums" element={<DiscussionForum />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<SignUp />} />
+        </Routes>
       </div>
       <Searchbar />
     </>
