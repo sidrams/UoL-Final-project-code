@@ -1,7 +1,6 @@
 // import { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
-import { Searchbar } from './components/SearchBar/SearchBar'
 import "./components/Styles/styles.css" 
 import Home from './pages/Home/Home'
 import Guides from './pages/Guides/Guides'
@@ -16,7 +15,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className='container'>
+      <div className='container items-center m-auto'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/guides" element={<Guides />} />
@@ -26,7 +25,6 @@ function App() {
           <Route path="/login" element={<SignUp />} />
         </Routes>
       </div>
-      <Searchbar />
     </>
   )
 }

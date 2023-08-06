@@ -9,6 +9,12 @@ body {
 .container {
     margin: 1rem;
     text-align: center;
+    /* margin: 0; */
+    /* display: flex; */
+    /* place-items: center; */
+    /* min-width: 320px; */
+    min-height: 90vh;
+    /* background-color: #F0F8F8; */
 }
 
 nav {
