@@ -6,7 +6,7 @@ def upload_path(instance, filname):
 
 class Guides(models.Model):
     name = models.CharField("Name", max_length=240)
-    description = models.CharField("Description", max_length=20)
+    description = models.CharField("Description", max_length=500)#"Description", blank=True, null=True
     image = models.ImageField(blank=True, null=True, upload_to='images/')
     
     def __str__(self):
