@@ -10,10 +10,10 @@ import SignUp from './pages/SignUp/SignUp'
 import { Route, Routes } from 'react-router-dom'
 
 
-function App() {
-  
+function App() { 
   return (
     <>
+    <h1>hello</h1>
       <Navbar />
       <div className='container items-center m-auto'>
         <Routes>
