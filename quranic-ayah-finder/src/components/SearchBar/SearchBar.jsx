@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
 import { BsUpload } from "react-icons/bs"
-import { SearchModal } from "./SearchModal";
+import SearchModal from "./SearchModal";
 // import "./Searchbar.css"
 
-export const Searchbar = () => {
+// export const Searchbar = () => {
+export default function Searchbar() {
     const [input, setInput] = useState("")
     const [guides, setGuides] = useState([])
     const [showModal, setShowModal] = useState(false)

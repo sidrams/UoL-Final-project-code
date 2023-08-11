@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-export const SearchModal = ({setShowModal, searchedText, setSearchedText}) => {
+export default function SearchModal ({setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState()
 
     const fetchImageText = () => {
