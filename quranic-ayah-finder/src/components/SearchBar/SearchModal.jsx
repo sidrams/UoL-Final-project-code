@@ -1,23 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Toast } from 'primereact/toast';
+import "primereact/resources/themes/lara-light-indigo/theme.css";  
+import "primereact/resources/primereact.min.css";    
+        
 export default function SearchModal ({setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState()
+    const toastCenter = useRef(null);
+
+    const showMessage = (event, ref, severity) => {
+        const label = event
+        console.log('in show message')
+        ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
+    };
 
     const fetchImageText = () => {
-        const uploadData = new FormData()
-        uploadData.append('image', image, image.name)
-        console.log(uploadData)
+        if (image == undefined) 
+            showMessage('Please upload an image', toastCenter, 'error');
+        else if (image.type.match("image.*") == null) 
+            showMessage('Incorrect File Type', toastCenter, 'error');
+        else {
+            // fetchImageText()
+            // console.log("passed")
+            setShowModal(false)
+            const uploadData = new FormData()
+            uploadData.append('image', image, image.name)
+            console.log(uploadData)
 
-        fetch('http://127.0.0.1:8000/search/', {
-          method: 'POST',
-          body: uploadData
-        })
-        .then((response) => response.json())
-        .then((json) =>{
-            setSearchedText(json)
-            console.log(json)
-            console.log("searched text "+ searchedText)
-        })
-        .catch(error => console.log(error))
+            fetch('http://127.0.0.1:8000/search/', {
+            method: 'POST',
+            body: uploadData
+            })
+            .then((response) => response.json())
+            .then((json) =>{
+                setSearchedText(json)
+                console.log(json)
+                console.log("searched text "+ searchedText)
+            })
+            .catch(error => console.log(error))
+        }
+        
         
         
         // const body = {
@@ -35,6 +56,10 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
     }
 
     return (
+        <>
+        <div className="card flex justify-center">
+            <Toast ref={toastCenter} />
+        </div>
         <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
         >
@@ -57,13 +82,23 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                    <input type="file" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+                    <input type="file" aria-label="image" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
                     <button 
                         className="flex mx-auto my-6"
                         onClick={() => {
-                            setShowModal(false)
-                            console.log("image name : "+image.name)
                             fetchImageText()
+                            // console.log("image name : "+image)
+                            // if (image == undefined) 
+                            //     showMessage('Please upload an image', toastCenter, 'error');
+                            // else if (image.type.match("image.*") == null) 
+                            //     showMessage('Incorrect File Type', toastCenter, 'error');
+                            // else (
+                            //     // fetchImageText()
+                            //     // console.log("passed")
+                            //     setShowModal(false)
+                            // )
+                            
+                            // console.log("iamge type is" +image.type.match("image.*"))
                         }}
                     >
                         Search
@@ -72,5 +107,6 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
             </div>
             </div>
         </div>
+        </>
     )
 }

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { BsUpload } from "react-icons/bs"
 import SearchModal from "./SearchModal";
 // import "./Searchbar.css"
@@ -52,7 +51,11 @@ export default function Searchbar() {
             </button>
             {showModal ? (
                 <>
-               <SearchModal setShowModal={setShowModal} searchedText={searchedText} setSearchedText={setSearchedText} />
+               <SearchModal 
+                    setShowModal={setShowModal} 
+                    searchedText={searchedText} 
+                    setSearchedText={setSearchedText} 
+                />
                 <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null}
