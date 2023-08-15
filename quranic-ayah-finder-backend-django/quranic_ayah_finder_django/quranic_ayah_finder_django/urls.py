@@ -30,7 +30,7 @@ router.register('images', GuideViewSet, basename='images')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/images/', include(router.urls)),
-    re_path(r'^search/$', views.Search_list),
-    re_path(r'^api/guides/$', views.Guides_list),
-    re_path(r'^api/guides/([0-9])$', views.Guides_detail),
+    re_path(r'^search/$', views.Search_list, name='search'),
+    re_path(r'^api/guides/$', views.Guides_list, name='guides'),
+    re_path(r'^api/guides/([0-9])$', views.Guides_detail, name='guide_details'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

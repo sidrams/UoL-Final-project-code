@@ -49,27 +49,36 @@ def Guides_list(request):
 
     elif request.method == 'POST':
         serializer = GuidesSerializer(data=request.data)
-        print(request.data['image'])
+        # print(request.data['image'])
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def Guides_detail(request, pk):
     try:
-        Guides = Guides.objects.get(pk=pk)
-    except Guides.DoesNotExist:
+        guides = Guides.objects.get(pk=pk)
+    except guides.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    if request.method == 'GET':
+        serializer = GuidesSerializer(guides, context={'request': request})
+
+        return Response(serializer.data)
+        # return Response(Guides)
+    
     if request.method == 'PUT':
-        serializer = GuidesSerializer(Guides, data=request.data,context={'request': request})
+        serializer = GuidesSerializer(guides, data=request.data,context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        Guides.delete()
+        try:
+            guides.delete()
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
