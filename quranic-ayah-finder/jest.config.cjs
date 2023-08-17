@@ -11,6 +11,7 @@ module.exports = {
     '/node_modules/', // Ignore files in node_modules folder
     '\\.css$', // Ignore CSS files
   ],
+  // globals: { fetch, Response, Request }
 };
 
 // module.exports = {

@@ -1,15 +1,16 @@
 import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";  
-import "primereact/resources/primereact.min.css";    
-        
+import "primereact/resources/primereact.min.css";  
+import fetch from 'node-fetch'  
+
 export default function SearchModal ({setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState()
     const toastCenter = useRef(null);
 
     const showMessage = (event, ref, severity) => {
         const label = event
-        console.log('in show message')
+        console.log('in show message '+label)
         ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
     };
 
@@ -20,11 +21,11 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
             showMessage('Incorrect File Type', toastCenter, 'error');
         else {
             // fetchImageText()
-            // console.log("passed")
+            console.log("in before calling api")
             setShowModal(false)
             const uploadData = new FormData()
             uploadData.append('image', image, image.name)
-            console.log(uploadData)
+            console.log(image)
 
             fetch('http://127.0.0.1:8000/search/', {
             method: 'POST',
@@ -86,6 +87,7 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
                     <button 
                         className="flex mx-auto my-6"
                         onClick={() => {
+                            console.log("search button clicked")
                             fetchImageText()
                             // console.log("image name : "+image)
                             // if (image == undefined) 

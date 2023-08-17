@@ -8,6 +8,7 @@ import Image from './mocks/Image';
 import userEvent from '@testing-library/user-event'
 
 const user = userEvent.setup()
+// const fetch = require('node-fetch')
 
 beforeEach(() => {
   render(<App />, {wrapper: BrowserRouter});
@@ -74,22 +75,24 @@ describe('Home page renders as expected', () => {
 
   });
 
-  test('should close the modal if image parsed successfully', async () => {
+  test('should close the modal and display message after image is parsed', async () => {
     render(<Image />)
     const testImage = document.querySelector("img");
     fireEvent.click(screen.getByRole("button", { name: "Upload image" }));
     expect(testImage.alt).toContain("test");
     
-    var fd = new FormData();
-    fd.append('image', testImage);
+    // var fd = new FormData();
+    // fd.append('image', testImage);
     fireEvent.change(screen.getByLabelText(/image/i), {
       target: {
-        files: fd,
+        files: [new File([testImage], 'testVerse.png', {type: 'image/png'})],
       },
     })
     const searchBtn = await screen.findByRole("button", { name: "Search" })
     await user.click(searchBtn);
     
-    expect(screen.getByText("Upload an image of a Verse" || "No searched text")).toBeInTheDocument();
+    expect(screen.getByText("No searched text")).toBeInTheDocument();
+    // print(screen.findByRole("button", { name: "Find detailed information" }))
+    // expect(screen.findByRole("button", { name: "Find detailed information" })).toBeInTheDocument();
   });
 })
