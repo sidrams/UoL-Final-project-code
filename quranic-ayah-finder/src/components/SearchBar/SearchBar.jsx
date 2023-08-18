@@ -1,16 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { BsUpload } from "react-icons/bs"
 import SearchModal from "./SearchModal";
 // import "./Searchbar.css"
 
 // export const Searchbar = () => {
 export default function Searchbar() {
-    const [input, setInput] = useState("")
-    const [guides, setGuides] = useState([])
+    // const [input, setInput] = useState("")
+    const [textInput, setTextInput] = useState()
+    // const [guides, setGuides] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [searchedText, setSearchedText] = useState('')
     const [verseDetails, setVerseDetails] = useState()
+    const ref = useRef(null);
 
+    useEffect(() => {
+        const handleClick = event => {
+            // console.log('Button clicked');
+
+            // console.log(event.target.value);
+            fetchData(textInput)
+        };
+
+        const element = ref.current;
+
+        element.addEventListener('keypress', handleClick);
+
+        return () => {
+        element.removeEventListener('keypress', handleClick);
+        };
+    }, []);
     // const fetchData = (value) => {
     //     fetch("http://localhost:8000/api/guides/")
     //         .then((response) => response.json())
@@ -19,8 +37,8 @@ export default function Searchbar() {
     //             console.log(json)}
     //         )
     // }
-    const fetchData = () => {
-        let query = 'https://api.quran.com/api/v4/search?q='+ searchedText
+    const fetchData = (text) => {
+        let query = 'https://api.quran.com/api/v4/search?q='+ text
         fetch(query)
             .then((response) => response.json())
             .then((json) => 
@@ -30,8 +48,13 @@ export default function Searchbar() {
     }
 
     const handleChange = (value) => {
-        setInput(value)
-        fetchData(value)
+        // setInput(value)
+        // console.log(value + ' text input is : ' + textInput)
+        setTextInput(value)
+        // useEffect(() => {
+        //     console.log(textInput)
+        //   }, [textInput]);
+        // console.log('changes text input')
     }
 
     return (
@@ -40,7 +63,13 @@ export default function Searchbar() {
             <input 
                 className="w-2/3"
                 placeholder="Enter a keywords here or upload an image..." 
-                value={input} onChange={(e) => handleChange(e.target.value)}
+                value={textInput} 
+                onChange={(e) => {
+                    // setTextInput(e.target.value)
+                    handleChange(e.target.value)
+                    // handleChange()
+                }}
+                ref={ref}
             />
             <button 
                 className="flex"
@@ -60,6 +89,11 @@ export default function Searchbar() {
                 </>
             ) : null}
         </div>
+        <button
+            onClick={() => fetchData(textInput)}
+        >
+            Search
+        </button>
         {/* <div>
         {!guides || guides.length <= 0 ? (
             <tr>
@@ -86,7 +120,7 @@ export default function Searchbar() {
             ) : (
                 <>
                 <div>text identified is : {searchedText}</div>
-                <button onClick={() => fetchData()}>Find detailed information</button>
+                <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
                 </>
            )}
         </div>

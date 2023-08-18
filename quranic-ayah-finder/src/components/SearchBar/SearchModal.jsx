@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";  
 import "primereact/resources/primereact.min.css";  
-import fetch from 'node-fetch'  
+// import fetch from 'node-fetch'  
 
 export default function SearchModal ({setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState()
