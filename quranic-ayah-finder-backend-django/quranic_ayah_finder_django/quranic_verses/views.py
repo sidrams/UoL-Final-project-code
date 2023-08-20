@@ -78,6 +78,35 @@ def createPost(request):
             return Response('Post added')
         return Response('Post not added yet')
 
+@api_view(['GET', 'POST'])
+def updatePost(request,pk):
+    post = Post.objects.get(pk=pk)
+    serializer = PostsSerializer(post, context={'request': request})
+    # response = {'post':serializer.data,'user':user.data}
+    # return Response(serializer.data)
+
+    if request.method == 'POST':
+        jsonResponse = json.loads(request.body.decode('utf-8'))
+        form = PostForm(jsonResponse, instance=post)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return Response('Post updated')
+        return Response('Post not updated yet')
+    
+    return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def deletePost(request,pk):
+    post = Post.objects.get(pk=pk)
+    # serializer = PostsSerializer(post, context={'request': request})
+
+    if request.method == 'POST':
+        post.delete()
+        return Response('Post deleted')
+    
+    return Response('Post not updated yet')
+    # return Response(serializer.data)
         
 
 

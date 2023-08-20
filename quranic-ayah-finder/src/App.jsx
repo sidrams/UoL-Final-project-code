@@ -23,8 +23,9 @@ function App() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
-          <Route path="/create-post" element={<PostForm />} />
-          <Route path="/posts/:id" element={<PostDetails />} />
+          <Route path="/post/create" element={<PostForm />} />
+          <Route path="/post/:id" element={<PostDetails />} />
+          <Route path="/post/update/:id" element={<PostForm />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignUp />} />
         </Routes>

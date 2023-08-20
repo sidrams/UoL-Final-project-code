@@ -1,7 +1,8 @@
-import { useState } from "react"
-import { Link, redirect } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { Link, redirect, useParams } from "react-router-dom";
 
 export default function PostForm () {
+    const { id } = useParams()
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -9,6 +10,28 @@ export default function PostForm () {
         verse_id: '',
     })
     const [success, setSuccess] = useState(false)
+    // const [update, setUpdate] = useState(false)
+
+    if (id) {
+        // setUpdate(true)
+        useEffect(() => {
+            fetch('http://127.0.0.1:8000/api/posts/'+id, {
+                method: 'GET',
+                })
+                .then((response) => response.json())
+                .then((json) =>{
+                    json.post.user = json.user.id
+                    setForm(json.post)
+                    // setForm({
+                    //     ...form,
+                    //     user: json.post.user.username
+                    // })
+                    console.log(json)
+                    console.log(form)
+                })
+                .catch(error => console.log(error))
+        }, [])
+    }
 
     const createPost = async () => {
         fetch(`http://127.0.0.1:8000/createPost`, {
@@ -23,6 +46,23 @@ export default function PostForm () {
             console.log(json)
             // redirect('/success')
             if (json == 'Post added') setSuccess(true)
+        })
+        .catch(error => console.log(error))
+    }
+
+    const updatePost = async () => {
+        fetch(`http://127.0.0.1:8000/updatePost/`+id, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        })
+        .then((response) => response.json())
+        .then((json) =>{
+            console.log(json)
+            // redirect('/success')
+            if (json == 'Post updated') setSuccess(true)
         })
         .catch(error => console.log(error))
     }
@@ -86,7 +126,7 @@ export default function PostForm () {
                         <input type="submit" value="Submit" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                createPost()
+                                id ? updatePost() : createPost()
                             }} 
                         />
                     </form>
