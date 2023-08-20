@@ -131,7 +131,7 @@ export default function Searchbar() {
                 <>
                 <h2 className="my-6 text-xl font-bold">Verses search result</h2>
                 { 
-                    verseDetails.search.results.map(verse => (
+                    verseDetails.search.results.map((verse,i) => (
                     <div key={verse.verse_key} className="mb-4">
                         Verse {verse.verse_key} - {verse.text}
                     </div>

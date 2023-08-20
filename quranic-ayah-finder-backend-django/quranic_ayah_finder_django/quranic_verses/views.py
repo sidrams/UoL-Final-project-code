@@ -5,18 +5,22 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import Guides
+from django.http import HttpResponse
+
+from .models import *
 from .serializers import *
+from .forms import *
 
 from rest_framework import viewsets
 
 from .search_quranic_verse.searchGoogleVisionAPI import detectText
 import io
+import json
 
 @api_view(['GET', 'POST'])
 def Search_list(request):
     if request.method == 'GET':
-        return Response(data="passed")
+        return Response(data="pass an image on the POST request to access the Google Vision API for text recognition")
     
     elif request.method == 'POST':
         image = request.FILES.get('image')
@@ -25,6 +29,57 @@ def Search_list(request):
         searched_text = detectText(reimage)
         print(searched_text)
         return Response(data=searched_text)
+
+@api_view(['GET', 'POST'])
+def Posts_Lists(request):
+    posts = Post.objects.all()
+    # user = User.objects.filter(user=posts.user.pk)
+    # UserSerializer(posts.user,context={'request': request}, many=True)
+    # context = {'posts': posts}
+    # return Response(data=context)
+
+    serializer = PostsSerializer(posts, context={'request': request}, many=True)
+    # response = {'post':serializer.data,'user':user.data}
+    return Response(serializer.data)
+    # return Response(response)
+
+@api_view(['GET', 'POST'])
+def Posts_detail(request,pk):
+    post = Post.objects.get(pk=pk)
+    user = UserSerializer(post.user)
+    # context = {'posts': posts}
+    # return Response(data=context)
+
+    serializer = PostsSerializer(post, context={'request': request})
+    response = {'post':serializer.data,'user':user.data}
+    # return Response(serializer.data)
+    return Response(response)
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset=Post.objects.all().order_by('-id')
+    serializer_class=PostsSerializer
+
+@api_view(['GET', 'POST'])
+def createPost(request):
+
+    if request.method == 'GET':
+        form = PostForm()
+        context = {'form': form}
+        print(form)
+        # return Response(form)
+        return HttpResponse(form.as_p())
+    
+    if request.method == 'POST':
+        jsonResponse = json.loads(request.body.decode('utf-8'))
+        form = PostForm(jsonResponse)
+        print(request.body)
+        if form.is_valid():
+            form.save()
+            return Response('Post added')
+        return Response('Post not added yet')
+
+        
+
 
 class GuideViewSet(viewsets.ModelViewSet):
     queryset = Guides.objects.all()

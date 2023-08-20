@@ -8,6 +8,8 @@ import FAQ from './pages/FAQs/FAQ'
 import DiscussionForum from './pages/DiscussionForum/DiscussionForum'
 import SignUp from './pages/SignUp/SignUp'
 import { Route, Routes } from 'react-router-dom'
+import PostDetails from './pages/DiscussionForum/PostDetails'
+import PostForm from './pages/DiscussionForum/PostForm'
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
+          <Route path="/create-post" element={<PostForm />} />
+          <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<SignUp />} />
         </Routes>
