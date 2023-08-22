@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import DeleteConfirmation from "./DeleteConfirmation"
+import Cookies from 'js-cookie';
+import { useContext } from 'react';
+import { Context } from "../../Context";
 
 export default function DiscussionForums() {
+    const { loggedUser, setLoggedUSer } = useContext(Context);
     const [posts, setPosts] = useState([])
     const [showDelete, setShowDelete] = useState(false)
     const [post_id, setPost_id] = useState()
     const [inputText, setInputText] = useState("");
+
+    // const session = Cookies.get('sessionid');
+    const csrftoken = Cookies.get('csrftoken');
+    // console.log("cookies token "+csrftoken)
+    console.log('logged user '+JSON.stringify(loggedUser.id))
 
     // const handleDelete = (post_id)
     const handleChange = (e) => {
@@ -30,7 +39,9 @@ export default function DiscussionForums() {
         <form method="GET" action="">
             <input type="text" name="q" placeholder="search posts..." onChange={handleChange} />
         </form>
-        <Link to='/post/create'>Create Post</Link>
+        {
+            loggedUser ? <Link to='/post/create'>Create Post</Link> : ''
+        }
         <div>
         {!posts || posts.length <= 0 ? (
                 <div></div>
@@ -63,13 +74,24 @@ export default function DiscussionForums() {
                             <p> {post.description < 100 ? post.description : post.description.slice(0, 300)} </p>
                             <p>... Read more</p>
                         </Link>
-                        <Link to={`/post/update/${post.pk}`}>Edit post</Link>
+                        {
+                            loggedUser.id == post.user.id ? 
+                            (
+                                <div>
+                                <Link to={`/post/update/${post.pk}`}>Edit post</Link>
+                                <button value={post.pk} onClick={(e) => {
+                                    setPost_id(e.target.value)
+                                    setShowDelete(true)
+                                    // console.log()
+                                }}>Delete post</button>
+                                </div>
+                            ) 
+                            : ''
+                            // console.log(post.user)
+                        }
+                        
                         {/* <Link to={`/post/delete/${post.pk}`}>Delete post</Link> */}
-                        <button value={post.pk} onClick={(e) => {
-                            setPost_id(e.target.value)
-                            setShowDelete(true)
-                            // console.log()
-                        }}>Delete post</button>
+                        
                           
                     </div>
                     

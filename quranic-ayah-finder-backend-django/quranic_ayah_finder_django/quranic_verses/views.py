@@ -24,6 +24,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from .validations import *
+from django.contrib.auth.decorators import login_required
 
 @api_view(['GET', 'POST'])
 def Search_list(request):
@@ -126,16 +127,18 @@ class UserView(APIView):
 #     return Response({'user': serializer.data, 'authenticated': request.user.is_authenticated}, status=status.HTTP_200_OK)
 
 @api_view(['GET', 'POST'])
+# @login_required
 def Posts_Lists(request):
-    posts = Post.objects.all()
+    if request.method == 'GET':
+        posts = Post.objects.all()
     # user = User.objects.filter(user=posts.user.pk)
     # UserSerializer(posts.user,context={'request': request}, many=True)
     # context = {'posts': posts}
     # return Response(data=context)
 
-    serializer = PostsSerializer(posts, context={'request': request}, many=True)
+        serializer = PostsSerializer(posts, context={'request': request}, many=True)
     # response = {'post':serializer.data,'user':user.data}
-    return Response(serializer.data)
+        return Response(serializer.data)
     # return Response(response)
 
 @api_view(['GET', 'POST'])
