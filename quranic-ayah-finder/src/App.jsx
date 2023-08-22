@@ -7,13 +7,14 @@ import Guides from './pages/Guides/Guides'
 import FAQ from './pages/FAQs/FAQ'
 import DiscussionForum from './pages/DiscussionForum/DiscussionForum'
 import SignUp from './pages/SignUp/SignUp'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import PostDetails from './pages/DiscussionForum/PostDetails'
 import PostForm from './pages/DiscussionForum/PostForm'
 import Login from './pages/Login/Login'
 import { Context } from './Context'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
+import LogoutModal from './components/Logout/Logout'
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path="/post/update/:id" element={<PostForm />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={loggedUser ? (<LogoutModal />) : <Navigate replace to="/" />} />
         </Routes>
       </div>
       </Context.Provider>

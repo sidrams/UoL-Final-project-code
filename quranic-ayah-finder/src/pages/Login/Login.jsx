@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
+import { Context } from "../../Context";
 
 export default function Login() {
+    const { loggedUser, setLoggedUser } = useContext(Context);
     const [form, setForm] = useState({
         username: '',
         password: ''
     })
     const csrftoken = Cookies.get('csrftoken');
-    const [loggedUser, setLoggedUser] = useState()
+    // const [loggedUser, setLoggedUser] = useState()
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/user', {
