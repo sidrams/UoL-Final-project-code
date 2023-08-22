@@ -8,6 +8,7 @@ from rest_framework import status
 from django.http import HttpResponse
 
 from .models import *
+from django.contrib.auth.models import User
 from .serializers import *
 from .forms import *
 
@@ -16,6 +17,13 @@ from rest_framework import viewsets
 from .search_quranic_verse.searchGoogleVisionAPI import detectText
 import io
 import json
+
+from django.contrib.auth import authenticate, login, logout, get_user_model
+
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.views import APIView
+from rest_framework import permissions, status
+from .validations import *
 
 @api_view(['GET', 'POST'])
 def Search_list(request):
@@ -29,6 +37,93 @@ def Search_list(request):
         searched_text = detectText(reimage)
         print(searched_text)
         return Response(data=searched_text)
+
+
+
+# LOGIN CODE
+class UserRegister(APIView):
+	permission_classes = (permissions.AllowAny,)
+	def post(self, request):
+		clean_data = custom_validation(request.data)
+		serializer = UserRegisterSerializer(data=clean_data)
+		if serializer.is_valid(raise_exception=True):
+			user = serializer.create(clean_data)
+			if user:
+				return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLogin(APIView):
+	permission_classes = (permissions.AllowAny,)
+	authentication_classes = (SessionAuthentication,)
+	##
+	def post(self, request):
+		data = request.data
+		assert validate_username(data)
+		assert validate_password(data)
+		serializer = UserLoginSerializer(data=data)
+		if serializer.is_valid(raise_exception=True):
+			user = serializer.check_user(data)
+			login(request, user)
+			return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UserLogout(APIView):
+	permission_classes = (permissions.AllowAny,)
+	authentication_classes = ()
+	def post(self, request):
+		logout(request)
+		return Response(status=status.HTTP_200_OK)
+
+
+class UserView(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+	authentication_classes = (SessionAuthentication,)
+	##
+	def get(self, request):
+		serializer = UserSerializer(request.user)
+		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+# LOGIN CODE END
+
+
+
+# from django.views.decorators.csrf import ensure_csrf_cookie
+# from django.views.decorators.csrf import csrf_exempt
+# @ensure_csrf_cookie
+# @api_view(['POST'])
+# def loginPage(request):
+#     if request.method == 'POST':
+#         jsonResponse = json.loads(request.body.decode('utf-8'))
+#         # form = PostForm(jsonResponse)
+#         username = jsonResponse.get('username')
+#         password = jsonResponse.get('password')
+#         print(username,password)
+#         try:
+#             user = User.objects.get(username=username)
+#         except:
+#             return Response("User does not exist")
+        
+#         user = authenticate(request, username=username, password=password)
+#         # print(user)
+#         if user is not None:
+#             serializer = UserSerializer(user)
+#             # if serializer.is_valid(raise_exception=True):
+#             # print(serializer.data.is_authenticated())
+# 		    # return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+#             login(request, user)
+#             return Response({'user':serializer.data,'message':'User Logged in'})
+#             return user
+#             # return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+#         else:
+#             return Response('Username or password does not exist')
+#     context = {}
+#     # return Response(context)
+
+# @api_view(['GET', 'POST'])
+# def getCurrentUser(request):
+
+#     serializer = UserSerializer(request.user)#.is_authenticated
+#     return Response({'user': serializer.data, 'authenticated': request.user.is_authenticated}, status=status.HTTP_200_OK)
 
 @api_view(['GET', 'POST'])
 def Posts_Lists(request):

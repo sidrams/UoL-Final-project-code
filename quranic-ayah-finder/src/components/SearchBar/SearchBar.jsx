@@ -111,7 +111,7 @@ export default function Searchbar() {
           )}
         </div> */}
         <div>
-            {!searchedText || searchedText.length <= 0 ? (
+            {!searchedText || searchedText.length <= 0 || textInput ?  (
                 <tr>
                 <td colSpan="6" align="center">
                     <b>No searched text</b>

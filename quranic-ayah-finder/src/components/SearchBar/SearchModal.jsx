@@ -16,11 +16,13 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
 
     const fetchImageText = () => {
         if (image == undefined) 
+            // image not uploaded
             showMessage('Please upload an image', toastCenter, 'error');
         else if (image.type.match("image.*") == null) 
+            // image not uploaded in the correct format
             showMessage('Incorrect File Type', toastCenter, 'error');
         else {
-            // fetchImageText()
+            // image is uploaded in correct format
             console.log("in before calling api")
             setShowModal(false)
             const uploadData = new FormData()
