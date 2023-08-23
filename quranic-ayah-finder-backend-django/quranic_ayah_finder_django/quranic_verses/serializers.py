@@ -66,3 +66,8 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('pk', 'user', 'post', 'body', 'updated', 'created')
+
+class GuideTopicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GuideTopic
+        fields = '__all__'

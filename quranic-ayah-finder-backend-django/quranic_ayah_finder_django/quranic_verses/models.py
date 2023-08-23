@@ -46,3 +46,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body[0:50]
+
+class GuideTopic(models.Model):
+    topic_name = models.CharField("Topic_name", max_length=500)
+
+    def __str__(self):
+        return self.topic_name[0:50]
+    
+# class QuizQuestion(models.Model):
+

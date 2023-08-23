@@ -15,6 +15,9 @@ import { Context } from './Context'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import LogoutModal from './components/Logout/Logout'
+import Categories from './pages/Guides/Categories'
+import Quiz from './pages/Guides/Quiz'
+import GuideDetails from './pages/Guides/GuideDetails'
 
 
 function App() {
@@ -48,6 +51,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/guides" element={<Guides />} />
+          <Route path="guides/topic/:id" element={<Categories />} />
+          <Route path="guides/topic/:id/Guide" element={<GuideDetails />} />
+          <Route path="guides/topic/:id/Quiz" element={<Quiz />} />
+          {/* </Route> */}
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
           <Route path="/post/create" element={loggedUser ? <PostForm /> : (<Navigate replace to="/login" />) } />

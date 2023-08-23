@@ -16,6 +16,7 @@ urlpatterns = [
 	path('logout', views.UserLogout.as_view(), name='logout'),
 	path('user', views.UserView.as_view(), name='user'),
 
+    path('api/guideTopics', views.GuideTopicViewSet.as_view(), name='guide_topics'),
     re_path(r'^api/guides/$', views.Guides_list, name='guides'),
     re_path(r'^api/guides/([0-9]*)$', views.Guides_detail, name='guide_details'),
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),

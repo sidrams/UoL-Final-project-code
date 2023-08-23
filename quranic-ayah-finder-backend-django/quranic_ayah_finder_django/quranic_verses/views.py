@@ -269,3 +269,12 @@ def Guides_detail(request, pk):
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class GuideTopicViewSet(APIView):
+    # queryset = GuideTopic.objects.all()
+    # serializer_class = GuideTopicSerializer
+    def get(self, request):
+        query = GuideTopic.objects.all()
+        serializer = GuideTopicSerializer(query,context={'request': request}, many=True)
+        return Response({'Topics': serializer.data}, status=status.HTTP_200_OK)
+        # return Response( serializer.data)
