@@ -19,7 +19,7 @@ import io
 import json
 
 from django.contrib.auth import authenticate, login, logout, get_user_model
-
+# from django.contrib.auth.forms import UserCreationForm
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework import permissions, status
@@ -43,15 +43,20 @@ def Search_list(request):
 
 # LOGIN CODE
 class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
-	def post(self, request):
-		clean_data = custom_validation(request.data)
-		serializer = UserRegisterSerializer(data=clean_data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.create(clean_data)
-			if user:
-				return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(status=status.HTTP_400_BAD_REQUEST)
+    permission_classes = (permissions.AllowAny,)
+    ##
+    # def get(self, request):
+    #     form = UserCreationForm()
+    #     return HttpResponse(form.as_p())
+    
+    def post(self, request):	
+        clean_data = custom_validation(request.data)		
+        serializer = UserRegisterSerializer(data=clean_data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(clean_data)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserLogin(APIView):
