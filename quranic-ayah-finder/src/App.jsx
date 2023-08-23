@@ -50,11 +50,11 @@ function App() {
           <Route path="/guides" element={<Guides />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
-          <Route path="/post/create" element={<PostForm />} />
-          <Route path="/post/:id" element={<PostDetails />} />
+          <Route path="/post/create" element={loggedUser ? <PostForm /> : (<Navigate replace to="/login" />) } />
+          <Route path="/post/:id" element={loggedUser ? <PostDetails />  : (<Navigate replace to="/login" />)} />
           <Route path="/post/update/:id" element={<PostForm />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={loggedUser ? (<Navigate replace to="/" />) : (<SignUp />) } />
+          <Route path="/login" element={loggedUser ? (<Navigate replace to="/" />) : <Login />} />
           <Route path="/logout" element={loggedUser ? (<LogoutModal />) : <Navigate replace to="/" />} />
         </Routes>
       </div>

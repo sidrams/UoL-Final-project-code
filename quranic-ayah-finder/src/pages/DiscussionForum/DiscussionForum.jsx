@@ -10,12 +10,13 @@ export default function DiscussionForums() {
     const [posts, setPosts] = useState([])
     const [showDelete, setShowDelete] = useState(false)
     const [post_id, setPost_id] = useState()
+    // const [postUser, setPostUser] = useState()
     const [inputText, setInputText] = useState("");
 
     // const session = Cookies.get('sessionid');
     const csrftoken = Cookies.get('csrftoken');
     // console.log("cookies token "+csrftoken)
-    console.log('logged user '+JSON.stringify(loggedUser.id))
+    // console.log('logged user '+JSON.stringify(loggedUser.id))
 
     // const handleDelete = (post_id)
     const handleChange = (e) => {
@@ -82,6 +83,7 @@ export default function DiscussionForums() {
                                 <button value={post.pk} onClick={(e) => {
                                     setPost_id(e.target.value)
                                     setShowDelete(true)
+                                    // setPostUser(post.user)
                                     // console.log()
                                 }}>Delete post</button>
                                 </div>
@@ -102,6 +104,7 @@ export default function DiscussionForums() {
                             <DeleteConfirmation 
                                 setShowDelete={setShowDelete} 
                                 post_id={post_id}
+                                // postUser={postUser}
                                 // searchedText={searchedText} 
                                 // setSearchedText={setSearchedText} 
                             />

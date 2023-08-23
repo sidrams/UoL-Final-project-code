@@ -49,6 +49,8 @@ export default function Login() {
             setLoggedUser(json)
         })
         .catch(error => {console.log(error)})
+        // return <Navigate replace to 
+        // history.back()
     }
 
     const logout = () => {
