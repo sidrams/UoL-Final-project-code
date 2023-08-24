@@ -278,3 +278,15 @@ class GuideTopicViewSet(APIView):
         serializer = GuideTopicSerializer(query,context={'request': request}, many=True)
         return Response({'Topics': serializer.data}, status=status.HTTP_200_OK)
         # return Response( serializer.data)
+
+class QuizQuestionsViewSet(APIView):
+    def get(self, request):
+        query = QuizQuestion.objects.all()
+        serializer = QuizSerializer(query,context={'request': request}, many=True)
+        return Response({'Questions': serializer.data}, status=status.HTTP_200_OK)
+
+class QuizQuestionsForTopicViewSet(APIView):
+    def get(self, request,pk):
+        query = QuizQuestion.objects.filter(topic_id=pk)
+        serializer = QuizSerializer(query,context={'request': request}, many=True)
+        return Response({'Questions': serializer.data}, status=status.HTTP_200_OK)

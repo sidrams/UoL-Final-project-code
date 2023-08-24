@@ -71,3 +71,10 @@ class GuideTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = GuideTopic
         fields = '__all__'
+
+class QuizSerializer(serializers.ModelSerializer):
+    topic_id = GuideTopicSerializer()
+
+    class Meta:
+        model = QuizQuestion
+        fields = '__all__'

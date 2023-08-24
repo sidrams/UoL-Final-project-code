@@ -53,5 +53,17 @@ class GuideTopic(models.Model):
     def __str__(self):
         return self.topic_name[0:50]
     
-# class QuizQuestion(models.Model):
+class QuizQuestion(models.Model):
+    topic_id = models.ForeignKey(GuideTopic, on_delete=models.CASCADE)
+    question = models.CharField("question", max_length=500)
+    answer_1 = models.CharField("answer 1", max_length=200)
+    answer_2 = models.CharField("answer 2", max_length=200)
+    answer_3 = models.CharField("answer 3", max_length=200)
+    answer_4 = models.CharField("answer 4", max_length=200)
+    correct_answer = models.CharField("correct answer", max_length=200)
+    note = models.CharField("note", max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return str(("topic",self.topic_id.pk, "question", self.pk))
+
 
