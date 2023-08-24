@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
+import Guides from "./Guides"
+import Login from "../Login/Login"
+import Cookies from "js-cookie"
 
 export default function Quiz(props) {
     const {id} = useParams()
+    const csrftoken = Cookies.get('csrftoken');
     const [quizQuestions, setQuizQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState()
     const [chosenAnswer, setChosenAnswer] = useState()
     const [score, setScore] = useState(0)
     const [disabled, setDisabled] = useState(false)
     const [endQuiz, setEndQuiz] = useState(false)
+    const [scoreSaved, setScoreSaved] = useState(false)
 
     // get questions for the chosen topic
     useEffect(() => {
@@ -62,6 +67,27 @@ export default function Quiz(props) {
         setDisabled(false)
     }
 
+    // saves progress for a logged in user
+    const saveProgress = () => {
+        fetch(`http://127.0.0.1:8000/api/UserQuizProgress/topic/`+id, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            body: JSON.stringify({"score":score})
+        })
+        .then((response) => response.json())
+        .then((json) =>{
+            console.log("score saved")
+            setScoreSaved(true)
+        })
+        .catch(error => console.log(error))
+        // console.log(`http://127.0.0.1:8000/api/UserQuizProgress/topic/`+id)
+    }
+
     return (
         <>
         <h1>Quiz</h1>
@@ -100,10 +126,20 @@ export default function Quiz(props) {
                         <div>
                             Would you like to 
                         </div>
-                         <div className="flex flex-col  gap-4 m-auto">
-                            <button onClick={restartQuiz}>Restart Quiz</button>
-                            <button>Save my progess</button>
-                        </div>
+                        {
+                            !scoreSaved ? 
+                            (
+                                <div className="flex flex-col  gap-4 m-auto">
+                                    <button onClick={restartQuiz}>Restart Quiz</button>
+                                    <button onClick={saveProgress}>Save my progess</button>
+                                </div>
+                            ): 
+                            (
+                                <div>Score saved</div>
+                            )
+                        }
+                         
+                        <Link to="/guides"> <button>Go back to topics</button></Link>
                     </div>
                 </div>
             )) : ''

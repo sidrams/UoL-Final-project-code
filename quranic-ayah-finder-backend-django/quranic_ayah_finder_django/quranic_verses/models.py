@@ -66,4 +66,18 @@ class QuizQuestion(models.Model):
     def __str__(self):
         return str(("topic",self.topic_id.pk, "question", self.pk))
 
+class UserQuizProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quiz_topic_id = models.ForeignKey(GuideTopic, on_delete=models.CASCADE)
+    score = models.IntegerField("Score")
+    time_taken_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-time_taken_at']
+    def __str__(self):
+        return str((self.user.username,str(("topic",self.quiz_topic_id.pk))))
+
+# class GuideContent(models.Model):
+#     topic_id = models.ForeignKey(GuideTopic, on_delete=models.CASCADE)
+#     content = models.JSONField
 

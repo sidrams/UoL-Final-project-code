@@ -290,3 +290,58 @@ class QuizQuestionsForTopicViewSet(APIView):
         query = QuizQuestion.objects.filter(topic_id=pk)
         serializer = QuizSerializer(query,context={'request': request}, many=True)
         return Response({'Questions': serializer.data}, status=status.HTTP_200_OK)
+    
+class UserQuizProgressViewSet(APIView):
+    def get(self, request):
+        query = UserQuizProgress.objects.filter(user=request.user)
+        serializer = UserQuizProgressSerializer(query,context={'request': request}, many=True)
+        return Response({'Progress': serializer.data}, status=status.HTTP_200_OK)
+        
+    # def post(self, request):	
+    #     clean_data = custom_validation(request.data)		
+    #     serializer = UserRegisterSerializer(data=clean_data)
+    #     if serializer.is_valid(raise_exception=True):
+    #         user = serializer.create(clean_data)
+    #         if user:
+    #             return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #         return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+class UserQuizProgressTopicViewSet(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+
+    def get(self, request,pk):
+        query = UserQuizProgress.objects.filter(quiz_topic_id=pk,user=request.user)
+        serializer = UserQuizProgressSerializer(query,context={'request': request}, many=True)
+        return Response({'Progress': serializer.data}, status=status.HTTP_200_OK)
+    
+    def post(self, request,pk):
+        data = request.data
+        print(request.user)
+        user = User.objects.get(id=request.user.id)
+        data['quiz_topic_id'] = GuideTopic.objects.get(id=pk)
+        print(data)
+        # progress = UserQuizProgress.objects.create(data, user=user, quiz_topic_id=topic)
+        progress = UserQuizProgress.objects.create(user=user, **data)
+        serializer = UserQuizProgressSerializer(progress)
+        # data['user'] = request.user.id#UserSerializer(request.user)
+        # topic = GuideTopic.objects.get(id=pk)
+        # data['quiz_topic_id'] = pk#GuideTopicSerializer(topic)
+        # serializer = UserQuizProgressTopicSerializer(data=data).c
+        # if serializer.is_valid(raise_exception=True):
+        #     progress = serializer.create(data)
+        #     if progress:
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# topic = GuideTopic.objects.get(id=pk)
+#         user = User.objects.get(id=request.user.id)
+#         data['user'] = request.user.id#request.user
+#         data['quiz_topic_id'] = pk#topic#pk#topic
+#         print(data)
+#         serializer = UserQuizProgressTopicSerializer(data=data)
+#         # serializer.user = request.user
+#         # serializer.quiz_topic_id = topic
+#         data['user'] = user#request.user.id#request.user
+#         data['quiz_topic_id'] = pk#topic#pk#topic
