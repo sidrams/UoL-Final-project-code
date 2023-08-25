@@ -26,12 +26,13 @@ urlpatterns = [
     # path('api/testChoices', views.ChoicesViewSet.as_view(), name='choices'),
 
 
-    re_path(r'^api/guides/$', views.Guides_list, name='guides'),
-    re_path(r'^api/guides/([0-9]*)$', views.Guides_detail, name='guide_details'),
+    # re_path(r'^api/guides/$', views.Guides_list, name='guides'),
+    # re_path(r'^api/guides/([0-9]*)$', views.Guides_detail, name='guide_details'),
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),
     re_path(r'^api/posts/([0-9]*)$', views.Posts_detail, name='posts_details'),
     re_path(r'^createPost$', views.createPost, name='create-post'),
     re_path(r'^updatePost/([0-9]*)$', views.updatePost, name='update-post'),
     re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
+    path('api/comments/posts/<int:pk>', views.CommentsViewSet.as_view(), name="comments_for_posts")
     # url(r'^createPost$', include(router.urls), name='create-post'),
 ]

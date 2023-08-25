@@ -210,7 +210,28 @@ def deletePost(request,pk):
     
     return Response('Post not updated yet')
     # return Response(serializer.data)
-        
+
+class CommentsViewSet(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    
+    def get(self, request, pk):
+        query = Comment.objects.filter(post=pk)
+        serializer = CommentSerializer(query, context={'request': request}, many=True)
+        return Response({'Comments': serializer.data}, status=status.HTTP_200_OK)
+        # return Response( serializer.data)
+
+    def post(self, request, pk):
+        data = request.data
+        print(request.user)
+        user = User.objects.get(id=request.user.id)
+        data['post'] = Post.objects.get(id=pk)
+        print(data)
+        comment = Comment.objects.create(user=user, **data)
+        serializer = CommentSerializer(comment)
+     
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class GuideViewSet(viewsets.ModelViewSet):
@@ -225,50 +246,50 @@ class GuideViewSet(viewsets.ModelViewSet):
 #         return HttpResponse({'message': 'Guide created'}, status=200)
         # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST'])
-def Guides_list(request):
-    if request.method == 'GET':
-        data = Guides.objects.all()
+# @api_view(['GET', 'POST'])
+# def Guides_list(request):
+#     if request.method == 'GET':
+#         data = Guides.objects.all()
 
-        serializer = GuidesSerializer(data, context={'request': request}, many=True)
+#         serializer = GuidesSerializer(data, context={'request': request}, many=True)
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-    elif request.method == 'POST':
-        serializer = GuidesSerializer(data=request.data)
-        # print(request.data['image'])
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+#     elif request.method == 'POST':
+#         serializer = GuidesSerializer(data=request.data)
+#         # print(request.data['image'])
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def Guides_detail(request, pk):
-    try:
-        guides = Guides.objects.get(pk=pk)
-    except guides.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def Guides_detail(request, pk):
+#     try:
+#         guides = Guides.objects.get(pk=pk)
+#     except guides.DoesNotExist:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    if request.method == 'GET':
-        serializer = GuidesSerializer(guides, context={'request': request})
+#     if request.method == 'GET':
+#         serializer = GuidesSerializer(guides, context={'request': request})
 
-        return Response(serializer.data)
-        # return Response(Guides)
+#         return Response(serializer.data)
+#         # return Response(Guides)
     
-    if request.method == 'PUT':
-        serializer = GuidesSerializer(guides, data=request.data,context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     if request.method == 'PUT':
+#         serializer = GuidesSerializer(guides, data=request.data,context={'request': request})
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(status=status.HTTP_204_NO_CONTENT)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        try:
-            guides.delete()
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     elif request.method == 'DELETE':
+#         try:
+#             guides.delete()
+#         except:
+#             return Response(status=status.HTTP_404_NOT_FOUND)
+#         return Response(status=status.HTTP_204_NO_CONTENT)
     
 class GuideTopicViewSet(APIView):
     # queryset = GuideTopic.objects.all()

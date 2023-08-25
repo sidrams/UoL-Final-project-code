@@ -45,7 +45,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.body[0:50]
+        return {"post id ":self.post.id,"":self.body[0:50]}
 
 class GuideTopic(models.Model):
     topic_name = models.CharField("Topic_name", max_length=500)

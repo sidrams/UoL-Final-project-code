@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import Cookies from "js-cookie"
 
 export default function PostDetails() {
     const { id } = useParams()
+    const csrftoken = Cookies.get('csrftoken');
     const [post, setPost] = useState([])
-
+    const [comments, setComments] = useState([])
+    const [newComment, setNewComment] = useState()
+    const [commentSaved, setCommentSaved] = useState()
+    
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/posts/'+id, {
             method: 'GET',
@@ -17,12 +22,78 @@ export default function PostDetails() {
             .catch(error => console.log(error))
     }, [])
 
-    return(
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/comments/posts/'+id, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            })
+            .then((response) => response.json())
+            .then((json) =>{
+                setComments(json.Comments)
+                console.log(json.Comments)
+            })
+            .catch(error => console.log(error))
+    }, [])
+
+    const postComment = (e) => {
+        e.preventDefault()
+        console.log("post the following comment: "+newComment)
+        fetch(`http://127.0.0.1:8000/api/comments/posts/`+id, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            body: JSON.stringify({"body":newComment})
+        })
+        .then((response) => response.json())
+        .then((json) =>{
+            console.log("comment posted saved")
+            console.log(json)
+            // const updatedComments = comments.push(json)
+            // console.log(updatedComments)
+            setComments([...comments,json])
+            setCommentSaved(true)
+            setNewComment('')
+        })
+        .catch(error => console.log(error))
+    }
+
+     return(
         <>
         <h1>post details</h1>
-        <p>{id}</p>
-        <p>{post.title}</p>
-        <p>{post.description}</p>
+        {
+            post && (
+                <>
+                <p>{id}</p>
+                <p>{post.title}</p>
+                <p>{post.description}</p>
+                </>
+            )
+        }
+        
+        {
+            comments ? 
+            (
+                <>
+                <h4>Comments</h4>
+                {comments.map((comment, i) => (
+                    <p><em>@{comment.user.username}</em>  {comment.body}</p>
+                ))}
+                <form action="">
+                    <input type="text" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="Add a new comment here"/>
+                    <button onClick={postComment} >Post</button>
+                </form>
+                </>
+            ) : ''
+        }
         </>
     )
 }

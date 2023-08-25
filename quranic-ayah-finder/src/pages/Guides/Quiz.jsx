@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
-import Guides from "./Guides"
-import Login from "../Login/Login"
+// import Guides from "./Guides"
+// import Login from "../Login/Login"
 import Cookies from "js-cookie"
 
 export default function Quiz(props) {
