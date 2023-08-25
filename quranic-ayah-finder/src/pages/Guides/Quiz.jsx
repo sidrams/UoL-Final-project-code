@@ -95,7 +95,7 @@ export default function Quiz(props) {
             currentQuestion ? (!endQuiz ? 
             // ("quiz has not ended") 
             (
-                <div className="bg-[#55BDB3] p-6 py-8 w-[60%] m-auto rounded-xl">
+                <div className="bg-[#55BDB3] p-6 py-8 lg:w-[60%] m-auto rounded-xl">
                     <h3>{currentQuestion.question}</h3>
                     <div className="flex flex-col gap-4 px-24 my-4">
                         <button value={currentQuestion.answer_1} disabled={disabled} className={chosenAnswer == currentQuestion.answer_1 ? getColor(currentQuestion.answer_1) : ''} onClick={(e) => handleClick(e,'answer_1')}>{currentQuestion.answer_1}</button>

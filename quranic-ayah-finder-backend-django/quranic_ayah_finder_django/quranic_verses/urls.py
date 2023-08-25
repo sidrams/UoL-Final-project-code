@@ -21,6 +21,10 @@ urlpatterns = [
     path('api/quizQuestions/<int:pk>', views.QuizQuestionsForTopicViewSet.as_view(), name='quiz_questions'),
     path('api/UserQuizProgress', views.UserQuizProgressViewSet.as_view(), name='quiz_progress_for_user'),
     path('api/UserQuizProgress/topic/<int:pk>', views.UserQuizProgressTopicViewSet.as_view(), name='quiz_progress_for_user'),
+    path('api/guideContent', views.GuideContentViewSet.as_view(), name='guide contents'),
+    path('api/guideContent/topic/<int:pk>', views.GuideContentTopicViewSet.as_view(), name='guide contents'),
+    # path('api/testChoices', views.ChoicesViewSet.as_view(), name='choices'),
+
 
     re_path(r'^api/guides/$', views.Guides_list, name='guides'),
     re_path(r'^api/guides/([0-9]*)$', views.Guides_detail, name='guide_details'),

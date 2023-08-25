@@ -94,3 +94,18 @@ class UserQuizProgressTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuizProgress
         fields = '__all__'
+
+class GuideContentSerializer(serializers.ModelSerializer):
+    topic_id = GuideTopicSerializer()
+
+    class Meta:
+        model = GuideContent
+        fields = '__all__'
+
+# class ChoicesSerializer(serializers.ModelSerializer):
+#     # user = UserSerializer()
+#     # quiz_topic_id = GuideTopicSerializer()
+
+#     class Meta:
+#         model = TestChoices
+#         fields = '__all__'

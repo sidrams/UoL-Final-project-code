@@ -77,7 +77,18 @@ class UserQuizProgress(models.Model):
     def __str__(self):
         return str((self.user.username,str(("topic",self.quiz_topic_id.pk))))
 
-# class GuideContent(models.Model):
-#     topic_id = models.ForeignKey(GuideTopic, on_delete=models.CASCADE)
-#     content = models.JSONField
+class GuideContent(models.Model):
+    topic_id = models.ForeignKey(GuideTopic, on_delete=models.CASCADE)
+    content = models.TextField("content", max_length=1000)
+
+    def __str__(self):
+        return str({'content no ':self.id,'topic ':self.topic_id.topic_name})
+
+# class TestChoices(models.Model):
+#     class Options(models.TextChoices):
+#         FOO = "A"
+#         BAR = "B"
+#         BAZ = "C"
+
+#     choiceField = models.CharField(max_length=200, choices=Options.choices)
 

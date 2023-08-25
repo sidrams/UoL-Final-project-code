@@ -334,6 +334,18 @@ class UserQuizProgressTopicViewSet(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class GuideContentViewSet(APIView):
+    def get(self, request):
+        query = GuideContent.objects.all()
+        serializer = GuideContentSerializer(query,context={'request': request}, many=True)
+        return Response({'Guides': serializer.data}, status=status.HTTP_200_OK)
+    
+class GuideContentTopicViewSet(APIView):
+    def get(self, request, pk):
+        query = GuideContent.objects.filter(topic_id=pk)
+        serializer = GuideContentSerializer(query,context={'request': request}, many=True)
+        return Response({'Guides': serializer.data}, status=status.HTTP_200_OK)
+    
 
 # topic = GuideTopic.objects.get(id=pk)
 #         user = User.objects.get(id=request.user.id)
@@ -345,3 +357,13 @@ class UserQuizProgressTopicViewSet(APIView):
 #         # serializer.quiz_topic_id = topic
 #         data['user'] = user#request.user.id#request.user
 #         data['quiz_topic_id'] = pk#topic#pk#topic
+
+# class ChoicesViewSet(APIView):
+#     def get(self, request):
+#         # query = TestChoices.objects.all()
+#         # serializer = ChoicesSerializer(query,context={'request': request}, many=True)
+#         # return Response({'choices': serializer.data}, status=status.HTTP_200_OK)
+#         choices = TestChoices.Options.choices
+#         # format it into dictionary
+#         # choices = {choice[0]: choice[1] for choice in SampleModel.Options.choices}
+#         return Response(choices)
