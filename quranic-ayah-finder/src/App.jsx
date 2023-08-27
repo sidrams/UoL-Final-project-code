@@ -48,7 +48,7 @@ function App() {
     <>
       <Context.Provider value={{ loggedUser, setLoggedUser}}>
       <Navbar />
-      <div className='container items-center m-auto'>
+      <div className=' items-center m-auto'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/guides" element={<Guides />} />

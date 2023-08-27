@@ -4,7 +4,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";  
 // import fetch from 'node-fetch'  
 
-export default function SearchModal ({setShowModal, searchedText, setSearchedText}) {
+export default function SearchModal ({setShowResults, setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState()
     const toastCenter = useRef(null);
 
@@ -36,26 +36,12 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
             .then((response) => response.json())
             .then((json) =>{
                 setSearchedText(json)
+                setShowResults(true)
                 console.log(json)
                 console.log("searched text "+ searchedText)
             })
             .catch(error => console.log(error))
         }
-        
-        
-        
-        // const body = {
-        //     name :'test',
-        //     description: 'testing if image uploads',
-        //     image: image
-        // }
-        // axios.post('http://127.0.0.1:8000/api/guides/', uploadData, axiosConfig)
-        // .then( res => {
-        //     console.log(res.data)
-        //     setSearchedText(res.data)
-        //     console.log("searched text "+ searchedText)
-        //     console.log("searched text type is "+ typeof(res.data))
-        // })
     }
 
     return (
@@ -75,10 +61,10 @@ export default function SearchModal ({setShowModal, searchedText, setSearchedTex
                     Upload an image of a Verse
                 </h3>
                 <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                 >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <span className="bg-transparent text-[black] flex items-end h-6 w-6 text-2xl block outline-none focus:outline-none">
                     ×
                     </span>
                 </button>
