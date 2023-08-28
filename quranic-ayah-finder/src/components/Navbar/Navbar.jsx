@@ -8,7 +8,7 @@ export default function Navbar() {
     const [showLogout, setShowLogout] = useState(false)
 
     return(
-        <div className='p-10'>
+        <div className='p-10 max-w-[1280px] m-auto'>
         <nav className="nav rounded-xl shadow text-sm font-medium">
             <Link to="/" className="site-title pl-2 font-normal">Visual Quranic Ayah Finder</Link>
             <ul>

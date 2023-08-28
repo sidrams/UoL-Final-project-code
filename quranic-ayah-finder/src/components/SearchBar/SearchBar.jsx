@@ -4,15 +4,15 @@ import SearchModal from "./SearchModal";
 import quranVector from '../../assets/quran vector.png'
 import borderEllipse from '../../assets/Ellipse.svg'
 import { AiFillCheckCircle } from "react-icons/ai";
+import PaginatorComponent from "../../pages/Home/Paginator";
 // import "./Searchbar.css"
 
 // export const Searchbar = () => {
-export default function Searchbar({showResults, setShowResults}) {
+export default function Searchbar({showResults, setShowResults, searchedText, fetchData, verseDetails}) {
     // const [input, setInput] = useState("")
     const [textInput, setTextInput] = useState('')
     const [showModal, setShowModal] = useState(false)
-    const [searchedText, setSearchedText] = useState('')
-    const [verseDetails, setVerseDetails] = useState()
+    
     const ref = useRef(null);
 
     useEffect(() => {
@@ -38,17 +38,7 @@ export default function Searchbar({showResults, setShowResults}) {
         }
     }, []);
 
-    const fetchData = (text) => {
-        let query = 'https://api.quran.com/api/v4/search?q='+ text +'&page=2'
-        console.log('query is '+query)
-        fetch(query)
-            .then((response) => response.json())
-            .then((json) => 
-                {setVerseDetails(json)
-                    setShowResults(true)
-                console.log("details fetched"+JSON.stringify(json))}
-            )
-    }
+    
 
     const handleChange = (value) => {
         // console.log("setting input text as "+value)
@@ -58,8 +48,8 @@ export default function Searchbar({showResults, setShowResults}) {
     return (
         <>
         {
-            !showResults ?
-            (
+            // !showResults ?
+            // (
                 <>
                  <div className="rounded-full absolute z-[-4] -right-1/4 top-[5%] ">
                     <img src={borderEllipse} alt="border design element" className="absolute logo-border" />
@@ -104,45 +94,50 @@ export default function Searchbar({showResults, setShowResults}) {
                     Search
                 </button>
                 </>
-            )
-            :
-            (
-                // <p>some result should be shown here</p>
-                <>
-                <div>
-                    {!searchedText || searchedText.length <= 0  ?  (
-                        <tr>
-                        <td colSpan="6" align="center">
-                            <b>No searched text</b>
-                        </td>
-                        </tr>
-                    ) : (
-                        <>
-                        <div>text identified is : {searchedText}</div>
-                        <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
-                        </>
-                )}
-                </div>
-                <div>
-                    {!verseDetails || verseDetails.length <= 0 ? (
-                        <div></div>
-                    ) : (
-                        <>
-                        <h2 className="my-6 text-xl font-bold">Verses search result</h2>
-                        { 
-                            verseDetails.search.results.map((verse,i) => (
-                            <div key={verse.verse_key} className="mb-4">
-                                Verse {verse.verse_key} - {verse.text}
-                            </div>
-                        ))}
+            // )
+            // :
+            // (
+            //     <p>some result should be shown here</p>
+                // <>
+                // <div>
+                //     {searchedText != '' && searchedText.length >= 0 ? (
+                //         // <tr>
+                //         // <td colSpan="6" align="center">
+                //         //     <b>No searched text</b>
+                //         // </td>
+                //         // </tr>
+                //         <>
+                //         <div>text identified is : {searchedText}</div>
+                //         <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
+                //         </>
+                //     ) : (
+                //         ''
+                // )}
+                // </div>
+                // <div>
+                //     {!verseDetails || verseDetails.length <= 0 ? (
+                //         <div></div>
+                //     ) : (
+                //         <>
+                //         <h2 className="my-6 text-xl font-bold">Verses search result for '{verseDetails.search.query}'</h2>
+                //         <p>total results {verseDetails.search.total_results}</p>
+                //         <p>showing {verseDetails.search.current_page} / {verseDetails.search.total_pages}</p>
+                //         { 
+                //             verseDetails.search.results.map((verse,i) => (
+                //             <div key={verse.verse_key} className="mb-4">
+                //                 Verse {verse.verse_key} - {verse.text}
+                //             </div>
+                //         ))}
                         
-                        {/* <div>{JSON.stringify(verseDetails.search.results)}</div> */}
+                //         {/* <div>{JSON.stringify(verseDetails.search.results)}</div> */}
                         
-                        </>
-                )}
-                </div>
-                </>
-            )
+                //         </>
+                // )}
+                // </div>
+                // <PaginatorComponent />
+
+                // </>
+            // )
         }
 
         
