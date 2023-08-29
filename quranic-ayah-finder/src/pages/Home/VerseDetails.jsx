@@ -1,19 +1,21 @@
-// import { useParams } from "react-router-dom"
-
 import { useEffect, useState } from "react";
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import BackgroundInfo from "../../components/VerseDetails/BackgroundInfo";
 import ChapterInfo from "../../components/VerseDetails/ChapterInfo";
+import VerseWords from "../../components/VerseDetails/VerseWords";
+import Tafsir from "../../components/VerseDetails/Tafsir";
+import Translations from "../../components/VerseDetails/Translations";
+import Locations from "../../components/VerseDetails/Locations";
 
 export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetails}) {
     const [chapterID, setChapterID] = useState(chosenVerse.verse_key.split(':')[0]) // get chapter id from chosen verse
     const [verseID, setVerseID] = useState(chosenVerse.verse_key.split(':')[1]) // get verse id from chosen verse
-    const [chapter, setChapter] = useState()
-    const [chapterInfo, setChapterInfo] = useState()
-    const [verseByWords, setVerseByWords] = useState()
-    const [tafsir, setTafsir] = useState()
-    const [queries, setQueries] = useState([
+    
+    const [chapter, setChapter] = useState() // basic chapter related info
+    const [chapterInfo, setChapterInfo] = useState() // detailed chapter related info
+    const [verseByWords, setVerseByWords] = useState() // each word with translation and transliteration
+    const [tafsir, setTafsir] = useState() //tafsir
+    
+    const queries = [
         {
             query : 'https://api.quran.com/api/v4/verses/by_key/'+chosenVerse.verse_key+'?language=en&words=true&translations=131&tafsirs=169&word_fields=text_uthmani&fields=chapter_id&tafsirs=169',
             setVar : (data) => {console.log(data.verse);setVerseByWords(data.verse)} 
@@ -31,8 +33,9 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
             setVar : (data) => {console.log(data);setTafsir(data)} 
         }
         
-    ])
+    ]
 
+    // fetch data for all sections 
     useEffect(() => {
         queries.map((item,i) => {
             console.log('query '+item.query)
@@ -48,6 +51,7 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
         })
     }, [])
 
+    // get 21st for 21, etc...
     const getOrdinalNum = (n) => {
         return n + (n > 0 ? ["th", "st", "nd", "rd"][(n % 100 > 10 && n % 100 < 14) || n % 10 > 3 ? 0 : n % 10] : '');
     }
@@ -62,77 +66,39 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
             
         </div>
 
-        {
+        {   // LOCATION
             verseByWords && chapter &&
             (
                 <div className="mb-4 bg-custom-gray p-6 shadow">
-                    <h2>Location</h2>
-                    <p className="text-sm text-slate-500 my-1" >
-                        {chosenVerse.verse_key}
-                    </p> 
-                    <p className="text-sm text-slate-500 my-1" >
-                        This verse is the {getOrdinalNum(verseID)} verse in 'Surah {chapter.name_simple}' ({chapter.name_arabic}), 
-                        the {getOrdinalNum(verseByWords.chapter_id)} chapter of the Holy Quran.
-                        The verse can be found in the {getOrdinalNum(verseByWords.juz_number)} Juz and 
-                        in the {getOrdinalNum(verseByWords.ruku_number)} Ruku of the {getOrdinalNum(verseByWords.chapter_id)} chapter.
-                    </p>
-                    <p className="text-sm text-slate-500 my-1" >
-                            This verse/ayah contains a total of  {verseByWords.words.length} words.
-                    </p>
+                    <Locations chosenVerse={chosenVerse} verseID={verseID} verseByWords={verseByWords} chapter={chapter} getOrdinalNum={getOrdinalNum} />
                 </div>
             )
         }
       
+        {/* LOCATION */}
         <div className="mb-4 bg-custom-gray p-6 shadow">
-            <h2>Translations</h2>
-            {
-                chosenVerse.translations.map((translation,i) => (
-                    <p className="text-sm text-slate-500 my-1">
-                        <span dangerouslySetInnerHTML={{__html: translation.text }} >
-                        </span> 
-                        <span className="text-slate-400"> ({translation.name})</span>
-                    </p>
-                ))
-            }
+            <Translations chosenVerse={chosenVerse} />
         </div>
 
-        {
+        {   // TAFSIR
             tafsir && 
             (
                 <div className="mb-4 bg-custom-gray p-6 shadow">
-                    <h2>Tafsir</h2>
-                    <p className="text-sm text-slate-500 my-1" >
-                        {tafsir.text}  
-                        <span className="text-slate-400"> ({tafsir.tafseer_name})</span>
-                    </p>
+                    <Tafsir tafsir={tafsir} />
                 </div>
             )
         }
         
-        {
+        {   // WORDS
             verseByWords && 
             (
                 <div className="mb-4 bg-custom-gray p-6 shadow">
-                    <h2>Words</h2>
-                    {/* {
-                        chosenVerse.words.map((translation,i) => (
-                            <p className="text-sm text-slate-500 my-1" dangerouslySetInnerHTML={{__html: translation.text }} >
-                            </p> 
-                        ))
-                    } */}
-                    <div className="card mt-4">
-                        <DataTable value={verseByWords.words} paginator rows={6} tableStyle={{ minWidth: '50rem', fontSize: '14px' }}>
-                            <Column field="position" header="Position In verse"></Column>
-                            <Column field="text_uthmani" header="Arabic Text"></Column>
-                            <Column field="translation.text" header="Translation"></Column>
-                            <Column field="transliteration.text" header="Transliteration"></Column>
-                        </DataTable>
-                    </div>
+                    <VerseWords verseByWords={verseByWords} />
                 </div>
             )
         }
         
-        {
+        {   // CHAPTER INFO AND ITS BACKGROUND
             chapter && chapterInfo && 
             (
                 <>
