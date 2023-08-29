@@ -149,3 +149,17 @@ input:focus {
   position: absolute;
   width: 150px;
 }
+
+/* VERSE DETAILS PAGE ---------------------------------- */
+.chapter-bg-info h2{
+  font-weight: 500;
+  margin-top: 1%;
+  margin-bottom: 2px;
+
+}
+
+.chapter-bg-info p{
+  font-size: 12px;
+  margin-bottom: 5px;
+
+}
