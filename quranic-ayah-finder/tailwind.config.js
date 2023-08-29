@@ -17,7 +17,9 @@ export default {
         'sea-green': '#55BDB3',
         'light-sea-green' : '#F0F8F8',
         'blackish-blue':'#0F2435',
-        'custom-gray' : '#FDFDFD'
+        'custom-gray' : '#FDFDFD',
+        'medium-gray':'#fAfAfA',
+        'navy-blue': '#213547'
       },
     }
   },
