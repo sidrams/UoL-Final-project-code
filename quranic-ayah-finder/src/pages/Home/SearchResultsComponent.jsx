@@ -18,7 +18,6 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
 
             {searchedText != '' && searchedText.length >= 0 ? (
                 <>
-        <BackButton onClick={resetSearch} text={'search again'} icon={<VscDebugRestart />} />
                 <div>text identified is : {searchedText}</div>
                 <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
                 </>

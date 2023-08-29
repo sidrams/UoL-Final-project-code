@@ -79,10 +79,16 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
             )
         }
       
-        {/* LOCATION */}
-        <div className="mb-4 bg-custom-gray p-6 shadow">
-            <Translations chosenVerse={chosenVerse} />
-        </div>
+        {/*  */}
+        {   // LOCATION
+            verseByWords && 
+            (
+                <div className="mb-4 bg-custom-gray p-6 shadow">
+                    <Translations chosenVerse={chosenVerse} verseByWords={verseByWords} />
+                </div>
+            )
+        }
+        
 
         {   // TAFSIR
             tafsir && 
