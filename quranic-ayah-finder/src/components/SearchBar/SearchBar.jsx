@@ -8,7 +8,7 @@ import PaginatorComponent from "../../pages/Home/Paginator";
 // import "./Searchbar.css"
 
 // export const Searchbar = () => {
-export default function Searchbar({showResults, setShowResults, searchedText, fetchData, verseDetails}) {
+export default function Searchbar({showResults, setShowResults, searchedText, fetchData, setSearchedText}) {
     // const [input, setInput] = useState("")
     const [textInput, setTextInput] = useState('')
     const [showModal, setShowModal] = useState(false)

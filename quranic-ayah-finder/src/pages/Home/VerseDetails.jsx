@@ -5,8 +5,10 @@ import VerseWords from "../../components/VerseDetails/VerseWords";
 import Tafsir from "../../components/VerseDetails/Tafsir";
 import Translations from "../../components/VerseDetails/Translations";
 import Locations from "../../components/VerseDetails/Locations";
+import BackButton from "../../components/Buttons/BackButton";
+import { VscDebugRestart } from "react-icons/vsc";
 
-export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetails}) {
+export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetails, resetSearch}) {
     const [chapterID, setChapterID] = useState(chosenVerse.verse_key.split(':')[0]) // get chapter id from chosen verse
     const [verseID, setVerseID] = useState(chosenVerse.verse_key.split(':')[1]) // get verse id from chosen verse
     
@@ -58,8 +60,10 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
 
     return(
         <>
-        <div className='w-1/3'>
-            <button  onClick={() => {setShowDetails(false);setChosenVerse()}} >Go back</button>
+        <div className='flex justify-between'>
+            {/* <button  onClick={() => {setShowDetails(false);setChosenVerse()}} className="back-button">Go back</button> */}
+            <BackButton onClick={() =>  {setShowDetails(false);setChosenVerse()}} />
+            <BackButton onClick={resetSearch} text={'search again'} icon={<VscDebugRestart />} />
         </div>
         <div className="mb-4 text-center text-3xl p-6">
              {chosenVerse.text}

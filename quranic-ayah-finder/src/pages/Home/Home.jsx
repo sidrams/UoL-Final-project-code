@@ -41,7 +41,8 @@ export default function Home() {
                             showResults={showResults} setShowResults={setShowResults} 
                             searchedText={searchedText} 
                             fetchData={fetchData} 
-                            verseDetails={verseDetails} 
+                            // verseDetails={verseDetails} 
+                            setSearchedText={setSearchedText}
                         />
                     </div>
                 ) :
