@@ -10,18 +10,20 @@ export default function Home() {
     const [showResults, setShowResults] = useState(false)
     const [searchedText, setSearchedText] = useState('')
     const [verseDetails, setVerseDetails] = useState()
+    const [exactMatch, setExactMatch] = useState(false);
 
     const fetchData = (text,page=1) => {
-        let query = 'https://api.quran.com/api/v4/search?q='+ text +'&page='+page
-        console.log('query is '+query)
+        let query = exactMatch ? 
+                    'https://api.quran.com/api/v4/search?q="'+ text +'"&page='+page :
+                    'https://api.quran.com/api/v4/search?q='+ text +'&page='+page 
+
         fetch(query)
-            .then((response) => response.json())
-            .then((json) => 
-                {
-                    setVerseDetails(json)
-                    setShowResults(true)
-                console.log("details fetched"+JSON.stringify(json))}
-            )
+        .then((response) => response.json())
+        .then((json) => {
+            setVerseDetails(json)
+            setShowResults(true)
+            console.log("details fetched"+JSON.stringify(json))
+        })
     }
 
     const resetSearch = () => {
@@ -58,6 +60,8 @@ export default function Home() {
                                 resetSearch={resetSearch}
                                 verseDetails={verseDetails} 
                                 showResults={showResults}
+                                exactMatch={exactMatch}
+                                setExactMatch={setExactMatch}
                             />
                         </div>
                         

@@ -4,7 +4,7 @@ import SearchModal from "./SearchModal";
 import quranVector from '../../assets/quran vector.png'
 import borderEllipse from '../../assets/Ellipse.svg'
 import { AiFillCheckCircle } from "react-icons/ai";
-import PaginatorComponent from "../../pages/Home/Paginator";
+import PaginatorComponent from "../SearchResults/Paginator";
 // import "./Searchbar.css"
 
 // export const Searchbar = () => {
