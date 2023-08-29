@@ -19,6 +19,7 @@ import Categories from './pages/Guides/Categories'
 import Quiz from './pages/Guides/Quiz'
 import GuideDetails from './pages/Guides/GuideDetails'
 import Profile from './pages/Profile/Profile'
+import VerseDetails from './pages/Home/VerseDetails'
 
 
 function App() {
@@ -51,6 +52,8 @@ function App() {
       <div className='w-full items-center m-auto '>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/verse-details/:id" element={<VerseDetails />} />
+          
           <Route path="/guides" element={<Guides />} />
           <Route path="guides/topic/:id" element={<Categories />} />
           <Route path="guides/topic/:id/Guide" element={<GuideDetails />} />

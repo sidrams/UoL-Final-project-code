@@ -1,9 +1,16 @@
+import { Link } from "react-router-dom"
 import PaginatorComponent from "./Paginator"
+import { useState } from "react"
+import VerseDetails from "./VerseDetails"
 
 export default function SearchResultsComponent({searchedText, fetchData, resetSearch, verseDetails}) {
+    const [showDetails, setShowDetails] = useState(false)
+    const [chosenVerse, setChosenVerse] = useState()
     return (
         <>
-        <button onClick={resetSearch} >search again</button>
+        <div className='w-1/3'>
+            <button  onClick={resetSearch} >search again</button>
+        </div>
         <div>
             {searchedText != '' && searchedText.length >= 0 ? (
                 <>
@@ -14,35 +21,61 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
                 ''
         )}
         </div>
-        <div>
+        <div >
+            {/* className="overflow-scroll  h-[60vh] " */}
             {!verseDetails || verseDetails.length <= 0 ? (
                 <div></div>
             ) : (
-                <>
-                <h2 className="my-6 text-xl font-bold">Verses search result for '{verseDetails.search.query}'</h2>
-                <p>total results {verseDetails.search.total_results}</p>
-                <p>currently showing {verseDetails.search.results.length}</p>
-                <p>showing {verseDetails.search.current_page} / {verseDetails.search.total_pages}</p>
-                { 
-                    verseDetails.search.results.map((verse,i) => (
-                    <div key={verse.verse_key} className="mb-4">
-                        Verse {verse.verse_key} - {verse.text}
-                    </div>
-                ))}
                 
-                {/* <div>{JSON.stringify(verseDetails.search.results)}</div> */}
+                // {
+                    !showDetails ? 
+                    (
+                        <>
+                        <h2 className="mt-6 text-2xl font-bold">Verses search result for '{verseDetails.search.query}'</h2>
+                        <p className="text-sm font-medium text-slate-500 my-1 mb-6">{verseDetails.search.total_results} verses found</p>
+                        {/* <p>total results {verseDetails.search.total_results}</p>
+                        <p>currently showing {verseDetails.search.results.length}</p>
+                        <p>showing {verseDetails.search.current_page} / {verseDetails.search.total_pages}</p> */}
+                        { 
+                            verseDetails.search.results.map((verse,i) => (
+                            <Link to=''>
+                            {/* // {`/verse-details/${verse.verse_id}`} */}
+
+                                <div key={verse.verse_key} onClick={() => {setShowDetails(true);setChosenVerse(verse)}} className="mb-4 bg-custom-gray p-6 shadow">
+                                    Verse {verse.verse_key} - {verse.text}
+                                    <div className="mt-2">
+                                        {
+                                            verse.translations.map((translation,i) => (
+                                                <p className="text-sm text-slate-500 my-1" dangerouslySetInnerHTML={{__html: translation.text }} >
+                                                    
+                                                </p> 
+                                            ))
+                                            // console.log(verse.translations)
+                                        }
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                         <PaginatorComponent 
+                            query={verseDetails.search.query}
+                            total_pages={verseDetails.search.total_pages}
+                            fetchData={fetchData}
+                        />
+                      </>
+                    ) : 
+                    (
+                        // <p>show details</p>
+                        <VerseDetails 
+                            chosenVerse={chosenVerse}
+                            setChosenVerse={setChosenVerse}
+                            setShowDetails={setShowDetails}
+                        />
+                    )
+                // }
                 
-                </>
         )}
         </div>
-        <PaginatorComponent 
-            query={verseDetails.search.query}
-            page={verseDetails.search.current_page} 
-            total_results={verseDetails.search.total_results} 
-            rows_on_page={verseDetails.search.results.length} 
-            total_pages={verseDetails.search.total_pages}
-            fetchData={fetchData}
-        />
+       
 
         </>
     )

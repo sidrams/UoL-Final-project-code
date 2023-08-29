@@ -29,7 +29,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -107,7 +107,7 @@ input:focus {
   color: #808e9b;
 }
 
-.active {
+.active-page {
   border: solid 1px var(--main-sea-green);
   border-radius: 40px;
   color: var(--main-sea-green);

@@ -12,7 +12,7 @@ export default function Home() {
     const [verseDetails, setVerseDetails] = useState()
 
     const fetchData = (text,page=1) => {
-        let query = 'https://api.quran.com/api/v4/search?q='+ text +'&page='+page + '&size=10'
+        let query = 'https://api.quran.com/api/v4/search?q='+ text +'&page='+page
         console.log('query is '+query)
         fetch(query)
             .then((response) => response.json())
@@ -33,28 +33,35 @@ export default function Home() {
         <>
         <h1 className="hidden">Visual Quranic Ayah Finder</h1>
          
-        <div className="search-bar flex flex-col items-center m-auto justify-center min-h-[80vh] w-[50%] z-10 relative  max-w-[640px]">
             {
                 !showResults ? 
                 (
-                    <Searchbar 
-                        showResults={showResults} setShowResults={setShowResults} 
-                        searchedText={searchedText} 
-                        fetchData={fetchData} 
-                        verseDetails={verseDetails} 
-                    />
+                    <div className="search-bar flex flex-col items-center m-auto justify-center min-h-[80vh] w-[50%] z-10 relative  max-w-[640px]">
+                        <Searchbar 
+                            showResults={showResults} setShowResults={setShowResults} 
+                            searchedText={searchedText} 
+                            fetchData={fetchData} 
+                            verseDetails={verseDetails} 
+                        />
+                    </div>
                 ) :
                 (
-                    <SearchResultsComponent 
-                        searchedText={searchedText} 
-                        fetchData={fetchData} 
-                        resetSearch={resetSearch}
-                        verseDetails={verseDetails} 
-                    />
+                    <div className="text-left  flex m-auto gap-4 p-0 w-[90%]"> 
+                    {/*  items-center,justify-center,  w-[50%] */}
+                        
+                        <div className="w-[95%] m-auto">
+                            <SearchResultsComponent 
+                                searchedText={searchedText} 
+                                fetchData={fetchData} 
+                                resetSearch={resetSearch}
+                                verseDetails={verseDetails} 
+                            />
+                        </div>
+                        
+                    </div>
                 )
             }
            
-        </div>
         {
             !showResults && (
                 <FeatureSection showResults={showResults} />

@@ -9,15 +9,17 @@ export default {
   },
   plugins: [],
   theme: {
-    colors: {
-      transparent: 'transparent',
-      white: '#ffffff',
-      black: '#000',
-      'sea-green': '#55BDB3',
-      'light-sea-green' : '#F0F8F8',
-      'blackish-blue':'#0F2435',
-      'custom-gray' : '#FDFDFD'
-    },
+    extend: {
+      colors: {
+        transparent: 'transparent',
+        white: '#ffffff',
+        black: '#000',
+        'sea-green': '#55BDB3',
+        'light-sea-green' : '#F0F8F8',
+        'blackish-blue':'#0F2435',
+        'custom-gray' : '#FDFDFD'
+      },
+    }
   },
 }
 

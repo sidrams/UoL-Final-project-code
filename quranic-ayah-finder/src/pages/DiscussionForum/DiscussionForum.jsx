@@ -34,6 +34,7 @@ export default function DiscussionForums() {
             })
             .catch(error => console.log(error))
     }, [])
+    
     return (
         <>
         <h1>DiscussionForums</h1>
