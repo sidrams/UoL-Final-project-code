@@ -5,7 +5,7 @@ import VerseDetails from "./VerseDetails"
 import BackButton from "../../components/Buttons/BackButton"
 import { VscDebugRestart } from "react-icons/vsc";
 
-export default function SearchResultsComponent({searchedText, fetchData, resetSearch, verseDetails}) {
+export default function SearchResultsComponent({searchedText, fetchData, resetSearch, verseDetails, showResults}) {
     const [showDetails, setShowDetails] = useState(false)
     const [chosenVerse, setChosenVerse] = useState()
     return (
@@ -16,19 +16,59 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
         </div>*/}
         <div>
 
-            {searchedText != '' && searchedText.length >= 0 ? (
+            {/* {searchedText != '' && searchedText.length >= 0 ? 
+            (
                 <>
-                <div>text identified is : {searchedText}</div>
+                <div className="mb-4 text-center text-3xl p-6">
+                    Text identified : {searchedText}
+                </div>
                 <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
                 </>
-            ) : (
+            ) : 
+            (
                 ''
-        )}
+            )
+            } */}
+            {/* {
+                searchedText != '' && searchedText.length >= 0 && 
+                <>
+                {
+                    !showDetails && 
+                    (
+                        <>
+                        <div className="mb-4 text-center text-3xl p-6">
+                            Text identified : {searchedText}
+                        </div>
+                        <button onClick={() => fetchData(searchedText)}>Find detailed information</button>
+                        </>
+                    )
+                }
+                </>
+            } */}
         </div>
         <div >
             {/* className="overflow-scroll  h-[60vh] " */}
             {!verseDetails || verseDetails.length <= 0 ? (
-                <div></div>
+                <div>
+                {
+                    searchedText != '' && searchedText.length >= 0 && 
+                    <>
+                    {
+                        // !showDetails && 
+                        // (
+                            <>
+                            <div className="mb-4 text-center text-3xl p-6">
+                                Text identified : {searchedText}
+                            </div>
+                            <div className="flex justify-center items-center ">
+                            <button className="capitalize" onClick={() => fetchData(searchedText)}>Find detailed information</button>
+                            </div>
+                            </>
+                        // )
+                    }
+                    </>
+                }
+                </div>
             ) : (
                 
                 // {

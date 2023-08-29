@@ -17,7 +17,8 @@ export default function Home() {
         fetch(query)
             .then((response) => response.json())
             .then((json) => 
-                {setVerseDetails(json)
+                {
+                    setVerseDetails(json)
                     setShowResults(true)
                 console.log("details fetched"+JSON.stringify(json))}
             )
@@ -56,6 +57,7 @@ export default function Home() {
                                 fetchData={fetchData} 
                                 resetSearch={resetSearch}
                                 verseDetails={verseDetails} 
+                                showResults={showResults}
                             />
                         </div>
                         
