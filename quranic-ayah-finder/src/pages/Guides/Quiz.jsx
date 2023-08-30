@@ -5,7 +5,7 @@ import { Link, useLocation, useParams } from "react-router-dom"
 import Cookies from "js-cookie"
 import BackButton from "../../components/Buttons/BackButton";
 import { VscDebugRestart } from "react-icons/vsc";
-import { MdQuiz } from 'react-icons/md'
+import { MdQuiz, MdOutlineQuestionAnswer } from 'react-icons/md'
 import { BsCardHeading } from 'react-icons/bs'
 
 export default function Quiz(props) {
@@ -158,7 +158,10 @@ export default function Quiz(props) {
                                 </div>
                             ): 
                             (
+                                <>
                                 <div>Score saved</div>
+                                <BackButton onClick={restartQuiz} text={<Link to="/profile/scores">View your progress</Link>} icon={<MdOutlineQuestionAnswer />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
+                                </>
                             )
                         }
                          
