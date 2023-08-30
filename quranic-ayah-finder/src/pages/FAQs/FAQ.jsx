@@ -6,80 +6,42 @@ export default function FAQ() {
     // console.log(topics)
     return (
         <>
-        <h1>FAQ</h1>
-        <div className="card">
+        <h1 className='w-[80%] m-auto my-6 text-2xl font-bold'>
+            FAQ (Frequently Asked Questions)
+        </h1>
+        <p className="text-sm font-medium text-slate-500 my-1 mb-[5%] lg:mx-[20%]">
+            Search Quranic verses through our one of a kind image search bar or explore Quranic content through one of our 
+            comprehensive guides and quizzes. These FAQs will help you navigate the application by providing with a lot of information 
+            to learn and test your knowledge with the quizzes that follow.
+        </p> 
+
+        <div className="card w-[80%] m-auto xl:text-xl lg:text-lg font-medium tracking-wide">
             {
-                topics.map((topic,i) => {
+                topics.map((topic,i) => 
+                {
                     const topicFAQs = faqs[topic]
-                    // console.log(items)
                     return (
-                        <>
-                        <h2>{topic}</h2>
-                        <Accordion multiple activeIndex={[]}>
-                        {
-                            topicFAQs.map((item,i) => (
-                                <AccordionTab header={item.question}>
-                                    <p className="m-0">
-                                        {item.answer}
-                                    </p>
-                                </AccordionTab>
-                            ))
-                        }
-                        </Accordion>
-                        </>
+                        <div className='text-slate-600 bg-custom-gray p-10 shadow-md rounded flex flex-col my-10 text-left'>
+                            <div className='mb-4'>
+                                <h2>{topic}</h2>
+                            </div>
+                            <div>
+                                <Accordion multiple activeIndex={[]}>
+                                {
+                                    topicFAQs.map((item,i) => (
+                                        <AccordionTab header={item.question} className='mb-4'>
+                                            <p className="m-0">
+                                                {item.answer}
+                                            </p>
+                                        </AccordionTab>
+                                    ))
+                                }
+                                </Accordion>
+                            </div>
+                        </div>
                     )
-                }
-                // (
-                //     
-                //     {
-                //         faqs[topic].map((item,i) => {
-
-                //         })
-                //     }
-                // )
-                )
+                })
             }
-            {/* <h2>General Questions</h2>
-            <Accordion multiple activeIndex={[0]}>
-            {
-                faqs.General.map((item,i) => (
-                    <AccordionTab header={item.question}>
-                        <p className="m-0">
-                            {item.answer}
-                        </p>
-                    </AccordionTab>
-                ))
-            }
-            </Accordion> */}
-            
-            {/* <h2>Quran Verse Search</h2>
-            <Accordion multiple activeIndex={[0]}>
-            {
-                faqs['Quran Verse Search'].map((item,i) => (
-                    <AccordionTab header={item.question}>
-                        <p className="m-0">
-                            {item.answer}
-                        </p>
-                    </AccordionTab>
-                ))
-            }
-            </Accordion> */}
-
-            {/* <h2>Quran Verse Search</h2>
-            <Accordion multiple activeIndex={[0]}>
-            {
-                faqs['Quran Verse Search'].map((item,i) => (
-                    <AccordionTab header={item.question}>
-                        <p className="m-0">
-                            {item.answer}
-                        </p>
-                    </AccordionTab>
-                ))
-            }
-            </Accordion> */}
-
-
-          
         </div>
         </>
     )
