@@ -9,6 +9,7 @@ import { BiCommentAdd } from "react-icons/bi";
 import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
 import { Toast } from 'primereact/toast';
+import { SlOptionsVertical } from 'react-icons/sl'
 
 export default function DiscussionForums() {
     const { loggedUser, setLoggedUSer } = useContext(Context);
@@ -100,40 +101,64 @@ export default function DiscussionForums() {
                             })
                             .map((post,i) => (
                             // render post components
-                            <div key={i} className="mb-4 flex my-10 w-[90%] text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left gap-2 hover:bg-medium-gray ">
-                            <Link to={`/post/${post.pk}`}>
-                                
-                                <h4 className="font-bold text-gray-600 text-lg mb-2 hover:text-sea-green"> {post.title} </h4> 
-                            </Link>
+                            <div key={i} className="mb-4 flex my-10 w-[90%] text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
+                            <div className="flex justify-between">
+                                <Link to={`/post/${post.pk}`}>
+                                    <h4 className="font-bold text-gray-600 xl:text-lg mb-2 hover:text-sea-green"> {post.title} </h4> 
+                                </Link>
 
-                            <div>
+                                {
+                                    loggedUser.id == post.user.id && 
+                                    (
+                                        <div>
+                                        <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+                                        
+                                            {/* <button value={post.pk} onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)}} aria-controls="popup_menu_right" aria-haspopup > */}
+                                                {/* delete icon */}
+                                                {/* <SlOptionsVertical 
+                                                    onClick={()=>setShowDelete(true)} 
+                                                    aria-controls="popup_menu_right" aria-haspopup 
+                                        
+                                                /> */}
+                                                <BackButton 
+                                                    icon={<SlOptionsVertical />} 
+                                                    customStyle="p-0 bg-transparent"
+                                                    customIconStyle="text-[1rem]"
+                                                    onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)} } 
+                                                    aria-controls="popup_menu_right" aria-haspopup 
+                                                />
+                                            {/* </button> */}
+                                        </div>
+                                    ) 
+                                }
+
+                                
+                            </div>
+                            
+
+                            <div className="flex gap-4 lg:text-sm">
                                 {
                                     post.user && (
-                                        <p className="text-gray-500">@{post.user.username}</p>
+                                        <Link to='/profile' className="text-gray-500 underline">@{post.user.username}</Link>
                                     )
                                 }
                                 <p>43 minutes ago</p>
-                                <p>5 comments</p>
-                                <Toast ref={toast}></Toast>
+                                <Link to={`/post/${post.pk}`} className="text-gray-500 underline">5 comments</Link>
+                                {/* <Toast ref={toast}></Toast> */}
 
                                 
                                 {
                                     loggedUser.id == post.user.id && 
                                     (
+                                        <>
                                         <div>
-                                        <Link to={`/post/update/${post.pk}`}>Edit</Link>
-
-                                        <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
-                                        <button value={post.pk} onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)}} aria-controls="popup_menu_right" aria-haspopup >delete icon</button>
-
-
-                                        {/* <button value={post.pk} onClick={(e) => {
-                                            setPost_id(e.target.value)
-                                            setShowDelete(true)
-                                        }}>
-                                            Delete post
-                                        </button> */}
+                                            <Link to={`/post/update/${post.pk}`} className="text-gray-500 underline">Edit</Link>
                                         </div>
+                                        {/* <div>
+                                        <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+                                            <button value={post.pk} onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)}} aria-controls="popup_menu_right" aria-haspopup >delete icon</button>
+                                        </div> */}
+                                        </>
                                     ) 
                                     // : ''
                                     // console.log(post.user)
