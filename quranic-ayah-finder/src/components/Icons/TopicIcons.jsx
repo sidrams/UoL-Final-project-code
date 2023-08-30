@@ -23,7 +23,6 @@ export default function TopicIcons({topic}) {
         'Salah and Ibadah (Prayer and Worship)':<GiPrayerBeads />
     }
 
-    console.log(icons[topic])
     return (
         icons[topic]
     )

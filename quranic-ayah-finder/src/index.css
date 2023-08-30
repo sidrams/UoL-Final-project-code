@@ -160,3 +160,8 @@ input:focus {
   margin-bottom: 5px;
 
 }
+
+/* PAGINATOR ON DISCUSSION FORUM PAGE -------------------- */
+.p-paginator {
+  background-color: transparent;
+}

@@ -136,12 +136,22 @@ class UserView(APIView):
 def Posts_Lists(request):
     if request.method == 'GET':
         posts = Post.objects.all()
+        
     # user = User.objects.filter(user=posts.user.pk)
     # UserSerializer(posts.user,context={'request': request}, many=True)
     # context = {'posts': posts}
     # return Response(data=context)
 
         serializer = PostsSerializer(posts, context={'request': request}, many=True)
+
+        # comment = []
+        for i,post in enumerate(posts):
+            print(post,i)
+            commentCount = Comment.objects.filter(post=post.id).count()
+            # comment.append(commentCount)
+            serializer.data[i]['comment_count'] = commentCount
+
+        # print(serializer.data[0]['pk'])
     # response = {'post':serializer.data,'user':user.data}
         return Response(serializer.data)
     # return Response(response)
@@ -233,6 +243,12 @@ class CommentsViewSet(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class CountCommentsViewSet(APIView):
+    def get(self, request, pk):
+        query = Comment.objects.filter(post=pk)
+        serializer = CommentSerializer(query, context={'request': request}, many=True)
+        return Response({'Comments': serializer.data}, status=status.HTTP_200_OK)
+        # return Response( serializer.data)
 
 class GuideViewSet(viewsets.ModelViewSet):
     queryset = Guides.objects.all()

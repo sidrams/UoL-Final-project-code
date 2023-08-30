@@ -5,11 +5,14 @@ import Cookies from 'js-cookie';
 import { useContext } from 'react';
 import { Context } from "../../Context";
 import BackButton from '../../components/Buttons/BackButton'
-import { BiCommentAdd } from "react-icons/bi";
-import { Button } from 'primereact/button';
+// import { Button } from 'primereact/button';
 import { Menu } from 'primereact/menu';
-import { Toast } from 'primereact/toast';
+// import { Toast } from 'primereact/toast';
 import { SlOptionsVertical } from 'react-icons/sl'
+import { MdModeComment } from "react-icons/md";
+import { BiSolidUserCircle, BiSearchAlt2, BiCommentAdd } from 'react-icons/bi'
+import TopicIcons from "../../components/Icons/TopicIcons";
+import { Paginator } from 'primereact/paginator';
 
 export default function DiscussionForums() {
     const { loggedUser, setLoggedUSer } = useContext(Context);
@@ -18,6 +21,14 @@ export default function DiscussionForums() {
     const [post_id, setPost_id] = useState()
     // const [postUser, setPostUser] = useState()
     const [inputText, setInputText] = useState("");
+
+    // pagination
+    const [first, setFirst] = useState(0);
+    const [rows, setRows] = useState(5);
+    const onPageChange = (event) => {
+        setFirst(event.first);
+        setRows(event.rows);
+    };
 
     const menuRight = useRef(null);
     const toast = useRef(null);
@@ -46,6 +57,40 @@ export default function DiscussionForums() {
         setInputText(e.target.value.toLowerCase())
     }
 
+    const getTimeDifference = (postDate) => {
+        // function getMinDiff(startDate, endDate) {
+            const msInMinute = 60 * 1000;
+            const currentDate = new Date()
+            const timeDiffInMin = Math.round(
+                 Math.abs(currentDate - new Date(postDate)) / msInMinute
+            );
+
+            if (timeDiffInMin < 60) {
+                return timeDiffInMin + (timeDiffInMin != 1 ? ' minutes' : ' minute')
+            }
+            else if (timeDiffInMin < (60*24)) {
+                const timeDiffInHours = Math.round(timeDiffInMin/60)
+                return timeDiffInHours +( timeDiffInHours != 1 ? ' hours': ' hour')
+            }
+            else if (timeDiffInMin < (60*24*7)) {
+                const timeDiffInDays = Math.round(timeDiffInMin/(60*24))
+                return timeDiffInDays + (timeDiffInDays != 1 ? ' days':' day')
+            }
+            else if (timeDiffInMin < (60*24*30)) {
+                const timeDiffInWeeks = Math.round(timeDiffInMin/(60*24*7))
+                return timeDiffInWeeks + (timeDiffInWeeks != 1 ? ' weeks':' week')
+            }
+            else if (timeDiffInMin < (60*24*30*12)) {
+                const timeDiffInMonths = Math.round(timeDiffInMin/(60*24*30))
+                return timeDiffInMonths + (timeDiffInWeeks != 1 ? ' months':' month')
+            }
+            else {
+                const timeDiffInYears = Math.round(timeDiffInMin/(60*24*30*12))
+                return timeDiffInYears + (timeDiffInYears != 1 ? ' years':' year')
+            }
+        //   }
+    }
+
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/posts/', {
             method: 'GET',
@@ -63,14 +108,16 @@ export default function DiscussionForums() {
             <div className="flex justify-between items-center">
                 <h1 className="my-6 text-2xl font-bold">
                     Discussion Forums
+                    
                 </h1>
-                <form method="GET" action="" className="w-[30%]">
-                    <input type="text" className='w-full' name="q" placeholder="Search posts..." onChange={handleChange} />
+                <form method="GET" action="" className="w-[30%] flex items-center gap-1">
+                    <BiSearchAlt2 className="text-[1.5rem] text-sea-green" /><input type="text" className='w-full shadow' name="q" placeholder="Search posts..." onChange={handleChange} />
                 </form>
             </div>
 
             {/* create post button */}
             <div>
+                
                 <BackButton icon={<BiCommentAdd />} text={
                     loggedUser ? <Link to='/post/create'>Create Post</Link> : ''
                 } />
@@ -99,6 +146,7 @@ export default function DiscussionForums() {
                                 return post;
                                 }
                             })
+                            .slice(first, first + rows)
                             .map((post,i) => (
                             // render post components
                             <div key={i} className="mb-4 flex my-10 w-[90%] text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
@@ -139,11 +187,11 @@ export default function DiscussionForums() {
                             <div className="flex gap-4 lg:text-sm">
                                 {
                                     post.user && (
-                                        <Link to='/profile' className="text-gray-500 underline">@{post.user.username}</Link>
+                                        <Link to='/profile' className="text-sea-green hover:font-medium underline flex items-center gap-1"><BiSolidUserCircle />@{post.user.username}</Link>
                                     )
                                 }
-                                <p>43 minutes ago</p>
-                                <Link to={`/post/${post.pk}`} className="text-gray-500 underline">5 comments</Link>
+                                <p>{getTimeDifference(post.updated)} ago</p>
+                                <Link to={`/post/${post.pk}`} className="text-gray-500 underline flex items-center gap-1"><MdModeComment />{post.comment_count} {post.comment_count != 1 ? 'comments' : 'comment'}</Link>
                                 {/* <Toast ref={toast}></Toast> */}
 
                                 
@@ -190,6 +238,8 @@ export default function DiscussionForums() {
                             </div>
                             
                         ))}
+                        <Paginator first={first} rows={rows} totalRecords={posts.length} rowsPerPageOptions={[5, 10, 20]} onPageChange={onPageChange} />
+
 
                     {showDelete ? (
                                     <>
@@ -210,17 +260,21 @@ export default function DiscussionForums() {
                 </div>
 
                 {/* posts aside bar - show some guide topics */}
-                <div className='w-1/4 tracking-wide text-gray-500 font-medium  text-left px-10 mt-8'>
+                <div className='w-1/4 tracking-wide text-gray-500 font-medium text-left mt-8'>
                     <h3 className='uppercase'>Explore Guides</h3>
-                    <div>
-                        {/* {
-                            getTopicsAttempted().map((topic,i) => (
+                    <div className="flex flex-col">
+                        {
+                            ['Chapters of the Qur’an', 'Fruits in the Quran', 'Dealing with people in the Quran']
+                            .map((topic,i) => (
+                                <Link to={'/guides/topic/'+(i+1)}>
                                 <div key={i} className='my-4 flex items-center gap-2'>
                                     <div className='bg-sea-green-opacity p-2 rounded-full text-[2rem]'><TopicIcons topic={topic} /> </div>
                                     {topic}
                                 </div>
+                                </Link>
                             ))
-                        } */}
+                            
+                        }
                     </div>
                 </div>
             </div>

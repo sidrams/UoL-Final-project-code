@@ -31,6 +31,7 @@ class Post(models.Model):
     verse_id = models.IntegerField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    # omment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ['-updated', '-created']
