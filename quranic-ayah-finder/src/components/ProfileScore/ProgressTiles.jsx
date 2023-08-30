@@ -8,7 +8,7 @@ export default function ProgressTiles({scoreData}) {
             scoreCount += score.score
         })
 
-        return Math.round(scoreCount/scoreData.length)
+        return scoreCount > 0 ? Math.round(scoreCount/scoreData.length) : 'NA'
     }
 
     const gethighestScore = () => {
@@ -48,7 +48,7 @@ export default function ProgressTiles({scoreData}) {
             <div className='flex flex-col justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green'>
                 <div className='text-3xl flex justify-center items-center gap-4'>
                     <RiTimeFill />
-                    <span>{new Date(scoreData[0].time_taken_at).toLocaleDateString()}</span>
+                    <span>{scoreData[0] ? new Date(scoreData[0].time_taken_at).toLocaleDateString() : 'NA'}</span>
                 </div>
                 Last attempt
             </div>

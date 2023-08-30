@@ -33,23 +33,34 @@ export default function IndivisualProgressComponent({scoreData}) {
     return (
         <div className='w-3/4'>
             {
-                scoreData.map((score,i) => (
-                    <div className='flex my-10'>
-                        <div className='w-[10%] flex flex-col text-slate-400'>
-                            <span className='text-2xl font-bold'>{getDate(score.time_taken_at)}</span>
-                            <span className='tracking-wider'>{getMonthName(score.time_taken_at)}</span>
-                        </div>
-                        <div className='w-[90%] text-slate-400 font-medium tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left gap-2'>
-                            <h4 className='font-bold text-gray-600'>{score.quiz_topic_id.topic_name}</h4>
-                            <div className='flex justify-start gap-[5%]'>
-                                <p className='flex items-center gap-3'><RiNumbersFill />Score {score.score}</p>
-                                <p className='flex items-center gap-3'><RiTimeFill />Last score achieved in topic : {getLastTopicScore(score.quiz_topic_id.id)}</p>
-                                <p className='flex items-center gap-3'><RiTrophyFill />Highest score achieved in topic : {getHighestTopicScore(score.quiz_topic_id.id)}</p>
+                scoreData.length > 0 ?
+                (
+                    <>
+                    {
+                        scoreData.map((score,i) => (
+                            <div className='flex my-10'>
+                                <div className='w-[10%] flex flex-col text-slate-400'>
+                                    <span className='text-2xl font-bold'>{getDate(score.time_taken_at)}</span>
+                                    <span className='tracking-wider'>{getMonthName(score.time_taken_at)}</span>
+                                </div>
+                                <div className='w-[90%] text-slate-400 font-medium tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left gap-2'>
+                                    <h4 className='font-bold text-gray-600'>{score.quiz_topic_id.topic_name}</h4>
+                                    <div className='flex justify-start gap-[5%]'>
+                                        <p className='flex items-center gap-3'><RiNumbersFill />Score {score.score}</p>
+                                        <p className='flex items-center gap-3'><RiTimeFill />Last score achieved in topic : {getLastTopicScore(score.quiz_topic_id.id)}</p>
+                                        <p className='flex items-center gap-3'><RiTrophyFill />Highest score achieved in topic : {getHighestTopicScore(score.quiz_topic_id.id)}</p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ))
+                        ))
+                    }
+                    </>
+                ) :
+                <p className='flex justify-between my-6 pr-12 tracking-wide text-sea-green text-left'>
+                    No Progress to show. Attempt some quizzes and make sure to save your progress to see some results here.
+                </p>
             }
+            
         </div>
     )
 }
