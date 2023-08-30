@@ -36,6 +36,8 @@ export default function ProfileScores() {
 
         return scoreCount/scoreData.length
     }
+
+    console.log(getAvgScore())
     return (
         <>
         <div className="w-[70%] m-auto flex flex-col gap-4">
