@@ -15,6 +15,7 @@ export default {
         white: '#ffffff',
         black: '#000',
         'sea-green': '#55BDB3',
+        'sea-green-opacity': '#55BDB32b',
         'light-sea-green' : '#F0F8F8',
         'blackish-blue':'#0F2435',
         'custom-gray' : '#FDFDFD',

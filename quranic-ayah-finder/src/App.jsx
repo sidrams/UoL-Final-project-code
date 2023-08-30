@@ -20,6 +20,8 @@ import Quiz from './pages/Guides/Quiz'
 import GuideDetails from './pages/Guides/GuideDetails'
 import Profile from './pages/Profile/Profile'
 import VerseDetails from './pages/Home/VerseDetails'
+import ProfileScore from './pages/Profile/ProfileScores'
+import ProfileScores from './pages/Profile/ProfileScores'
 
 
 function App() {
@@ -64,7 +66,10 @@ function App() {
           <Route path="/post/create" element={loggedUser ? <PostForm /> : (<Navigate replace to="/login" />) } />
           <Route path="/post/:id" element={loggedUser ? <PostDetails />  : (<Navigate replace to="/login" />)} />
           <Route path="/post/update/:id" element={<PostForm />} />
+
           <Route path="/profile" element={!loggedUser ? (<Navigate replace to="/login" />) : (<Profile />) } />
+          <Route path="/profile/scores" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileScores />) } />
+          
           <Route path="/signup" element={loggedUser ? (<Navigate replace to="/" />) : (<SignUp />) } />
           <Route path="/login" element={loggedUser ? (<Navigate replace to="/" />) : <Login />} />
           <Route path="/logout" element={loggedUser ? (<LogoutModal />) : <Navigate replace to="/" />} />
