@@ -39,7 +39,7 @@ export default function Guides() {
             {/* {console.log(typeof(topics))} */}
             {
                 topics.map((topic,i) => (
-                    <Link to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="bg-[#55BDB3] text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px] rounded flex justify-center items-center">
+                    <Link to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="bg-[#55BDB3] text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px]  rounded flex justify-center items-center  ">
                     <div key={i} className="flex flex-col justify-center items-center gap-4">
                         <p className="text-[7rem]">{icons[i]}</p>
                         {topic.topic_name} 

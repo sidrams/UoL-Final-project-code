@@ -91,8 +91,8 @@ export default function GuideDetails() {
             (
                 <>
                 <div className="flex flex-wrap gap-4 justify-center items-center">
-                    <button onClick={prevGuide} disabled={firstGuide} className="p-2 rounded-full h-fit"> <CiCircleChevLeft size={'2.5em'} color="#55BDB3" /> </button>
-                    <div className="whitespace-pre-line bg-[#55BDB3] text-slate-600 bg-custom-gray p-8 shadow-md w-[70%] h-[300px] overflow-auto rounded flex justify-center items-center">
+                    <button onClick={prevGuide} disabled={firstGuide} className="p-2 rounded-full h-fit "> <CiCircleChevLeft size={'2.5em'} color="#55BDB3" /> </button>
+                    <div className="whitespace-pre-line text-slate-600 bg-custom-gray p-8 shadow-md w-[70%] h-[300px] h-[50vh] overflow-auto rounded flex justify-center items-center">
                         {/* <div> */}
                             {currentGuide.content}
                         {/* </div> */}

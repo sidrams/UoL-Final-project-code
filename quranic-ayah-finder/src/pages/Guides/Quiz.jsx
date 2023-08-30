@@ -3,6 +3,10 @@ import { Link, useLocation, useParams } from "react-router-dom"
 // import Guides from "./Guides"
 // import Login from "../Login/Login"
 import Cookies from "js-cookie"
+import BackButton from "../../components/Buttons/BackButton";
+import { VscDebugRestart } from "react-icons/vsc";
+import { MdQuiz } from 'react-icons/md'
+import { BsCardHeading } from 'react-icons/bs'
 
 export default function Quiz(props) {
     const {id} = useParams()
@@ -28,6 +32,7 @@ export default function Quiz(props) {
             .catch(error => console.log(error))
     }, [])
 
+    console.log(quizQuestions)
     // display next question when pressed
     const nextQuestion = () => {
         const index = quizQuestions.indexOf(currentQuestion);
@@ -90,13 +95,24 @@ export default function Quiz(props) {
 
     return (
         <>
-        <h1>Quiz</h1>
+        <div className="flex justify-between w-[70%] m-auto">
+            <BackButton onClick={() =>history.back()}  />
+            {/* <div> */}
+                <h1 className="my-6 text-2xl font-bold">
+                    Quiz {currentQuestion ? (<span>- {currentQuestion.topic_id.topic_name}</span>) : '' }
+                </h1>
+                {/* <p className="font-medium text-slate-500 my-1 mb-6 ">
+                    Would you like to learn or test your knowledge?
+                </p> */}
+            {/* </div> */}
+            <div className="w-[80px]"></div>
+        </div>
         {
             currentQuestion ? (!endQuiz ? 
             // ("quiz has not ended") 
             (
-                <div className="bg-[#55BDB3] p-6 py-8 lg:w-[60%] m-auto rounded-xl">
-                    <h3>{currentQuestion.question}</h3>
+                <div className="bg-sea-green p-6 py-8 lg:w-[60%] m-auto rounded max-w-[700px] min-h-[70vh] flex flex-col justify-between">
+                    <h3 className="font-medium text-2xl m-6">{currentQuestion.question}</h3>
                     <div className="flex flex-col gap-4 px-24 my-4">
                         <button value={currentQuestion.answer_1} disabled={disabled} className={chosenAnswer == currentQuestion.answer_1 ? getColor(currentQuestion.answer_1) : ''} onClick={(e) => handleClick(e,'answer_1')}>{currentQuestion.answer_1}</button>
                         <button value={currentQuestion.answer_2} disabled={disabled} className={chosenAnswer == currentQuestion.answer_2 ? getColor(currentQuestion.answer_2) : ''} onClick={(e) => handleClick(e,'answer_2')}>{currentQuestion.answer_2}</button>
@@ -109,18 +125,18 @@ export default function Quiz(props) {
                             ("Correct! ") : ("Wrong... ")) + (currentQuestion.note ? currentQuestion.note : '')) : ''
                     }
                     </div>
-                    <button onClick={nextQuestion}>Next</button>
+                    <button onClick={nextQuestion} className="w-[25%] mx-auto mt-[3%]">Next</button>
                 </div>
             )
             : 
             (
                 // "end of quiz"
-                <div className="bg-[#55BDB3] p-6 py-8 w-[60%] m-auto rounded-xl">
+                <div className="flex flex-col justify-evenly items-center  shadow  text-lg bg-[#55BDB3EE] p-6 py-8 w-[60%] m-auto rounded  min-h-[60vh]">
                     <div>
                         Well Done! The Quiz has now ended.
                     </div>
-                    <div>
-                        You scored {score} in this quiz.
+                    <div className="">
+                        You scored <span className={(score < 5 ? "text-[red]" : "text-[green]")+" font-medium"}> {score}</span> in this quiz .
                     </div>
                     <div className="flex flex-col gap-4 justify-center items-center gap-4">
                         <div>
@@ -129,9 +145,16 @@ export default function Quiz(props) {
                         {
                             !scoreSaved ? 
                             (
-                                <div className="flex flex-col  gap-4 m-auto">
-                                    <button onClick={restartQuiz}>Restart Quiz</button>
-                                    <button onClick={saveProgress}>Save my progess</button>
+                                // <div className="flex flex-col  gap-4 m-auto">
+                                //     <button onClick={restartQuiz}>Restart Quiz</button>
+                                //     <button onClick={saveProgress}>Save my progess</button>
+                                // </div>
+                                <div className="flex gap-4 m-auto">
+                                    {/* <button onClick={restartGuide}>Restart Guide </button> */}
+                                    <BackButton onClick={restartQuiz} text="Restart Quiz" icon={<VscDebugRestart />} customStyle="hover:bg-medium-gray hover:text-navy-blue" />
+                                    <BackButton onClick={saveProgress} text={<Link to={`/guides/topic/${id}/Quiz`} >Save my progress</Link>} icon={<MdQuiz />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
+                                    <BackButton onClick={restartQuiz} text={<Link to="/guides">Go back to topics</Link>} icon={<BsCardHeading />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
+                                    {/* <button ><Link to={`/guides/topic/${id}/Quiz`} >Take the quiz</Link></button> */}
                                 </div>
                             ): 
                             (
@@ -139,7 +162,6 @@ export default function Quiz(props) {
                             )
                         }
                          
-                        <Link to="/guides"> <button>Go back to topics</button></Link>
                     </div>
                 </div>
             )) : ''
