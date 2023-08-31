@@ -117,10 +117,9 @@ export default function DiscussionForums() {
 
             {/* create post button */}
             <div>
-                
-                <BackButton icon={<BiCommentAdd />} text={
-                    loggedUser ? <Link to='/post/create'>Create Post</Link> : ''
-                } />
+                {
+                    loggedUser && <BackButton icon={<BiCommentAdd />} text={<Link to='/post/create'>Create Post</Link>} />
+                }
                 
             </div>
             
