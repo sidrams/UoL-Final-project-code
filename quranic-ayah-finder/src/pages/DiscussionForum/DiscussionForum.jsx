@@ -155,7 +155,7 @@ export default function DiscussionForums() {
                                 </Link>
 
                                 {
-                                    loggedUser.id == post.user.id && 
+                                    loggedUser && loggedUser.id == post.user.id && 
                                     (
                                         <div>
                                         <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />

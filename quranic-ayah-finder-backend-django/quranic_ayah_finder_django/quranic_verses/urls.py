@@ -34,6 +34,7 @@ urlpatterns = [
     re_path(r'^updatePost/([0-9]*)$', views.updatePost, name='update-post'),
     re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
     path('api/comments/posts/<int:pk>', views.CommentsViewSet.as_view(), name="comments_for_posts"),
+    path('api/add/comments/posts/<int:pk>', views.AddCommentsViewSet.as_view(), name="comments_for_posts"),
     # path('api/comments/count/posts/<int:pk>', views.CommentsViewSet.as_view(), name="count_comments_for_posts"),
     # url(r'^createPost$', include(router.urls), name='create-post'),
 ]

@@ -64,7 +64,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
           <Route path="/post/create" element={loggedUser ? <PostForm /> : (<Navigate replace to="/login" />) } />
-          <Route path="/post/:id" element={loggedUser ? <PostDetails />  : (<Navigate replace to="/login" />)} />
+          <Route path="/post/:id" element={<PostDetails />  } />
           <Route path="/post/update/:id" element={<PostForm />} />
 
           <Route path="/profile" element={!loggedUser ? (<Navigate replace to="/login" />) : (<Profile />) } />

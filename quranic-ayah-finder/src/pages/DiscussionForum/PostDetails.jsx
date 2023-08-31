@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import Cookies from "js-cookie"
-
+import { BiSearchAlt2 } from "react-icons/bi";
 export default function PostDetails() {
     const { id } = useParams()
     const csrftoken = Cookies.get('csrftoken');
@@ -65,10 +65,22 @@ export default function PostDetails() {
         })
         .catch(error => console.log(error))
     }
-
+        console.log(post)
+        console.log(comments)
      return(
-        <>
-        <h1>post details</h1>
+        <div className="xl:w-[70%] lg:w-[85%] m-auto">
+            <div className="flex justify-between items-center">
+                <div className="my-6 flex flex-col items-start">
+                    <p className="uppercase text-gray-400 tracking-wider font-medium text-sm">post</p>
+                    <h1 className=" text-2xl font-bold">
+                        {post.post.title}
+                        
+                    </h1>
+                </div>
+                <form method="GET" action="" className="w-[30%] flex items-center gap-1 mt-6">
+                    <BiSearchAlt2 className="text-[1.5rem] text-sea-green" /><input type="text" className='w-full shadow' name="q" placeholder="Search posts..." onChange='' />
+                </form>
+            </div>
         {
             post && (
                 <>
@@ -94,6 +106,6 @@ export default function PostDetails() {
                 </>
             ) : ''
         }
-        </>
+        </div>
     )
 }

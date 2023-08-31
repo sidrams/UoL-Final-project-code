@@ -222,14 +222,15 @@ def deletePost(request,pk):
     # return Response(serializer.data)
 
 class CommentsViewSet(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = (SessionAuthentication,)
-    
     def get(self, request, pk):
         query = Comment.objects.filter(post=pk)
         serializer = CommentSerializer(query, context={'request': request}, many=True)
         return Response({'Comments': serializer.data}, status=status.HTTP_200_OK)
         # return Response( serializer.data)
+
+class AddCommentsViewSet(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
 
     def post(self, request, pk):
         data = request.data
