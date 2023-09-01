@@ -2,13 +2,16 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";  
 import "primereact/resources/primereact.min.css";  
-import { Navigate, redirect } from "react-router-dom";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
+
 // import fetch from 'node-fetch'  
 
 export default function DeleteConfirmation ({setShowDelete, post_id}) {
     // , searchedText, setSearchedText
     const [success, setSuccess] = useState(false)
     const toastCenter = useRef(null);
+    const navigate = useNavigate()
+
 
     const showMessage = (event, ref, severity) => {
         const label = event
@@ -30,7 +33,8 @@ export default function DeleteConfirmation ({setShowDelete, post_id}) {
             console.log(json)
             // redirect('/success')
             if (json == 'Post deleted') setSuccess(true)
-            window.location.reload();
+            // window.location.reload();
+            navigate('/discussionForums')
         })
         .catch(error => console.log(error))
         // if (success) 

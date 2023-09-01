@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { Link, redirect, useParams } from "react-router-dom";
+import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../Context";
 import { AiFillCloseCircle } from "react-icons/ai";
 import BackButton from "../../components/Buttons/BackButton";
@@ -8,7 +8,7 @@ import { BsCheckCircle } from "react-icons/bs";
 export default function PostForm () {
     const { loggedUser, setLoggedUser } = useContext(Context) // get user logged in
     let { id } = useParams() // get post id, if post is to be updated
-    const [post_id, setPost_id] = useState() // store id of created/updated post to show link for the same
+    const [post_id, setPost_id] = useState(id ? id : '') // store id of created/updated post to show link for the same
 
     // form object - to be passed in a request
     const [form, setForm] = useState({ 
@@ -19,10 +19,11 @@ export default function PostForm () {
     })
     const [success, setSuccess] = useState(false) // set true if post successfully added/updated
     const [update, setUpdate] = useState(false) // true if post has to be updated
+    const navigate = useNavigate()
 
-    // get post data with corresponding id
+    // get post data with corresponding id and prefill the form with the data
     if (id) {
-        setPost_id(id)
+        // setPost_id(id)
         useEffect(() => {
             fetch('http://127.0.0.1:8000/api/posts/'+id, {
                 method: 'GET',
@@ -55,6 +56,7 @@ export default function PostForm () {
             if (json.message == 'Post added') setSuccess(true)
             setPost_id(json.post_id)
             // console.log(id)
+            navigate('/post/'+json.post_id)
         })
         .catch(error => console.log(error))
     }
@@ -72,6 +74,8 @@ export default function PostForm () {
         .then((json) =>{
             console.log(json)
             if (json.message == 'Post updated') setSuccess(true)
+            // setPost_id(json.post_id)
+            navigate('/post/'+json.post_id)
         })
         .catch(error => console.log(error))
     }
@@ -100,26 +104,25 @@ export default function PostForm () {
                 (   // if post is added successfuly , show link to discussion forum page
                     <div className="w-[50%] min-h-[70vh] flex flex-col justify-evenly items-center m-auto mb-4 bg-medium-gray p-6 shadow-xl">
                         <p className="text-2xl font-medium tracting-wider">Success!</p>
-                        <div className="flex flex-col items-center gap-2">
-                        <p className="text-gray-500">Post added Successfully</p>
-                        {/* <button className="uppercase tracking-wider"></button> */}
-                        {/* <div className="bg-sea-green rounded-full hover:text-sea-green">
-                        <BackButton text={<Link className="text-white" to={'/post/'+post_id}>See post</Link>} onClick='' customStyle="text-xl hover:bg-light-sea-green border-sea-green hover:text-sea-green" icon='' />
 
-                        </div> */}
-                        <BsCheckCircle className="text-[5rem] text-teal-500" />
+                        <div className="flex flex-col items-center gap-2">
+                            <p className="text-gray-500">Post added Successfully</p>
+                            <BsCheckCircle className="text-[5rem] text-teal-500" />
                         </div>
-                        <Link  className="w-[25%] font-medium bg-sea-green rounded-full border-2 hover:text-sea-green p-4 text-xl text-white hover:bg-light-sea-green hover:border-sea-green" to={'/post/'+post_id}>See Post</Link>
+                        
+                        <Link  className="w-[25%] font-medium bg-sea-green rounded-full border-2 hover:text-sea-green p-4 text-xl text-white hover:bg-light-sea-green hover:border-sea-green" to={'/post/'+post_id}>
+                            See Post
+                        </Link>
                     </div>
                 ) :
-                (
+                (   // show form to create/update post
                     <div className="w-[50%] m-auto mb-4 bg-medium-gray p-6 shadow-xl">
                         <div className="flex justify-between items-center border-b border-solid border-slate-300 pb-4">
                             <div></div>
 
                             {/* header */}
                             <h2 className="text-xl font-bold">
-                                Create post
+                                {update ? 'Update Post' : 'Create post'}
                             </h2>
 
                             {/* link to close post form */}
@@ -141,6 +144,7 @@ export default function PostForm () {
                                 <input type="number"  className="w-[70%] shadow" placeholder="Eg. 17:91 ..." name="verse_id" value={form.verse_id} onChange={handleChange} id="id_verse_id" /> 
                             </p>
 
+                            {/* submit button will show either update or create accordingly */}
                             <button type="submit" value="Submit" 
                                 onClick={(e) => {
                                     e.preventDefault();

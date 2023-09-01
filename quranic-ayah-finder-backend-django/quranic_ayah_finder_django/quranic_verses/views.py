@@ -219,8 +219,10 @@ def updatePost(request,pk):
         form = PostForm(jsonResponse, instance=post)
         print(form)
         if form.is_valid():
-            form.save()
-            return Response('Post updated')
+            post = form.save()
+            # serializer = PostSe
+            print(post.id)
+            return Response({'message':'Post updated', 'post_id': post.id})
         return Response('Post not updated yet')
     
     return Response(serializer.data)
