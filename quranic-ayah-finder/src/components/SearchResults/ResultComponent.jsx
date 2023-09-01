@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 
 export default function ResultComponent({onClick, verse}) {
+    // search results with the verse and translations for the searched keyword
+
     return (
-        // <h1>result component</h1>
         <Link to=''>
             <div key={verse.verse_key} onClick={onClick} className="mb-4 bg-custom-gray p-6 shadow">
                 Verse {verse.verse_key} - {verse.text}

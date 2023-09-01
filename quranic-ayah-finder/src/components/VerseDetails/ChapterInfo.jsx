@@ -1,4 +1,5 @@
 export default function ChapterInfo({chapter, chapterInfo, getOrdinalNum, chapterID}) {
+    // chapter info of the given ayah/verse
     return (
         <>
         <h2>About {chapter.name_simple}  -  {chapter.name_arabic} (Chapter Info)</h2>

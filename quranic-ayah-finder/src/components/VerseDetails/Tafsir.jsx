@@ -1,4 +1,5 @@
 export default function Tafsir({tafsir}) {
+    // tafsirs/detailed explanations of the given ayah/verse
     return (
         <>
         <h2>Tafsir</h2>

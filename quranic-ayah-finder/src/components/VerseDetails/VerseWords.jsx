@@ -2,15 +2,10 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 export default function VerseWords({verseByWords}) {
+    // table of words in the given ayah/verse
     return (
         <>
         <h2>Words</h2>
-        {/* {
-            chosenVerse.words.map((translation,i) => (
-                <p className="text-sm text-slate-500 my-1" dangerouslySetInnerHTML={{__html: translation.text }} >
-                </p> 
-            ))
-        } */}
         <div className="card mt-4">
             <DataTable value={verseByWords.words} paginator rows={6} tableStyle={{ minWidth: '50rem', fontSize: '14px' }}>
                 <Column field="position" header="Position In verse"></Column>

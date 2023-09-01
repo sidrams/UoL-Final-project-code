@@ -1,4 +1,5 @@
 export default function ResultHeader({verseDetails}) {
+    // header for verse details page for the chosen verse
     return (
         <div>
             <h2 className="mt-6 text-2xl font-bold">

@@ -16,12 +16,14 @@ export default function ProfileHeader() {
                 </h1>
                 <p className="text-sea-green text-lg mt-3">
                     Logged in as  
+                    {/* username */}
                     <span className="font-bold">
                         {" @" +loggedUser.username}
                     </span>
                 </p>
             </div>
 
+            {/* link to profile scores page */}
             <Link to="/profile/scores"><BackButton text="View All scores" icon={<RiNumbersFill />}/></Link>
         </div>
     )

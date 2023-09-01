@@ -1,10 +1,14 @@
 export default function ImageResultHeader({searchedText, onClick, exactMatch, setExactMatch}) {
+    // header for image search where the recognised text is displayed
+
+    // option to match the exact text, passed in quotes i.e. "..." 
     const handleChange = () => {
         setExactMatch(!exactMatch);
     };
 
     return (
         <>
+        {/* display identified text */}
         <div className="mb-4 text-center text-3xl p-6">
             Text identified : {searchedText}
         </div>

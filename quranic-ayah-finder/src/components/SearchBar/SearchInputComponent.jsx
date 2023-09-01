@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { BsUpload } from "react-icons/bs"
 
 export default function SearchInputComponent({textInput, onChange, setShowModal, setTextInput, fetchData, showResults}) {
+    // input component of the main search bar
     const ref = useRef(null);
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 import TopicIcons from "../Icons/TopicIcons";
 
 export default function AttemptedTopicList({getTopicsAttempted}) {
+    // show all topics a user has attempted and saved progress for 
     return (
         <div className='w-1/4 tracking-wide text-gray-500 font-medium  text-left px-10 mt-8'>
             <h4 className='uppercase'>Topics completed</h4>

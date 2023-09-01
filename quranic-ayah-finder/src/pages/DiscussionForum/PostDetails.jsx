@@ -1,55 +1,23 @@
 import { useState, useEffect, useContext, useRef } from "react"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import Cookies from "js-cookie"
-import { BiSearchAlt2, BiSolidUserCircle } from "react-icons/bi";
+import { Link, useParams } from "react-router-dom"
 import { Context } from "../../Context";
-import TimeDifference from "../../components/Time/TimeDifference";
-import { MdModeComment } from "react-icons/md";
-import { SlOptionsVertical } from "react-icons/sl";
 import BackButton from "../../components/Buttons/BackButton";
-import { Menu } from "primereact/menu";
 import FeaturedPostsSideBar from "../../components/Posts/FeaturedPostsSideBar";
 import DeleteConfirmation from "./DeleteConfirmation";
 import CommentsComponent from "../../components/Posts/CommentsComponent";
+import LoginModalComponent from "../../components/Login/LoginModalComponent";
+import ToggleMenuComponent from "../../components/Posts/ToggleMenuComponent";
+import PostComponentSubSection from "../../components/Posts/PostComponentSubSection";
+import PostComponentBody from "../../components/Posts/PostComponentBody";
 
 export default function PostDetails() {
-    const { loggedUser, setLoggedUSer } = useContext(Context)
-    const { id } = useParams()
-    // const csrftoken = Cookies.get('csrftoken');
-    const [post, setPost] = useState([])
-    const [comments, setComments] = useState([])
-    // const [newComment, setNewComment] = useState()
-    const [featuredPosts, setFeaturedPosts] = useState()
-    const [showDelete, setShowDelete] = useState(false)
-    const [showlogin, setShowlogin] = useState(false)
-
-    const navigate = useNavigate()
-    const [post_id, setPost_id] = useState()
-    const menuRight = useRef(null);
-    const items = [
-        {
-            label:'',
-            items: [
-                {
-                    label: 'Update',
-                    icon: 'pi pi-refresh',
-                    command: () => {
-                        navigate("/post/update/"+post_id)
-                        // console.log(post_id)
-                    }
-                },
-                {
-                    label: 'Delete',
-                    icon: 'pi pi-refresh',
-                    command: () => {
-                        // toast.current.show({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
-                        setShowDelete(true)
-                    }
-                },
-                
-            ]
-        }
-    ]
+    const { loggedUser, setLoggedUSer } = useContext(Context) // get user if logged in
+    const { id } = useParams() // post id of the chosen post
+    const [post, setPost] = useState([]) // store post data 
+    const [comments, setComments] = useState([]) // store comments for the post
+    const [featuredPosts, setFeaturedPosts] = useState() // get posts for featured side section
+    const [showDelete, setShowDelete] = useState(false) // show delete confirmation modal if prompted
+    const [showLogin, setShowLogin] = useState(false) // show login component if anonymous user wants to post a comment
 
     // get post and comments data for the chosen post
     useEffect(() => {
@@ -78,49 +46,29 @@ export default function PostDetails() {
         .catch(error => console.log(error))
     }, [])
 
-    console.log(loggedUser)
-    // console.log(loggedUser && post.user&& loggedUser.id == post.user.id)
-
     return(
      <div className="xl:w-[70%] lg:w-[85%] m-auto ">
+        {   // show login component if user wants to post comment and is not logged in
+            showLogin && <LoginModalComponent setShowLogin={setShowLogin} />
+        }
+        
+        {/* back button */}
         <Link to='/discussionForums'><BackButton onClick=''  /></Link>
         
+        {/* post section */}
         <div className="pb-10 flex">
             <div className="w-[70%]">
+                {/* post component */}
                 <div  className="mb-0 flex mt-4 tracking-wider bg-custom-gray xl:p-8 p-6 px-8 shadow-md  overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                     <div className="flex justify-between">
+                        {/* post body - containing title and description */}
+                        <PostComponentBody post={post} />
 
-                        <div className="mb-6 flex flex-col items-start">
-                            <p className="uppercase text-gray-400 tracking-wider font-medium text-sm">post</p>
-                            {
-                                post && 
-                                (
-                                    <>
-                                    <h1 className=" text-2xl font-bold">
-                                        {post.title}
-                                    </h1>
-                                    <p className="my-4 text-mid-gray">
-                                        {post.description}
-                                    </p>
-                                    </>
-                                )
-                            }
-                            
-                        </div>
-
+                        {/* toggle menu with options to update or delete posts */}
                         {
                             loggedUser && post.user && loggedUser.id == post.user.id && 
                             (
-                                <div>
-                                    <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
-                                    <BackButton 
-                                        icon={<SlOptionsVertical />} 
-                                        customStyle="p-0 bg-transparent"
-                                        customIconStyle="text-[1rem]"
-                                        onClick={(e) => {setPost_id(post.pk);menuRight.current.toggle(e)} } 
-                                        aria-controls="popup_menu_right" aria-haspopup 
-                                    />
-                                </div>
+                                <ToggleMenuComponent post={post} setShowDelete={setShowDelete} />
                             ) 
                         }
 
@@ -133,20 +81,12 @@ export default function PostDetails() {
                         }
                     </div>
                     
-
-                    <div className="flex gap-4 lg:text-sm">
-                        {
-                            post.user && (
-                                <Link to='/profile' className="text-sea-green hover:font-medium underline flex items-center gap-1"><BiSolidUserCircle />@{post.user.username}</Link>
-                            )
-                        }
-                        <p>{post.post && TimeDifference(post.post.updated)} ago</p>
-                        <Link to={``} className="text-gray-500 underline flex items-center gap-1"><MdModeComment />{comments.length} {comments.length != 1 ? 'comments' : 'comment'}</Link>
-                    </div>
+                    {/* post component subsection containg username, time posted, no of comments */}
+                    <PostComponentSubSection post={post} comments={comments} />
                 </div>
 
                 {/* comments section */}
-                <CommentsComponent id={id} comments={comments} setComments={setComments} />
+                <CommentsComponent id={id} comments={comments} setComments={setComments} setShowLogin={setShowLogin} />
             </div>
 
             {/* featured posts section on the side */}

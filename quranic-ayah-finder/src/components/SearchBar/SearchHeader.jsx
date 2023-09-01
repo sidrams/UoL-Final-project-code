@@ -3,6 +3,7 @@ import borderEllipse from '../../assets/Ellipse.svg'
 
 export default function SearchHeader() {
     return (
+        // header for main search bar
         <>
         <div className="rounded-full absolute z-[-4] -right-1/4 top-[5%] ">
             <img src={borderEllipse} alt="border design element" className="absolute logo-border" />

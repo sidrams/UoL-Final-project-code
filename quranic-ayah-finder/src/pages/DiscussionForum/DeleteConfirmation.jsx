@@ -2,16 +2,13 @@ import React, { useState, useRef } from "react";
 import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";  
 import "primereact/resources/primereact.min.css";  
-import { Navigate, redirect, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 // import fetch from 'node-fetch'  
 
 export default function DeleteConfirmation ({setShowDelete, post_id}) {
-    // , searchedText, setSearchedText
     const [success, setSuccess] = useState(false)
     const toastCenter = useRef(null);
     const navigate = useNavigate()
-
 
     const showMessage = (event, ref, severity) => {
         const label = event
@@ -19,29 +16,22 @@ export default function DeleteConfirmation ({setShowDelete, post_id}) {
         ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
     };
 
+    // request to delete post
     const deletePost = async () => {
-        // console.log(post_id)
         fetch(`http://127.0.0.1:8000/deletePost/`+post_id, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify(form)
         })
         .then((response) => response.json())
         .then((json) =>{
             console.log(json)
-            // redirect('/success')
             if (json == 'Post deleted') setSuccess(true)
-            // window.location.reload();
+            window.location.reload();
             navigate('/discussionForums')
         })
         .catch(error => console.log(error))
-        // if (success) 
-        // {success && (
-        //     <Navigate to="/discussionForums" replace={true} />
-        //   )}
-
     }
 
     return (

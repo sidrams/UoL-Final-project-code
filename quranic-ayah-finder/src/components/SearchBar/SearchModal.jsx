@@ -5,15 +5,17 @@ import "primereact/resources/primereact.min.css";
 // import fetch from 'node-fetch'  
 
 export default function SearchModal ({setShowResults, setShowModal, searchedText, setSearchedText}) {
-    const [image, setImage] = useState()
-    const toastCenter = useRef(null);
+    const [image, setImage] = useState() // store the image uploaded by the user
 
+    // show any errors in file handling
+    const toastCenter = useRef(null); 
     const showMessage = (event, ref, severity) => {
         const label = event
         console.log('in show message '+label)
         ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
     };
 
+    // fetch and recognise text in the image uploaded
     const fetchImageText = () => {
         if (image == undefined) 
             // image not uploaded
@@ -23,11 +25,9 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
             showMessage('Incorrect File Type', toastCenter, 'error');
         else {
             // image is uploaded in correct format
-            console.log("in before calling api")
             setShowModal(false)
             const uploadData = new FormData()
             uploadData.append('image', image, image.name)
-            console.log(image)
 
             fetch('http://127.0.0.1:8000/search/', {
             method: 'POST',
@@ -37,8 +37,6 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
             .then((json) =>{
                 setSearchedText(json)
                 setShowResults(true)
-                console.log(json)
-                console.log("searched text "+ searchedText)
             })
             .catch(error => console.log(error))
         }
@@ -46,6 +44,7 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
 
     return (
         <>
+        {/* show the modal */}
         <div className="card flex justify-center">
             <Toast ref={toastCenter} />
         </div>
@@ -77,18 +76,6 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
                         onClick={() => {
                             console.log("search button clicked")
                             fetchImageText()
-                            // console.log("image name : "+image)
-                            // if (image == undefined) 
-                            //     showMessage('Please upload an image', toastCenter, 'error');
-                            // else if (image.type.match("image.*") == null) 
-                            //     showMessage('Incorrect File Type', toastCenter, 'error');
-                            // else (
-                            //     // fetchImageText()
-                            //     // console.log("passed")
-                            //     setShowModal(false)
-                            // )
-                            
-                            // console.log("iamge type is" +image.type.match("image.*"))
                         }}
                     >
                         Search

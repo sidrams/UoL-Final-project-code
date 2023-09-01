@@ -5,8 +5,9 @@ import SearchButton from "./SearchButton";
 import SearchModal from "./SearchModal";
 
 export default function Searchbar({showResults, setShowResults, searchedText, fetchData, setSearchedText}) {
-    const [textInput, setTextInput] = useState('')
-    const [showModal, setShowModal] = useState(false)
+    // input component of the main search bar
+    const [textInput, setTextInput] = useState('') // handle text input in search bar
+    const [showModal, setShowModal] = useState(false) // show modal if image search prompted
     
     // handle text change in search bar
     const handleChange = (value) => {

@@ -5,11 +5,12 @@ import ReactPaginate from 'react-paginate';
 import { MdOutlineArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 
 export default function PaginatorComponent({query, fetchData, total_pages}) {
+    // paginator for search results page for the all the verses fetched
+
     const onPageChange = (event) => {
         console.log(event.selected)
         fetchData(query, event.selected + 1)
     };
-
 
     return (
         <div className="card mt-8">
@@ -30,7 +31,6 @@ export default function PaginatorComponent({query, fetchData, total_pages}) {
                 previousClassName={"item previous"}
                 previousLabel={<MdOutlineArrowBackIos style={{ fontSize: 18, width: 150 }}/>}
             />
-            
         </div>
     );
 }
