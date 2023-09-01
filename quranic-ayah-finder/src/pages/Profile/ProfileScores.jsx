@@ -6,11 +6,17 @@ import IndivisualProgressComponent from '../../components/ProfileScore/Indivisua
 import AttemptedTopicList from '../../components/ProfileScore/AttemptedTopicList';
 import BackButton from '../../components/Buttons/BackButton';
 import { Link } from 'react-router-dom';
+import SearchBar from '../../components/SearchBarSub/SearchBar';
 
 export default function ProfileScores() {
     const csrftoken = Cookies.get('csrftoken');
     const { loggedUser, setLoggedUser } = useContext(Context)
     const [scoreData, setScoreData] = useState()
+    // handle search bar input
+    const [inputText, setInputText] = useState('') 
+    const handleChange = (e) => {
+        setInputText(e.target.value.toLowerCase())
+    }
 
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/UserQuizProgress', {
@@ -62,14 +68,15 @@ export default function ProfileScores() {
                             <h2 className=''>
                                 Showing all progress for <span className='font-bold'>{loggedUser.username}</span>
                             </h2>
-                            <p>sort by <span className='font-bold'>*</span></p>
+                            {/* <p>sort by <span className='font-bold'>*</span></p> */}
+                            <SearchBar placeholder='Search topics...' handleChange={handleChange}/>
                         </div>
 
                         {/* all progress components */}
                         <div className='flex'>
                             
                             {/* indivisual progress components */}
-                            <IndivisualProgressComponent scoreData={scoreData} />
+                            <IndivisualProgressComponent scoreData={scoreData} inputText={inputText} />
 
                             {/* List of topics that quizzes have been attempted for */}
                             <AttemptedTopicList getTopicsAttempted={getTopicsAttempted} />

@@ -1,6 +1,6 @@
 import { RiNumbersFill, RiTimeFill,RiTrophyFill } from 'react-icons/ri'
 
-export default function IndivisualProgressComponent({scoreData}) {
+export default function IndivisualProgressComponent({scoreData, inputText}) {
     const getDate = (scoreDate) => {
         return new Date(scoreDate).getDate()
     }
@@ -37,7 +37,19 @@ export default function IndivisualProgressComponent({scoreData}) {
                 (
                     <>
                     {
-                        scoreData.map((score,i) => (
+                        scoreData.filter(data => {
+                            if (inputText === '') {
+                            return data;
+                            } else if (
+                                data.quiz_topic_id.topic_name.toLowerCase().includes(inputText)
+                                // post.title.toLowerCase().includes(inputText) ||
+                                // post.description.toLowerCase().includes(inputText) ||
+                                // post.user.username.toLowerCase().includes(inputText) ||
+                                // toString(post.verse_id).toLowerCase().includes(inputText)
+                            ) {
+                            return data;
+                            }
+                        }).map((score,i) => (
                             <div className='flex my-10'>
                                 <div className='w-[10%] flex flex-col text-slate-400'>
                                     <span className='text-2xl font-bold'>{getDate(score.time_taken_at)}</span>
