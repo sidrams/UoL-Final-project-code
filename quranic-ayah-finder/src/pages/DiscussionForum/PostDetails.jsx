@@ -11,7 +11,7 @@ import { Menu } from "primereact/menu";
 import FeaturedPostsSideBar from "../../components/Posts/FeaturedPostsSideBar";
 import DeleteConfirmation from "./DeleteConfirmation";
 import CommentsComponent from "../../components/Posts/CommentsComponent";
-import Login from '../Login/Login'
+
 export default function PostDetails() {
     const { loggedUser, setLoggedUSer } = useContext(Context)
     const { id } = useParams()
@@ -78,15 +78,12 @@ export default function PostDetails() {
         .catch(error => console.log(error))
     }, [])
 
-    
+    console.log(loggedUser)
+    // console.log(loggedUser && post.user&& loggedUser.id == post.user.id)
 
     return(
      <div className="xl:w-[70%] lg:w-[85%] m-auto ">
         <Link to='/discussionForums'><BackButton onClick=''  /></Link>
-        <button onClick={() => setShowlogin(true)}>Show login</button>
-        {
-            showlogin && <Login />
-        }
         
         <div className="pb-10 flex">
             <div className="w-[70%]">
@@ -127,6 +124,7 @@ export default function PostDetails() {
                             ) 
                         }
 
+                        {/* if post is promted to be deleted */}
                         {
                             showDelete && 
                             (

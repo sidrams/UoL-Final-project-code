@@ -27,9 +27,32 @@ export default function Login() {
         })
         .then((response) => response.json())
         .then((json) =>{
+            console.log(json)
             setLoggedUser(json)
         })
+        // .catch(error => {console.log(error)})
+        .then((response) => {
+            fetch('http://127.0.0.1:8000/user', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            })
+            .then((response) => response.json())
+            .then((json) =>{
+                json.user ? 
+                setLoggedUser(json.user) :
+                console.log(json)
+            })
+            .catch(error => console.log(error))
+        })
+        
+
         .catch(error => {console.log(error)})
+
     }
 
     // make logout request
