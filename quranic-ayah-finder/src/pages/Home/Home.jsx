@@ -1,18 +1,16 @@
 import Searchbar  from "../../components/SearchBar/SearchBar"
-import { useContext, useState } from 'react';
-import { Context } from "../../Context";
-
+import { useState } from 'react';
 import FeatureSection from "./FeatureSection";
 import SearchResultsComponent from "./SearchResultsComponent";
 
 export default function Home() {
-    // const { loggedUser, setLoggedUSer } = useContext(Context);
-    const [showResults, setShowResults] = useState(false)
-    const [searchedText, setSearchedText] = useState('')
-    const [verseDetails, setVerseDetails] = useState()
-    const [exactMatch, setExactMatch] = useState(false);
+    const [showResults, setShowResults] = useState(false) // display results 
+    const [searchedText, setSearchedText] = useState('') // text recognised from user uploaded image
+    const [verseDetails, setVerseDetails] = useState() // fetched search results data from API 
+    const [exactMatch, setExactMatch] = useState(false); // set results to match exactly
 
-    const fetchData = (text,page=1) => {
+    const fetchData = (text, page=1) => {
+        // fetch data from API and assign it to 'verseDetails'
         let query = exactMatch ? 
                     'https://api.quran.com/api/v4/search?q="'+ text +'"&page='+page :
                     'https://api.quran.com/api/v4/search?q='+ text +'&page='+page 
@@ -22,10 +20,10 @@ export default function Home() {
         .then((json) => {
             setVerseDetails(json)
             setShowResults(true)
-            console.log("details fetched"+JSON.stringify(json))
         })
     }
 
+    // reset search and variables to do a new search 
     const resetSearch = () => {
         setShowResults(false)
         setSearchedText('')
@@ -38,21 +36,18 @@ export default function Home() {
          
             {
                 !showResults ? 
-                (
+                (   // main search bar
                     <div className="search-bar flex flex-col items-center m-auto justify-center min-h-[80vh] w-[50%] z-10 relative  max-w-[640px]">
                         <Searchbar 
                             showResults={showResults} setShowResults={setShowResults} 
                             searchedText={searchedText} 
                             fetchData={fetchData} 
-                            // verseDetails={verseDetails} 
                             setSearchedText={setSearchedText}
                         />
                     </div>
                 ) :
-                (
+                (   // display fetched search results
                     <div className="text-left  flex m-auto gap-4 p-0 w-[90%]"> 
-                    {/*  items-center,justify-center,  w-[50%] */}
-                        
                         <div className="w-[95%] m-auto">
                             <SearchResultsComponent 
                                 searchedText={searchedText} 
@@ -64,15 +59,13 @@ export default function Home() {
                                 setExactMatch={setExactMatch}
                             />
                         </div>
-                        
                     </div>
                 )
             }
            
-        {
+        {   // Home page component listing features of the website
             !showResults && (
                 <FeatureSection showResults={showResults} />
-
             )
         }
         </>

@@ -1,9 +1,8 @@
 import { Accordion, AccordionTab } from 'primereact/accordion';
 
 export default function FAQ() {
-  
     let topics = Object.keys(faqs);
-    // console.log(topics)
+
     return (
         <>
         <h1 className='w-[80%] m-auto my-6 text-2xl font-bold'>
@@ -47,6 +46,7 @@ export default function FAQ() {
     )
 }
 
+// faq content
 const faqs = {
     General : [
         {

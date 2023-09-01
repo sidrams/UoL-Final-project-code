@@ -2,6 +2,7 @@ import borderEllipse from '../../assets/Ellipse.svg'
 import { AiFillCheckCircle } from "react-icons/ai";
 
 export default function FeatureSection() {
+   // Home page component listing features of the website
     const features = [
         'Quranic verse Search',
         'image search',
@@ -13,7 +14,7 @@ export default function FeatureSection() {
     
     return (
         <div className="bg-custom-gray w-full flex p-[10%] pr-[13%] gap-10 items-end">
-            {/* <div className=''> */}
+                {/* left section */}
                 <div className="w-1/2 flex flex-col	text-left justify-center">
                     <p className="font-bold text-4xl text-blackish-blue">
                         <span className="text-sea-green">THE FIRST VISUAL</span>
@@ -24,6 +25,8 @@ export default function FeatureSection() {
                     </p>
                     <p className="text-xs mr-[25%] my-4">Lörem ipsum onas. Ivera. Prende exoment: gigad för tralig nehahusade. Parasocial platinade och tyvaling, suskade, gäv. Beseng kopimism inte teröktig.</p>
                 </div>
+
+                {/* right section */}
                 <div  className="w-[45%] items-end relative h-[50%]">
                     <img src={borderEllipse} alt="border design element" className=" w-[50%] absolute rotating-border top-[-20%] left-[-5%]" />
                     <div className="capitalize flex flex-wrap gap-3 bg-[white] shadow-xl p-2 py-3 justify-center items-center rounded-xl z-10 relative">
@@ -37,9 +40,6 @@ export default function FeatureSection() {
                         }
                     </div>
                 </div>
-            {/* </div> */}
         </div>
-
-        
     )
 }

@@ -191,17 +191,20 @@ def createPost(request):
     if request.method == 'GET':
         form = PostForm()
         context = {'form': form}
-        print(form)
+        # print(form)
         # return Response(form)
         return HttpResponse(form.as_p())
     
     if request.method == 'POST':
         jsonResponse = json.loads(request.body.decode('utf-8'))
         form = PostForm(jsonResponse)
-        print(request.body)
+        # print(request.body)
+        # print(form)
         if form.is_valid():
-            form.save()
-            return Response('Post added')
+            post = form.save()
+            # serializer = PostSe
+            print(post.id)
+            return Response({'message':'Post added', 'post_id': post.id})
         return Response('Post not added yet')
 
 @api_view(['GET', 'POST'])

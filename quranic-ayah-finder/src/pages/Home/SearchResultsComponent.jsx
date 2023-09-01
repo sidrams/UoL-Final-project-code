@@ -8,8 +8,8 @@ import PaginatorComponent from "../../components/SearchResults/Paginator"
 import ImageResultHeader from "../../components/SearchResults/ImageResultHeader";
 
 export default function SearchResultsComponent({searchedText, fetchData, resetSearch, verseDetails, exactMatch, setExactMatch}) {
-    const [showDetails, setShowDetails] = useState(false)
-    const [chosenVerse, setChosenVerse] = useState()
+    const [chosenVerse, setChosenVerse] = useState() // the verse selected by user to view
+    const [showDetails, setShowDetails] = useState(false) // show details component for the chosen verse
 
     return (
         <>
@@ -19,8 +19,11 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
             {   
                 searchedText != '' && searchedText.length >= 0 && 
                 <>
-                {
-                    <ImageResultHeader searchedText={searchedText} onClick={() => fetchData(searchedText)} exactMatch={exactMatch} setExactMatch={setExactMatch} />
+                {   //header to be shown if a user searches by uploading an image
+                    <ImageResultHeader searchedText={searchedText} 
+                        onClick={() => fetchData(searchedText)} 
+                        exactMatch={exactMatch} setExactMatch={setExactMatch} 
+                    />
                 }
                 </>
             }
@@ -30,7 +33,7 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
             !showDetails ? 
             (
                 <>
-                {/* query key word and number of results */}
+                {/* show query key word and number of results */}
                 <div className="flex justify-between">
                     <ResultHeader verseDetails={verseDetails} />
                     <BackButton onClick={resetSearch} text={'search again'} icon={<VscDebugRestart />} />

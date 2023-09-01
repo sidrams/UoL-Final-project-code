@@ -47,7 +47,6 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
             .then((response) => response.json())
             .then((json) =>{
                 item.setVar(json)
-                console.log(json)
             })
             .catch(error => console.log(error))
         })
@@ -61,13 +60,11 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
     return(
         <>
         <div className='flex justify-between'>
-            {/* <button  onClick={() => {setShowDetails(false);setChosenVerse()}} className="back-button">Go back</button> */}
             <BackButton onClick={() =>  {setShowDetails(false);setChosenVerse()}} />
             <BackButton onClick={resetSearch} text={'search again'} icon={<VscDebugRestart />} />
         </div>
         <div className="mb-4 text-center text-3xl p-6">
              {chosenVerse.text}
-            
         </div>
 
         {   // LOCATION
@@ -79,8 +76,7 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
             )
         }
       
-        {/*  */}
-        {   // LOCATION
+        {   // TRANSLATIONS
             verseByWords && 
             (
                 <div className="mb-4 bg-custom-gray p-6 shadow">

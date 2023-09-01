@@ -11,27 +11,8 @@ export default function Login() {
         password: ''
     })
     const csrftoken = Cookies.get('csrftoken');
-    // const [loggedUser, setLoggedUser] = useState()
 
-    useEffect(() => {
-        fetch('http://127.0.0.1:8000/user', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            credentials: 'include',
-            })
-            .then((response) => response.json())
-            .then((json) =>{
-                json.user ? 
-                setLoggedUser(json.user) :
-                console.log(json.user)
-            })
-            .catch(error => console.log(error))
-    }, [])
-
+    // make login request
     const login = () => {
         fetch(`http://127.0.0.1:8000/login`, {
             method: 'POST',
@@ -46,14 +27,12 @@ export default function Login() {
         })
         .then((response) => response.json())
         .then((json) =>{
-            console.log(json)
             setLoggedUser(json)
         })
         .catch(error => {console.log(error)})
-        // return <Navigate replace to 
-        // history.back()
     }
 
+    // make logout request
     const logout = () => {
         fetch(`http://127.0.0.1:8000/logout`, {
             method: 'POST',
@@ -63,17 +42,12 @@ export default function Login() {
                 'X-CSRFToken': csrftoken,
             },
             credentials: 'include',
-            // body: 
-            // JSON.stringify(form),
         })
         .then((response) => setLoggedUser(null))
-        // .then((response) =>{
-        //     console.log(json)
-        //     setLoggedUser(null)
-        // })
         .catch(error => {console.log(error)})
     }
 
+    // handle form changes
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -83,7 +57,6 @@ export default function Login() {
 
     return (
         <>
-        {/* <h1>Log in</h1> */}
         {
             loggedUser ? 
             (
@@ -93,7 +66,7 @@ export default function Login() {
                 </>
             ) 
             : 
-            (
+            (   // user login form 
                 <div className='lg:w-[50%] xl:w-[40%] lg:min-h-[70vh] xl:min-h-[60vh] m-auto mb-4 bg-custom-gray p-6 shadow-xl flex flex-col justify-evenly'>
                     <div className="flex justify-between items-center">
                         <div></div>
@@ -118,28 +91,15 @@ export default function Login() {
 
                     </form> 
                     
+                    {/* registeration link  */}
                     <p  className="flex items-center m-auto my-2">
                         Not a user yet? Click here to <span> <Link to='/signup' className='underline font-medium'> Register</Link></span>
                     </p>
                     
                     <button type="button" value="Login" onClick={login} className='uppercase tracking-wider  bg-sea-green text-white w-1/3 m-auto my-4 rounded-full hover:opacity-90'>Login</button>
-
                 </div>
             )
         }
-        {/* <div>
-            <form method="POST" action="">
-                {/* <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} /> 
-                
-                <label>Username:</label>
-                <input type="text" value={form.username} onChange={handleChange} name="username" placeholder="Enter Username..." />
-
-                <label>Password::</label>
-                <input type="password" value={form.password} onChange={handleChange} name="password" placeholder="Enter Password..." />
-
-                <input type="button" value="Login" onClick={login} />
-            </form>
-        </div> */}
         </>
     )
 }

@@ -20,7 +20,6 @@ import Quiz from './pages/Guides/Quiz'
 import GuideDetails from './pages/Guides/GuideDetails'
 import Profile from './pages/Profile/Profile'
 import VerseDetails from './pages/Home/VerseDetails'
-import ProfileScore from './pages/Profile/ProfileScores'
 import ProfileScores from './pages/Profile/ProfileScores'
 
 
@@ -28,6 +27,7 @@ function App() {
   const [loggedUser, setLoggedUser] = useState("");
   const csrftoken = Cookies.get('csrftoken');
 
+  // get if user is logged in
   useEffect(() => {
     fetch('http://127.0.0.1:8000/user', {
         method: 'GET',
@@ -53,23 +53,28 @@ function App() {
       <Navbar />
       <div className='w-full items-center m-auto '>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* {main search bar and verse details} */}
+          <Route path="/" element={<Home />} /> 
           <Route path="/verse-details/:id" element={<VerseDetails />} />
           
+          {/* guide related urls */}
           <Route path="/guides" element={<Guides />} />
           <Route path="guides/topic/:id" element={<Categories />} />
           <Route path="guides/topic/:id/Guide" element={<GuideDetails />} />
           <Route path="guides/topic/:id/Quiz" element={<Quiz />} />
-          {/* </Route> */}
+
+          {/* faq and discussion forum related posts */}
           <Route path="/faq" element={<FAQ />} />
           <Route path="/discussionForums" element={<DiscussionForum />} />
           <Route path="/post/create" element={loggedUser ? <PostForm /> : (<Navigate replace to="/login" />) } />
           <Route path="/post/:id" element={<PostDetails />  } />
           <Route path="/post/update/:id" element={<PostForm />} />
 
+          {/* profile routes */}
           <Route path="/profile/:username" element={!loggedUser ? (<Navigate replace to="/login" />) : (<Profile />) } />
           <Route path="/profile/scores" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileScores />) } />
           
+          {/* user handling routes */}
           <Route path="/signup" element={loggedUser ? (<Navigate replace to="/" />) : (<SignUp />) } />
           <Route path="/login" element={loggedUser ? (<Navigate replace to="/" />) : <Login />} />
           <Route path="/logout" element={loggedUser ? (<LogoutModal />) : <Navigate replace to="/" />} />
