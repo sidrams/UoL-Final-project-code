@@ -6,7 +6,10 @@ import LogoutModal from '../Logout/Logout';
 export default function Navbar() {
     const { loggedUser, setLoggedUSer } = useContext(Context);
     const [showLogout, setShowLogout] = useState(false)
-
+    const classes = {
+        'green-bg-button': "bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px] ",
+        'white-bg-button':"bg-white text-[#55BDB3] border-[#55BDB3] border-[1.5px] py-1 px-3 rounded-md flex min-w-[95px] place-content-center hover:text-white hover:bg-[#F3F3F3] hover:border-[#55BDB3] hover:border-[1.5px]",
+    }
     return(
         <div className='p-10 max-w-[1280px] m-auto'>
         <nav className="nav rounded-xl shadow text-sm font-medium">
@@ -16,39 +19,19 @@ export default function Navbar() {
                 <CustomLink to="/guides">Guides</CustomLink>
                 <CustomLink to="/faq">FAQs</CustomLink>
                 <CustomLink to="/discussionForums">Discussion Forums</CustomLink>
-                {
-                    loggedUser ? 
-                    <>
-                    <CustomLink to={"/profile/"+loggedUser.username} textWhite={true}
-                        className="bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center
-                                    hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px] "
-                    >
-                        Profile
-                    </CustomLink>
-                    <CustomLink to="/logout"
-                        className="bg-white text-[#55BDB3] border-[#55BDB3] border-[1.5px] py-1 px-3 rounded-md flex min-w-[95px] place-content-center
-                                    hover:text-white hover:bg-[#F3F3F3] hover:border-[#55BDB3] hover:border-[1.5px]"
-                    >
-                        Logout
-                    </CustomLink>
-                    </>
-                    :
-                    <>
-                    <CustomLink to="/signup"  textWhite={true}
-                        className="bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center
-                                    hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px]"
-                    >
-                        Sign up
-                    </CustomLink>
-                    <CustomLink to="/login" 
-                        className="bg-white text-[#55BDB3] border-[#55BDB3] border-[1.5px] py-1 px-3 rounded-md flex min-w-[95px] place-content-center
-                                    hover:text-white hover:bg-[#F3F3F3] hover:border-[#55BDB3] hover:border-[1.5px]"
-                    >
-                            Login
-                    </CustomLink>
-                    </>
-                }
-               
+                <CustomLink 
+                    to={loggedUser ? "/profile/"+loggedUser.username : "/signup"} 
+                    textWhite={true}
+                    className={classes['green-bg-button']}
+                >
+                    {loggedUser ? 'Profile' : 'Sign up'}
+                </CustomLink>
+                <CustomLink 
+                    to={loggedUser ? "/logout" : "/login" }
+                    className={classes['white-bg-button']}
+                >
+                    {loggedUser ? 'Logout' : 'Login'}
+                </CustomLink>
             </ul>
         </nav>
         </div>
