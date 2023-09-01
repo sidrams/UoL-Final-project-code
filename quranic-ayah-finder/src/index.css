@@ -165,3 +165,7 @@ input:focus {
 .p-paginator {
   background-color: transparent;
 }
+
+.post-comment {
+  word-break: break-word;
+}

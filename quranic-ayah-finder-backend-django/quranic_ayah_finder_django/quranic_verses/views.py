@@ -160,11 +160,13 @@ def Posts_Lists(request):
 def Posts_detail(request,pk):
     post = Post.objects.get(pk=pk)
     user = UserSerializer(post.user)
+    comments = Comment.objects.filter(post=post.pk)
     # context = {'posts': posts}
     # return Response(data=context)
 
     serializer = PostsSerializer(post, context={'request': request})
-    response = {'post':serializer.data,'user':user.data}
+    commentSerializer = CommentSerializer(comments, context={'request': request},many=True)
+    response = {'post':serializer.data,'user':user.data, 'comments': commentSerializer.data}
     # return Response(serializer.data)
     return Response(response)
 

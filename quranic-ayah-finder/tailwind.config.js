@@ -20,7 +20,8 @@ export default {
         'blackish-blue':'#0F2435',
         'custom-gray' : '#FDFDFD',
         'medium-gray':'#fAfAfA',
-        'navy-blue': '#213547'
+        'navy-blue': '#213547',
+        'mid-gray': '#848B84'
       },
     }
   },
