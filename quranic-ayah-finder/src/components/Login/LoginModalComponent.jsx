@@ -5,8 +5,9 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { Context } from '../../Context';
 
 export default function LoginModalComponent({setShowLogin}) {
-    const [showRegister, setShowRegister] = useState(false)
-    const [form, setForm] = useState({
+    const { loggedUser, setLoggedUser } = useContext(Context) // get user if logged in
+    const [showRegister, setShowRegister] = useState(false) // show register form 
+    const [form, setForm] = useState({ // form that stores the data to be passed
         username: '',
         password: ''
     })
@@ -30,6 +31,7 @@ export default function LoginModalComponent({setShowLogin}) {
             setLoggedUser(json)
             setShowLogin(false)
         })
+        // then fetch user and set logged user accordingly
         .then((response) => {
             fetch('http://127.0.0.1:8000/user', {
             method: 'GET',
@@ -48,13 +50,10 @@ export default function LoginModalComponent({setShowLogin}) {
             })
             .catch(error => console.log(error))
         })
-        
-
         .catch(error => {console.log(error)})
     }
 
-    const { loggedUser, setLoggedUser } = useContext(Context)
-
+    // make rewuest to register user
     const register = () => {
         fetch(`http://127.0.0.1:8000/register`, {
             method: 'POST',
@@ -66,6 +65,7 @@ export default function LoginModalComponent({setShowLogin}) {
             credentials: 'include',
             body: JSON.stringify(form),
         })
+        // then login user and set logged user accordingly
         .then((response) => {
             fetch(`http://127.0.0.1:8000/login`, {
                 method: 'POST',
@@ -80,12 +80,10 @@ export default function LoginModalComponent({setShowLogin}) {
             })  
             .then((response) => response.json())
             .then((json) =>{
-                console.log("response json is "+json)
                 setLoggedUser(json)
             })
             .catch(error => {console.log(error)})
         })
-      
         .catch(error => {console.log(error)})
     }
 
@@ -106,9 +104,7 @@ export default function LoginModalComponent({setShowLogin}) {
                 <h1 className="text-3xl text-sea-green font-bold">
                     Login
                 </h1>
-                {/* <Link to='/'> */}
-                    <AiFillCloseCircle onClick={() => setShowLogin(false)} className="text-[1.5rem]"/>
-                    {/* </Link> */}
+                <AiFillCloseCircle onClick={() => setShowLogin(false)} className="text-[1.5rem]"/>
             </div>
             
             <form method="POST" action="" className="flex flex-col text-left tracking-wide justify-between">
@@ -122,8 +118,6 @@ export default function LoginModalComponent({setShowLogin}) {
                     <label className='hidden'>Password::</label>
                     <input type="password" className="bg-gray-200 shadow w-[70%] m-auto" placeholder="Password" value={form.password} onChange={handleChange} name="password"/>
                 </p>
-            
-
             </form> 
             
             {/* registeration link  */}
@@ -171,6 +165,7 @@ export default function LoginModalComponent({setShowLogin}) {
                 </p>
             </form>
             
+            {/* switch  to login form */}
             <p  className="flex items-center m-auto my-2">
                 Already Signed Up? <Link to='' onClick={() => setShowRegister(false)} className='underline font-medium'>Login</Link>
             </p>

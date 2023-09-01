@@ -1,10 +1,8 @@
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { TiArrowLeftThick } from "react-icons/ti";
 
-// FaArrowLeftLong
-// FaCircleArrowLeft
-// HiArrowSmLeft
 export default function BackButton({onClick, icon=<TiArrowLeftThick />, text='', customStyle='', customIconStyle=''}) {
+    // customizable button that aligns with the theme
     return (
         <button  
             onClick={onClick} 
@@ -12,10 +10,7 @@ export default function BackButton({onClick, icon=<TiArrowLeftThick />, text='',
                         +customStyle}
         >
             <p className={"text-[1.5rem] font-bold "+customIconStyle}>{icon}</p>
-            {/* <Icon /> */}
             {text}
-            {/* back */}
-            {/* <TiArrowLeftThick className="text-[1.5rem] font-bold" /> */}
         </button>
     )
 }

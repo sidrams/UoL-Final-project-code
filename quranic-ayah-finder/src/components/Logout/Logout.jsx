@@ -1,8 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
-import { Toast } from 'primereact/toast';
 import "primereact/resources/themes/lara-light-indigo/theme.css";  
 import "primereact/resources/primereact.min.css";  
-import { Navigate, redirect } from "react-router-dom";
 // import fetch from 'node-fetch'  
 import { Context } from "../../Context";
 import Cookies from 'js-cookie';
@@ -10,9 +8,6 @@ import Cookies from 'js-cookie';
 export default function LogoutModal ({setShowLogout}) {
     const { loggedUser, setLoggedUser } = useContext(Context);
     const csrftoken = Cookies.get('csrftoken');
-
-    // , searchedText, setSearchedText
-    // const [success, setSuccess] = useState(false)
     const toastCenter = useRef(null);
 
     const showMessage = (event, ref, severity) => {
@@ -21,6 +16,7 @@ export default function LogoutModal ({setShowLogout}) {
         ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
     };
 
+    // make logout request and set logged user to null
     const logout = () => {
         fetch(`http://127.0.0.1:8000/logout`, {
             method: 'POST',
@@ -30,12 +26,8 @@ export default function LogoutModal ({setShowLogout}) {
                 'X-CSRFToken': csrftoken,
             },
             credentials: 'include',
-            // body: 
-            // JSON.stringify(form),
         })
-        // .then((response) => setLoggedUser(null))
         .then((response) =>{
-        //     console.log(json)
             setLoggedUser(null)
         })
         .catch(error => {console.log(error)})
@@ -45,9 +37,6 @@ export default function LogoutModal ({setShowLogout}) {
 
     return (
         <>
-        {/* <div className="card flex justify-center">
-            <Toast ref={toastCenter} />
-        </div> */}
         <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
         >
@@ -74,7 +63,6 @@ export default function LogoutModal ({setShowLogout}) {
                         className="flex m-1 my-6"
                         onClick={() => {
                             console.log("logout button clicked")
-                            // setShowLogout(false)
                             logout()
                         }}
                     >
@@ -84,7 +72,6 @@ export default function LogoutModal ({setShowLogout}) {
                         className="flex m-1 my-6"
                         onClick={() => {
                             console.log("cancel button clicked")
-                            // setShowLogout(false)
                             history.back()
                         }}
                     >

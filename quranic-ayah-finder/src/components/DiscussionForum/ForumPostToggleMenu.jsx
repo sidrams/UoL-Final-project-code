@@ -5,8 +5,9 @@ import { useRef } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 
 export default function ForumPostToggleMenu({setPost_id, setShowDelete, post}) {
+    // toggle menu that shows option to dlete a post on each of the posts in the discussion forums
     const menuRight = useRef(null);
-    const items = [
+    const items = [ // items in the toggle menu
         {
             label:'',
             items: [

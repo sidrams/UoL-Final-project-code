@@ -1,12 +1,10 @@
 import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 import { useContext, useState } from 'react';
 import { Context } from "../../Context";
-import LogoutModal from '../Logout/Logout';
 
 export default function Navbar() {
-    const { loggedUser, setLoggedUSer } = useContext(Context);
-    const [showLogout, setShowLogout] = useState(false)
-    const classes = {
+    const { loggedUser, setLoggedUSer } = useContext(Context); // get user logged in
+    const classes = { // common classnames
         'green-bg-button': "bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px] ",
         'white-bg-button':"bg-white text-[#55BDB3] border-[#55BDB3] border-[1.5px] py-1 px-3 rounded-md flex min-w-[95px] place-content-center hover:text-white hover:bg-[#F3F3F3] hover:border-[#55BDB3] hover:border-[1.5px]",
     }

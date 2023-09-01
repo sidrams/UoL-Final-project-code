@@ -7,7 +7,7 @@ import { ImBooks } from "react-icons/im"
 import { MdFastfood } from "react-icons/md"
 
 export default function TopicIcons({topic}) {
- 
+    // return correspondin icons for a given topic
     const icons = {
         'Chapters of the Qur’an':<GiSpellBook />,
         'Fruits in the Quran': <GiFruitBowl />,
