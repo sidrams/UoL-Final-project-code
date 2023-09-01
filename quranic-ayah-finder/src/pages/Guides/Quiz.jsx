@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import {Context} from '../../Context'
 import { useParams } from "react-router-dom"
 import Cookies from "js-cookie"
 import BackButton from "../../components/Buttons/BackButton";
 import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import EndQuizComponent from "../../components/Quiz/EndQuizComponent";
+import LoginModalComponent from "../../components/Login/LoginModalComponent";
 
 export default function Quiz(props) {
+    const { loggedUser, setLoggedUser } = useContext(Context)
     const {id} = useParams() // topic id
     const csrftoken = Cookies.get('csrftoken'); // csrf token to save logged in user progress
     const [quizQuestions, setQuizQuestions] = useState([]) // get quiz question for the chosen topic
@@ -15,7 +18,7 @@ export default function Quiz(props) {
     const [disabled, setDisabled] = useState(false) // disable buttons after a user chooses an answer
     const [endQuiz, setEndQuiz] = useState(false) // show last slide with score when quiz ends
     const [scoreSaved, setScoreSaved] = useState(false) // set to true is user successfully saved the score
-
+    const [showLogin, setShowLogin] = useState(false) // show login component if user wants to save progress
     // get questions for the chosen topic
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/quizQuestions/'+id, {
@@ -63,6 +66,7 @@ export default function Quiz(props) {
 
     // saves progress for a logged in user
     const saveProgress = () => {
+        loggedUser ? 
         fetch(`http://127.0.0.1:8000/api/UserQuizProgress/topic/`+id, {
             method: "POST",
             headers: {
@@ -75,10 +79,18 @@ export default function Quiz(props) {
         })
         .then((response) => setScoreSaved(true))
         .catch(error => console.log(error))
+
+        : setShowLogin(true); alert('User needs to be Logged in to save progress')
     }
 
     return (
         <>
+        {/* Login component if required */}
+        {
+            showLogin && 
+            <LoginModalComponent setShowLogin={setShowLogin} />
+        }
+        
         {/* header */}
         <div className="flex justify-between w-[70%] m-auto">
             <BackButton onClick={() =>history.back()}  />
@@ -101,6 +113,7 @@ export default function Quiz(props) {
             <EndQuizComponent id={id} score={score} scoreSaved={scoreSaved} restartQuiz={restartQuiz} saveProgress={saveProgress} />
             ) : ''
         }
+        
         </>
     )
 }

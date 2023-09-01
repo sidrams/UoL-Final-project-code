@@ -10,17 +10,19 @@ import BackButton from "../../components/Buttons/BackButton";
 import { Menu } from "primereact/menu";
 import FeaturedPostsSideBar from "../../components/Posts/FeaturedPostsSideBar";
 import DeleteConfirmation from "./DeleteConfirmation";
-
+import CommentsComponent from "../../components/Posts/CommentsComponent";
+import Login from '../Login/Login'
 export default function PostDetails() {
     const { loggedUser, setLoggedUSer } = useContext(Context)
     const { id } = useParams()
-    const csrftoken = Cookies.get('csrftoken');
+    // const csrftoken = Cookies.get('csrftoken');
     const [post, setPost] = useState([])
     const [comments, setComments] = useState([])
-    const [newComment, setNewComment] = useState()
+    // const [newComment, setNewComment] = useState()
     const [featuredPosts, setFeaturedPosts] = useState()
     const [showDelete, setShowDelete] = useState(false)
-    
+    const [showlogin, setShowlogin] = useState(false)
+
     const navigate = useNavigate()
     const [post_id, setPost_id] = useState()
     const menuRight = useRef(null);
@@ -76,35 +78,16 @@ export default function PostDetails() {
         .catch(error => console.log(error))
     }, [])
 
-    // request to post a comment to a post
-    const postComment = (e) => {
-        // only logged in users can post
-        !loggedUser ? 
-        alert('you need to be logged in to post a comment')
-        :
-        e.preventDefault()
+    
 
-        // make request
-        fetch(`http://127.0.0.1:8000/api/add/comments/posts/`+id, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            credentials: 'include',
-            body: JSON.stringify({"body":newComment})
-        })
-        .then((response) => response.json())
-        .then((json) =>{
-            setComments([...comments,json])
-            setNewComment('')
-        })
-        .catch(error => console.log(error))
-    }
-     return(
+    return(
      <div className="xl:w-[70%] lg:w-[85%] m-auto ">
         <Link to='/discussionForums'><BackButton onClick=''  /></Link>
+        <button onClick={() => setShowlogin(true)}>Show login</button>
+        {
+            showlogin && <Login />
+        }
+        
         <div className="pb-10 flex">
             <div className="w-[70%]">
                 <div  className="mb-0 flex mt-4 tracking-wider bg-custom-gray xl:p-8 p-6 px-8 shadow-md  overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
@@ -164,28 +147,8 @@ export default function PostDetails() {
                     </div>
                 </div>
 
-                <div className="mb-4 flex tracking-wider bg-medium-gray xl:p-8 p-6 px-8 shadow-md rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
-                {
-                    comments ? 
-                    (
-                        <>
-                        {comments.map((comment, i) => (
-                            <div className="my-4 flex flex-col">
-                                <p className="font-medium my-1">
-                                    @{comment.user.username} 
-                                    <span className="text-xs ml-2 text-mid-gray">{TimeDifference(comment.updated)} ago</span>
-                                </p>  
-                                <p className="flex post-comment ml-2">{comment.body}</p>
-                            </div>
-                        ))}
-                        <form action="" className="mt-6 flex">
-                            <input type="text" className="w-[90%]" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="Add a new comment here"/>
-                            <button onClick={postComment} className="uppercase tracking-wider">Post</button>
-                        </form>
-                        </>
-                    ) : ''
-                }
-                </div>
+                {/* comments section */}
+                <CommentsComponent id={id} comments={comments} setComments={setComments} />
             </div>
 
             {/* featured posts section on the side */}

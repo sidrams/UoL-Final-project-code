@@ -195,7 +195,7 @@ export default function DiscussionForums() {
 
                                 
                                 {
-                                    loggedUser.id == post.user.id && 
+                                    loggedUser && post.user && loggedUser.id == post.user.id && 
                                     (
                                         <>
                                         <div>
