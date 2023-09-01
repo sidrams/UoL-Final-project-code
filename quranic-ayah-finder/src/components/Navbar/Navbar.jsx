@@ -19,9 +19,9 @@ export default function Navbar() {
                 {
                     loggedUser ? 
                     <>
-                    <CustomLink to={"/profile/"+loggedUser.username} 
+                    <CustomLink to={"/profile/"+loggedUser.username} textWhite={true}
                         className="bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center
-                                    hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px]"
+                                    hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px] "
                     >
                         Profile
                     </CustomLink>
@@ -34,7 +34,7 @@ export default function Navbar() {
                     </>
                     :
                     <>
-                    <CustomLink to="/signup" 
+                    <CustomLink to="/signup"  textWhite={true}
                         className="bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center
                                     hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px]"
                     >
@@ -61,7 +61,7 @@ function CustomLink({ to, children, ...props }) {
     const classes = props.className
 
     return (
-        <li className={isActive ? ("active " + classes): classes}>
+        <li className={isActive ? (props.textWhite ? classes : "active " + classes): classes}>
             <Link to={to}>{children}</Link>
         </li>
     )
