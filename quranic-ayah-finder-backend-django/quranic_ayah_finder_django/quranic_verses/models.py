@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 
 class Guides(models.Model):
     name = models.CharField("Name", max_length=240)
-    description = models.CharField("Description", max_length=500)#"Description", blank=True, null=True
+    description = models.CharField("Description", max_length=500)
     image = models.ImageField(blank=True, null=True, upload_to='images/')
     
     def __str__(self):
@@ -31,7 +31,6 @@ class Post(models.Model):
     verse_id = models.IntegerField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
-    # omment = models.ForeignKey('Comment', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ['-updated', '-created']
@@ -85,11 +84,4 @@ class GuideContent(models.Model):
     def __str__(self):
         return str({'content no ':self.id,'topic ':self.topic_id.topic_name})
 
-# class TestChoices(models.Model):
-#     class Options(models.TextChoices):
-#         FOO = "A"
-#         BAR = "B"
-#         BAZ = "C"
-
-#     choiceField = models.CharField(max_length=200, choices=Options.choices)
 

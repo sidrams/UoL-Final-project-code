@@ -26,10 +26,6 @@ SECRET_KEY = 'django-insecure-^wcg5$upsb*y70#l*os7eeimrq$7$fyxa0rnf=tcpycm8c_ug7
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost',
-#     # 'http://127.0.0.1:5173'
-# ],
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://127.0.0.1:5173']
 ALLOWED_HOSTS = [
     'http://127.0.0.1',
@@ -53,7 +49,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'quranic_verses',
-    # 'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +64,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-# CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = (
   'http://127.0.0.1:5173',

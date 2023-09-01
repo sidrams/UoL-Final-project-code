@@ -7,16 +7,17 @@ from . import views
 # router.register(r'createPost',PostViewSet)
 
 urlpatterns = [
+    # search related url
     re_path(r'^search/$', views.Search_list, name='search'),
-    # path('login/', views.loginPage, name='login'),
-    # path('getUser/', views.getCurrentUser, name='user'),
 
+    # user related urls
     path('register', views.UserRegister.as_view(), name='register'),
 	path('login', views.UserLogin.as_view(), name='login'),
 	path('logout', views.UserLogout.as_view(), name='logout'),
 	path('user', views.UserView.as_view(), name='user'),
 	path('profile', views.UserProfileView.as_view(), name='user_profile'),
 
+    # guides and quizzes related urls
     path('api/guideTopics', views.GuideTopicViewSet.as_view(), name='guide_topics'),
     path('api/quizQuestions', views.QuizQuestionsViewSet.as_view(), name='quiz_questions'),
     path('api/quizQuestions/<int:pk>', views.QuizQuestionsForTopicViewSet.as_view(), name='quiz_questions'),
@@ -24,11 +25,8 @@ urlpatterns = [
     path('api/UserQuizProgress/topic/<int:pk>', views.UserQuizProgressTopicViewSet.as_view(), name='quiz_progress_for_user'),
     path('api/guideContent', views.GuideContentViewSet.as_view(), name='guide contents'),
     path('api/guideContent/topic/<int:pk>', views.GuideContentTopicViewSet.as_view(), name='guide contents'),
-    # path('api/testChoices', views.ChoicesViewSet.as_view(), name='choices'),
 
-
-    # re_path(r'^api/guides/$', views.Guides_list, name='guides'),
-    # re_path(r'^api/guides/([0-9]*)$', views.Guides_detail, name='guide_details'),
+    # posts and comments related endpoints
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),
     re_path(r'^api/posts/([0-9]*)$', views.Posts_detail, name='posts_details'),
     re_path(r'^createPost$', views.createPost, name='create-post'),
@@ -36,6 +34,4 @@ urlpatterns = [
     re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
     path('api/comments/posts/<int:pk>', views.CommentsViewSet.as_view(), name="comments_for_posts"),
     path('api/add/comments/posts/<int:pk>', views.AddCommentsViewSet.as_view(), name="comments_for_posts"),
-    # path('api/comments/count/posts/<int:pk>', views.CommentsViewSet.as_view(), name="count_comments_for_posts"),
-    # url(r'^createPost$', include(router.urls), name='create-post'),
 ]

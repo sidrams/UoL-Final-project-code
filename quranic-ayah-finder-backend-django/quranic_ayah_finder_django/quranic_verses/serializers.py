@@ -9,7 +9,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
     def create(self, clean_data):
-        user_obj = User.objects.create_user(username=clean_data['username'], password=clean_data['password'])#, password2=clean_data['password2']
+        user_obj = User.objects.create_user(username=clean_data['username'], password=clean_data['password'])
         user_obj.username = clean_data['username']
         user_obj.save()
         return user_obj
@@ -35,11 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'username')
 
-# class UserLoginSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = '__all__'
-
 class GuidesSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -57,7 +52,7 @@ class PostsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Post 
-        fields =  ('pk','title','user', 'verse_id', 'description', 'updated', 'created') # user, verse_id, 'updated', 'created'
+        fields =  ('pk','title','user', 'verse_id', 'description', 'updated', 'created') 
         
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -89,9 +84,6 @@ class UserQuizProgressSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class UserQuizProgressTopicSerializer(serializers.ModelSerializer):
-    # user = UserSerializer()
-    # quiz_topic_id = GuideTopicSerializer()
-
     class Meta:
         model = UserQuizProgress
         fields = '__all__'
@@ -102,11 +94,3 @@ class GuideContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = GuideContent
         fields = '__all__'
-
-# class ChoicesSerializer(serializers.ModelSerializer):
-#     # user = UserSerializer()
-#     # quiz_topic_id = GuideTopicSerializer()
-
-#     class Meta:
-#         model = TestChoices
-#         fields = '__all__'
