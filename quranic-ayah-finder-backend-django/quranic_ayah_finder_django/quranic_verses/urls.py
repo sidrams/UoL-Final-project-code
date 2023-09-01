@@ -15,6 +15,7 @@ urlpatterns = [
 	path('login', views.UserLogin.as_view(), name='login'),
 	path('logout', views.UserLogout.as_view(), name='logout'),
 	path('user', views.UserView.as_view(), name='user'),
+	path('profile', views.UserProfileView.as_view(), name='user_profile'),
 
     path('api/guideTopics', views.GuideTopicViewSet.as_view(), name='guide_topics'),
     path('api/quizQuestions', views.QuizQuestionsViewSet.as_view(), name='quiz_questions'),

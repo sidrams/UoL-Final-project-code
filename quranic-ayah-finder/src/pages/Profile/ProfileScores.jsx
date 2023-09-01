@@ -4,6 +4,8 @@ import { Context } from '../../Context';
 import ProgressTiles from '../../components/ProfileScore/ProgressTiles';
 import IndivisualProgressComponent from '../../components/ProfileScore/IndivisualProgressComponent';
 import AttemptedTopicList from '../../components/ProfileScore/AttemptedTopicList';
+import BackButton from '../../components/Buttons/BackButton';
+import { Link } from 'react-router-dom';
 
 export default function ProfileScores() {
     const csrftoken = Cookies.get('csrftoken');
@@ -42,9 +44,13 @@ export default function ProfileScores() {
             scoreData && 
             (
                 <div className="xl:w-[70%] lg:w-[85%] m-auto flex flex-col gap-4">
+                    
                     <h1 className="hidden">Scores</h1>
                     
-                    <h2 className="my-6 text-2xl font-semi text-left">
+                    <h2 className="my-6 text-2xl font-semi text-left flex items-center">
+                        <Link to={'/profile/'+loggedUser.username}>
+                            <BackButton />
+                        </Link>
                         Your Progress
                     </h2>
 

@@ -83,13 +83,24 @@ class UserLogout(APIView):
 
 
 class UserView(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
-	authentication_classes = (SessionAuthentication,)
-	##
-	def get(self, request):
-		serializer = UserSerializer(request.user)
-		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    ##
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+    
 # LOGIN CODE END
+
+class UserProfileView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+	##
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        post = PostsSerializer(Post.objects.filter(user=request.user), many=True)
+        userProgress = UserQuizProgressSerializer(UserQuizProgress.objects.filter(user=request.user), many=True)
+        return Response({'user': serializer.data, 'posts': post.data, 'progress':userProgress.data}, status=status.HTTP_200_OK)
 
 
 

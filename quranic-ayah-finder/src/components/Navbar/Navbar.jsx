@@ -19,7 +19,7 @@ export default function Navbar() {
                 {
                     loggedUser ? 
                     <>
-                    <CustomLink to="/profile" 
+                    <CustomLink to={"/profile/"+loggedUser.username} 
                         className="bg-[#55BDB3] text-white py-1 px-3 rounded-md flex min-w-[95px] place-content-center
                                     hover:bg-white hover:text-[#55BDB3] hover:border-[#55BDB3] hover:border-[1.5px]"
                     >

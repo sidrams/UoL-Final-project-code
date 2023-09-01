@@ -40,7 +40,7 @@ export default function PostDetails() {
             })
             .then((response) => response.json())
             .then((json) =>{
-                setPost(json)
+                setPost(json.post)
                 setComments(json.comments)
                 console.log(json)
             })
@@ -108,7 +108,11 @@ export default function PostDetails() {
         // console.log(post)
         // console.log(comments)
      return(
-        <div className="xl:w-[70%] lg:w-[85%] m-auto pb-10 flex">
+     <div className="xl:w-[70%] lg:w-[85%] m-auto ">
+     <BackButton onClick={() =>history.back()}  />
+        <div className="pb-10 flex">
+            
+
             {/* <div className="flex justify-between items-center px-4">
                 <div className="my-6 flex flex-col items-start">
                     <p className="uppercase text-gray-400 tracking-wider font-medium text-sm">post</p>
@@ -136,14 +140,14 @@ export default function PostDetails() {
                         <div className="mb-6 flex flex-col items-start">
                             <p className="uppercase text-gray-400 tracking-wider font-medium text-sm">post</p>
                             {
-                                post.post && 
+                                post && 
                                 (
                                     <>
                                     <h1 className=" text-2xl font-bold">
-                                        {post.post.title}
+                                        {post.title}
                                     </h1>
-                                    <p>
-                                        {post.post.description}
+                                    <p className="my-4 text-mid-gray">
+                                        {post.description}
                                     </p>
                                     </>
                                 )
@@ -222,14 +226,14 @@ export default function PostDetails() {
                 <div >
                     {/* <p>test</p> */}
                     {
-                        featuredPosts.map((post, i) => (
+                        featuredPosts && featuredPosts.map((post, i) => (
                             post.pk != id &&
-                            <Link to={'/post/'+post.pk} key={i} className="mb-0 flex mt-4 tracking-wider bg-custom-gray xl:p-8 p-6  shadow-md  overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
+                            <Link to={'/post/'+post.pk} onClick={() => setPost(post)} key={i} className="mb-0 flex mt-4 tracking-wider bg-custom-gray xl:p-8 p-6  shadow-md  overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                                  {
                                     post.user && (
-                                        <Link to='/profile' className="text-xs font-medium text-sea-green hover:font-medium  flex items-center gap-1">
+                                        <p className="text-xs font-medium text-sea-green hover:font-medium  flex items-center gap-1">
                                             @{post.user.username} <span className="text-mid-gray font-thin "> posted</span>
-                                        </Link>
+                                        </p>
                                     )
                                 }
                                 <p className="mb-2 truncate">{post.title.length < 35 ? post.title : post.title.slice(0,35)}</p>
@@ -248,6 +252,7 @@ export default function PostDetails() {
                     }
                 </div>
             </div>
+        </div>
         </div>
     )
 }

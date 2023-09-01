@@ -1,24 +1,26 @@
 import { MdOutlineQuestionAnswer } from 'react-icons/md'
 import { RiNumbersFill, RiTimeFill,RiTrophyFill } from 'react-icons/ri'
-
-export default function ProgressTiles({scoreData}) {
+import { BiSolidMessageAltEdit } from 'react-icons/bi'
+import TimeDifference from '../Time/TimeDifference'
+export default function ProfileTiles({profileData}) {
     const getAvgScore = () => {
         let scoreCount = 0
-        scoreData.map((score,i) => {
-            scoreCount += score.score
-        })
+        // scoreData.map((score,i) => {
+        //     scoreCount += score.score
+        // })
 
-        return scoreCount > 0 ? Math.round(scoreCount/scoreData.length) : 
-            (scoreData.length == 0 ? 'NA' : 0)
+        // return scoreCount > 0 ? Math.round(scoreCount/scoreData.length) : 'NA'
+        return 0
     }
 
     const gethighestScore = () => {
         let highestScore = 0
-        scoreData.map((score,i) => {
-            highestScore = score.score > highestScore ? score.score : highestScore
-        })
+        // scoreData.map((score,i) => {
+        //     highestScore = score.score > highestScore ? score.score : highestScore
+        // })
 
-        return highestScore
+        // return highestScore
+        return 0
     }
 
     return (
@@ -26,7 +28,7 @@ export default function ProgressTiles({scoreData}) {
             <div className='flex flex-col justify-center items-center gap-3 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green'>
                 <div className='text-3xl flex justify-center items-center gap-4'>
                     <MdOutlineQuestionAnswer />
-                    <span>{scoreData.length}</span>
+                    <span>{profileData.progress.length}</span>
                 </div>
                 <div>
                     Quizzes Attempted
@@ -34,24 +36,40 @@ export default function ProgressTiles({scoreData}) {
             </div>
             <div className='flex flex-col  justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green'>
                 <div className='text-3xl flex justify-center items-center gap-4'>
-                    <RiNumbersFill />
-                    <span>{getAvgScore()}</span>
+                <RiTimeFill />
+                    {/* <span>{scoreData[0] ? new Date(scoreData[0].time_taken_at).toLocaleDateString() : 'NA'}</span> */}
+                    <p className='text-2xl'>
+                        {
+                            profileData.progress.length > 0 ? 
+                            TimeDifference(profileData.progress[0].time_taken_at) + ' ago' :
+                            'NA'
+                        }
+                    </p>
                 </div>
-                Average Score
+                Last Attempted
             </div>
             <div className='flex flex-col justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6  w-[23%] hover:bg-sea-green-opacity hover:text-sea-green'>
                 <div className='text-3xl flex justify-center items-center gap-4'>
-                    <RiTrophyFill />
-                    <span>{gethighestScore()}</span>
+                    <BiSolidMessageAltEdit />
+                    <span>{profileData.posts.length}</span>
                 </div>
-                Highest Score acieved
+                Posts Shared
             </div>
             <div className='flex flex-col justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green'>
                 <div className='text-3xl flex justify-center items-center gap-4'>
                     <RiTimeFill />
-                    <span>{scoreData[0] ? new Date(scoreData[0].time_taken_at).toLocaleDateString() : 'NA'}</span>
+                    {/* <span>{scoreData[0] ? new Date(scoreData[0].time_taken_at).toLocaleDateString() : 'NA'}</span> */}
+                    <p className='text-2xl'>
+                        {/* {TimeDifference(profileData.posts[0].updated)} ago */}
+                        {
+                            profileData.posts.length > 0 ? 
+                            TimeDifference(profileData.posts[0].updated) + ' ago' :
+                            'NA'
+                        }
+                    </p>
+                    
                 </div>
-                Last attempt
+                Last posted
             </div>
         </div>
     )
