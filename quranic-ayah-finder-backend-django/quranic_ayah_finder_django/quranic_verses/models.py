@@ -27,10 +27,11 @@ class Guides(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=500)
     description = models.TextField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     verse_id = models.IntegerField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(blank=True, null=True, upload_to='images/')
 
     class Meta:
         ordering = ['-updated', '-created']

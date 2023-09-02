@@ -2,17 +2,20 @@ import { useContext, useEffect, useState } from "react"
 import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../Context";
 import { AiFillCloseCircle } from "react-icons/ai";
+import Cookies from "js-cookie";
 
 export default function PostForm () {
     const { loggedUser, setLoggedUser } = useContext(Context) // get user logged in
     let { id } = useParams() // get post id, if post is to be updated
-
+    const csrftoken = Cookies.get('csrftoken'); // for making requests to API
+    const [uploadNewImg, setUploadNewImg] = useState(false)
     // form object - to be passed in a request
     const [form, setForm] = useState({ 
         title: '',
         description: '',
         user: loggedUser.id,
         verse_id: '',
+        image: null
     })
     const [update, setUpdate] = useState(false) // true if post has to be updated
     const navigate = useNavigate()
@@ -31,6 +34,7 @@ export default function PostForm () {
                     setForm(json.post)
                     setUpdate(true)
                 } 
+                console.log(json.post)
             })
             .catch(error => console.log(error))
         }, [])
@@ -54,18 +58,31 @@ export default function PostForm () {
 
     // request to update a given post
     const updatePost = async () => {
+        // create form data to pass to request
+        let form_data = new FormData();
+        // pass other parts of the form
+        form.title && form_data.append('title', form.title);
+        form.description && form_data.append('description', form.description);
+        form.verse_id && form_data.append('verse_id', form.verse_id);
+        // pass the user
+        form_data.append('user', form.user);
+        // upload image if a new image is uploaded
+        uploadNewImg && form_data.append('image', form.image, form.image.name);
+
         fetch(`http://127.0.0.1:8000/updatePost/`+id, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
-        .then((response) => response.json())
-        .then((json) =>{
-            navigate('/post/'+json.post_id)
-        })
-        .catch(error => console.log(error))
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                },
+                credentials: 'include',
+                body: form_data
+            })
+            .then((response) => response.json())
+            .then((json) =>{
+                console.log(json)
+                navigate('/post/'+(json.post_id ? json.post_id : json.pk))
+            })
+            .catch(error => console.log(error))
     }
 
     // handle all form values
@@ -73,6 +90,15 @@ export default function PostForm () {
         setForm({
             ...form,
             [e.target.name] : e.target.value
+        })
+        console.log(form)
+    }
+
+    // handle all form values
+    const handleImageChange = (e) => {
+        setForm({
+            ...form,
+            image : e.target.files[0]
         })
         console.log(form)
     }
@@ -114,6 +140,22 @@ export default function PostForm () {
                         <p className="flex  items-center my-2 hidden"> 
                             <label for="id_verse_id" className="w-[20%]">Verse id:</label> 
                             <input type="number"  className="w-[70%] shadow" placeholder="Eg. 17:91 ..." name="verse_id" value={form.verse_id} onChange={handleChange} id="id_verse_id" /> 
+                        </p>
+
+                        <p>
+                            <label for="image" className="w-[20%]">Image :</label> 
+                            
+                            {uploadNewImg && <input type="file"
+                                id="image" value={form.image ? form.image.name : ''}
+                                accept="image/*"  onChange={handleImageChange} />
+                            }
+                            {
+                                form.image && !uploadNewImg &&
+                                <div className="flex flex-col items-center  ">
+                                    <p>{(form.image.substring(form.image.lastIndexOf('/')+1) + ' currently uploaded')}</p>
+                                    <button onClick={() => setUploadNewImg(true)}>Choose Another</button>
+                                </div>
+                            }
                         </p>
 
                         {/* submit button will show either update or create accordingly */}

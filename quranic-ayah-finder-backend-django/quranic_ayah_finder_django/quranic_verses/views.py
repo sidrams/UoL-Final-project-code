@@ -13,6 +13,7 @@ from .serializers import *
 from .forms import *
 
 from rest_framework import viewsets
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .search_quranic_verse.searchGoogleVisionAPI import detectText
 import json
@@ -22,6 +23,36 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from rest_framework import permissions, status
 from .validations import *
+
+
+# all endpoints
+# class Endpoints(APIView):
+#     def get(self, request):
+#         admin/
+# api/images/
+# ^search/$ [name='search']
+# register [name='register']
+# login [name='login']
+# logout [name='logout']
+# user [name='user']
+# profile [name='user_profile']
+# profile/<str:username> [name='public_user_profile']
+# api/guideTopics [name='guide_topics']
+# api/quizQuestions [name='quiz_questions']
+# api/quizQuestions/<int:pk> [name='quiz_questions']
+# api/UserQuizProgress [name='quiz_progress_for_user']
+# api/UserQuizProgress/topic/<int:pk> [name='quiz_progress_for_user']
+# api/guideContent [name='guide contents']
+# api/guideContent/topic/<int:pk> [name='guide contents']
+# ^api/posts/$ [name='posts']
+# ^api/posts/([0-9]*)$ [name='posts_details']
+# ^createPost$ [name='create-post']
+# ^updatePost/([0-9]*)$ [name='update-post']
+# ^deletePost/([0-9]*)$ [name='delete-post']
+# api/comments/posts/<int:pk> [name='comments_for_posts']
+# api/add/comments/posts/<int:pk> [name='comments_for_posts']
+# ^media/(?P<path>.*)$
+
 
 # main search bar endpoint
 @api_view(['GET', 'POST'])
@@ -173,6 +204,45 @@ def updatePost(request,pk):
         return Response('Post not updated yet')
     return Response(serializer.data)
 
+class PostViewSet(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get(self, request, *args, **kwargs):
+        posts = Post.objects.all()
+        serializer = PostsSerializer(posts, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, pk, *args, **kwargs):
+        # user = User.objects.get(pk=request.data['user'])
+        post = Post.objects.get(pk=pk)
+        # request.data['user'] = UserSerializer(instance=user) #UserSerializer(request.user)
+        print(request.data)
+
+        posts_serializer = PostsSerializer(data=request.data,instance=post, partial=True)
+        if posts_serializer.is_valid():
+            posts_serializer.save()
+            return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', posts_serializer.errors)
+            return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+# class PostView(APIView):
+
+#     def get(self, request, *args, **kwargs):
+#         posts = Post.objects.all()
+#         serializer = PostSerializer(posts, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request, *args, **kwargs):
+#         posts_serializer = PostSerializer(data=request.data)
+#         if posts_serializer.is_valid():
+#             posts_serializer.save()
+#             return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
+#         else:
+#             print('error', posts_serializer.errors)
+#             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # delete a post
 @api_view(['GET', 'POST'])
 def deletePost(request,pk):
