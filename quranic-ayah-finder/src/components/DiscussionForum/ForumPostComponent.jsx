@@ -47,7 +47,7 @@ export default function ForumPostComponent({posts, inputText}) {
                         </Link>
 
                         {   // toggle menu with options to update or delete posts
-                            loggedUser && loggedUser.id == post.user.id && 
+                            loggedUser && post.user && loggedUser.id == post.user.id && 
                             <ForumPostToggleMenu setPost_id={setPost_id} setShowDelete={setShowDelete} post={post} />
                         }
                     </div>

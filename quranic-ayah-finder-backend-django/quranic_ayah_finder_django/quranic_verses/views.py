@@ -204,21 +204,49 @@ def updatePost(request,pk):
         return Response('Post not updated yet')
     return Response(serializer.data)
 
-class PostViewSet(APIView):
+class CreatePostViewSet(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (SessionAuthentication,)
     parser_classes = (MultiPartParser, FormParser)
 
-    def get(self, request, *args, **kwargs):
-        posts = Post.objects.all()
-        serializer = PostsSerializer(posts, many=True)
-        return Response(serializer.data)
+    # create post
+    def post(self, request, *args, **kwargs):
+        post = Post.objects.create(user=request.user)
+        data = request.data
+        # data['user'] = request.user
+        posts_serializer = PostsSerializer(data=data,instance=post, partial=True)
+        if posts_serializer.is_valid():
+            posts_serializer.save()
+            return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', posts_serializer.errors)
+            return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # # post = Post.objects.get(pk=pk)
+        # data = request.data
+        # # data['user']
+        # user = User.objects.get(id=request.user.id)
+        # # data['user'] = request.user
+        # post = Post.objects.create(user=user, **data)
 
+        # # post = Post.objects.create(user=user , **data)
+        # # post.user = user
+        # # post.save()
+        # posts_serializer = PostsSerializer(instance=post)
+        # if posts_serializer.is_valid():
+        #     # posts_serializer.create()
+        #     return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
+        # else:
+        #     print('error', posts_serializer.errors)
+        #     return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class PostViewSet(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+    parser_classes = (MultiPartParser, FormParser)
+        
+    # update post
     def post(self, request, pk, *args, **kwargs):
-        # user = User.objects.get(pk=request.data['user'])
         post = Post.objects.get(pk=pk)
-        # request.data['user'] = UserSerializer(instance=user) #UserSerializer(request.user)
-        print(request.data)
 
         posts_serializer = PostsSerializer(data=request.data,instance=post, partial=True)
         if posts_serializer.is_valid():

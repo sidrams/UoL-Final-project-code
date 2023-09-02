@@ -40,35 +40,44 @@ export default function PostForm () {
         }, [])
     }
 
-    // request to create a post
-    const createPost = async () => {
-        fetch(`http://127.0.0.1:8000/createPost`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
-        .then((response) => response.json())
-        .then((json) =>{
-            navigate('/post/'+json.post_id)
-        })
-        .catch(error => console.log(error))
-    }
-
-    // request to update a given post
-    const updatePost = async () => {
-        // create form data to pass to request
+    // handle and format all form data pass with API requests
+    const handleFormData = () => {
+        // create form data 
         let form_data = new FormData();
         // pass other parts of the form
         form.title && form_data.append('title', form.title);
         form.description && form_data.append('description', form.description);
         form.verse_id && form_data.append('verse_id', form.verse_id);
+        
         // pass the user
+        // update && 
         form_data.append('user', form.user);
+        
         // upload image if a new image is uploaded
-        uploadNewImg && form_data.append('image', form.image, form.image.name);
+        (uploadNewImg || !update) && form_data.append('image', form.image, form.image.name);
+        console.log(form_data)
+        update ? updatePost(form_data) : createPost(form_data)
+    }
+    // request to create a post
+    const createPost = async (form_data) => {
+        fetch(`http://127.0.0.1:8000/createPost`, {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            body: form_data
+        })
+        .then((response) => response.json())
+        .then((json) =>{
+            console.log(json)
+            navigate('/post/'+(json.post_id ? json.post_id : json.pk))
+        })
+        .catch(error => console.log(error))
+    }
 
+    // request to update a given post
+    const updatePost = async (form_data) => {
         fetch(`http://127.0.0.1:8000/updatePost/`+id, {
                 method: "POST",
                 headers: {
@@ -145,12 +154,12 @@ export default function PostForm () {
                         <p>
                             <label for="image" className="w-[20%]">Image :</label> 
                             
-                            {uploadNewImg && <input type="file"
-                                id="image" value={form.image ? form.image.name : ''}
+                            {(!update || uploadNewImg) && <input type="file"
+                                id="image" 
                                 accept="image/*"  onChange={handleImageChange} />
                             }
                             {
-                                form.image && !uploadNewImg &&
+                                form.image && !uploadNewImg && update &&
                                 <div className="flex flex-col items-center  ">
                                     <p>{(form.image.substring(form.image.lastIndexOf('/')+1) + ' currently uploaded')}</p>
                                     <button onClick={() => setUploadNewImg(true)}>Choose Another</button>
@@ -162,7 +171,8 @@ export default function PostForm () {
                         <button type="submit" value="Submit" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                update ? updatePost() : createPost()
+                                // update ? updatePost() : createPost()
+                                handleFormData()
                             }} 
                             className="shadow-lg my-2 bg-sea-green hover:opacity-95"
                         >

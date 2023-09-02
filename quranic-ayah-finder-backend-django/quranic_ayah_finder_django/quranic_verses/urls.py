@@ -31,7 +31,8 @@ urlpatterns = [
     # posts and comments related endpoints
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),
     re_path(r'^api/posts/([0-9]*)$', views.Posts_detail, name='posts_details'),
-    re_path(r'^createPost$', views.createPost, name='create-post'),
+    # re_path(r'^createPost$', views.createPost, name='create-post'),
+    re_path(r'^createPost$', views.CreatePostViewSet.as_view(), name='create-post'),
     # re_path(r'^updatePost/([0-9]*)$', views.updatePost, name='update-post'),
     re_path(r'^updatePost/([0-9]*)$', views.PostViewSet.as_view(), name='update-post'),
     re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
