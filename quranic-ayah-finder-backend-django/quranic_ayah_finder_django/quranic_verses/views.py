@@ -24,34 +24,131 @@ from rest_framework.views import APIView
 from rest_framework import permissions, status
 from .validations import *
 
-
 # all endpoints
-# class Endpoints(APIView):
-#     def get(self, request):
-#         admin/
-# api/images/
-# ^search/$ [name='search']
-# register [name='register']
-# login [name='login']
-# logout [name='logout']
-# user [name='user']
-# profile [name='user_profile']
-# profile/<str:username> [name='public_user_profile']
-# api/guideTopics [name='guide_topics']
-# api/quizQuestions [name='quiz_questions']
-# api/quizQuestions/<int:pk> [name='quiz_questions']
-# api/UserQuizProgress [name='quiz_progress_for_user']
-# api/UserQuizProgress/topic/<int:pk> [name='quiz_progress_for_user']
-# api/guideContent [name='guide contents']
-# api/guideContent/topic/<int:pk> [name='guide contents']
-# ^api/posts/$ [name='posts']
-# ^api/posts/([0-9]*)$ [name='posts_details']
-# ^createPost$ [name='create-post']
-# ^updatePost/([0-9]*)$ [name='update-post']
-# ^deletePost/([0-9]*)$ [name='delete-post']
-# api/comments/posts/<int:pk> [name='comments_for_posts']
-# api/add/comments/posts/<int:pk> [name='comments_for_posts']
-# ^media/(?P<path>.*)$
+class AllEndpoints(APIView):
+    endpoints = {
+        'Search related url' : [
+            {
+                'path': 'search/',
+                'response': 'pass an image on the POST request to access the Google Vision API for text recognition',
+                'method': 'GET*, POST'
+            }
+        ],
+        'User related urls' : [
+            {
+                'path': 'register',
+                'response': 'to register a user',
+                'method': 'POST'
+            },
+            {
+                'path': 'login',
+                'response': 'to login a user',
+                'method': 'POST'
+            },
+            {
+                'path': 'logout',
+                'response': 'to logout a user',
+                'method': 'POST'
+            },
+            {
+                'path': 'user',
+                'response': 'to get user infor of logged in user',
+                'method': 'POST'
+            },
+            {
+                'path': 'profile',
+                'response': 'to view profile of the logged in user',
+                'method': 'POST'
+            },
+            {
+                'path': 'profile/<str:username>',
+                'response': 'to view profile of any public user with a username',
+                'method': 'GET'
+            },
+        ],
+        'Quides and Quizzes related urls' : [
+            {
+                'path': 'api/guideTopics',
+                'response': 'get a list of all the topics',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/quizQuestions',
+                'response': 'get a list of all the quiz questions for all the topics',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/quizQuestions/<int:pk>',
+                'response': 'get a list of all the quiz questions for topic with id "pk"',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/UserQuizProgress',
+                'response': 'get a list of all the quiz progresses saved for the logged in user',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/UserQuizProgress/topic/<int:pk>',
+                'response': 'get a list of all the quiz progresses for the topic with id "pk" saved for the logged in user',
+                'method': 'GET, POST'
+            },
+            {
+                'path': 'api/guideContent',
+                'response': 'get a list of all the guide contents for all the topics',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/guideContent/topic/<int:pk>',
+                'response': 'get a list of all the guide contents for the topic with id "pk"',
+                'method': 'GET'
+            }
+        ],
+        'Posts and Comments related endpoints' : [
+            {
+                'path': 'api/posts/',
+                'response': 'get a list of all posts',
+                'method': 'GET, POST'
+            },
+            {
+                'path': 'api/posts/([0-9]*)',
+                'response': 'get a details of the post with the given id',
+                'method': 'GET, POST'
+            },
+            {
+                'path': 'createPost',
+                'response': 'pass data to create a post',
+                'method': 'POST'
+            },
+            {
+                'path': 'updatePost/([0-9]*)',
+                'response': 'pass data to update the post with the given id',
+                'method': 'POST'
+            },
+            {
+                'path': 'deletePost/([0-9]*)',
+                'response': 'delete the post with the given id',
+                'method': 'POST'
+            },
+            {
+                'path': 'api/comments/posts/<int:pk>',
+                'response': 'get all comments fot the post with the given id',
+                'method': 'GET'
+            },
+            {
+                'path': 'api/add/comments/posts/<int:pk>',
+                'response': 'add a comment fot the post with the given id',
+                'method': 'POST'
+            }
+        ],
+
+    }
+    def get(self, request):
+        return Response(self.endpoints)
+
+
+
+
+
 
 
 # main search bar endpoint
@@ -168,42 +265,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset=Post.objects.all().order_by('-id')
     serializer_class=PostsSerializer
 
-
-# create a post
-@api_view(['GET', 'POST'])
-def createPost(request):
-    if request.method == 'GET':
-        form = PostForm()
-        context = {'form': form}
-        return HttpResponse(form.as_p())
-    
-    if request.method == 'POST':
-        jsonResponse = json.loads(request.body.decode('utf-8'))
-        form = PostForm(jsonResponse)
-        if form.is_valid():
-            post = form.save()
-            print(post.id)
-            return Response({'message':'Post added', 'post_id': post.id})
-        return Response('Post not added yet')
-
-
-# update a post
-@api_view(['GET', 'POST'])
-def updatePost(request,pk):
-    post = Post.objects.get(pk=pk)
-    serializer = PostsSerializer(post, context={'request': request})
-    
-    if request.method == 'POST':
-        jsonResponse = json.loads(request.body.decode('utf-8'))
-        form = PostForm(jsonResponse, instance=post)
-        print(form)
-        if form.is_valid():
-            post = form.save()
-            print(post.id)
-            return Response({'message':'Post updated', 'post_id': post.id})
-        return Response('Post not updated yet')
-    return Response(serializer.data)
-
+# function to create a post
 class CreatePostViewSet(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (SessionAuthentication,)
@@ -213,7 +275,6 @@ class CreatePostViewSet(APIView):
     def post(self, request, *args, **kwargs):
         post = Post.objects.create(user=request.user)
         data = request.data
-        # data['user'] = request.user
         posts_serializer = PostsSerializer(data=data,instance=post, partial=True)
         if posts_serializer.is_valid():
             posts_serializer.save()
@@ -221,24 +282,8 @@ class CreatePostViewSet(APIView):
         else:
             print('error', posts_serializer.errors)
             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # # post = Post.objects.get(pk=pk)
-        # data = request.data
-        # # data['user']
-        # user = User.objects.get(id=request.user.id)
-        # # data['user'] = request.user
-        # post = Post.objects.create(user=user, **data)
-
-        # # post = Post.objects.create(user=user , **data)
-        # # post.user = user
-        # # post.save()
-        # posts_serializer = PostsSerializer(instance=post)
-        # if posts_serializer.is_valid():
-        #     # posts_serializer.create()
-        #     return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
-        # else:
-        #     print('error', posts_serializer.errors)
-        #     return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+# function to update a post
 class PostViewSet(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (SessionAuthentication,)
@@ -256,21 +301,6 @@ class PostViewSet(APIView):
             print('error', posts_serializer.errors)
             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-# class PostView(APIView):
-
-#     def get(self, request, *args, **kwargs):
-#         posts = Post.objects.all()
-#         serializer = PostSerializer(posts, many=True)
-#         return Response(serializer.data)
-
-#     def post(self, request, *args, **kwargs):
-#         posts_serializer = PostSerializer(data=request.data)
-#         if posts_serializer.is_valid():
-#             posts_serializer.save()
-#             return Response(posts_serializer.data, status=status.HTTP_201_CREATED)
-#         else:
-#             print('error', posts_serializer.errors)
-#             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # delete a post
 @api_view(['GET', 'POST'])
 def deletePost(request,pk):
@@ -304,7 +334,6 @@ class AddCommentsViewSet(APIView):
         serializer = CommentSerializer(comment)
      
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # count all comments for a given post with id 'pk'
 class CountCommentsViewSet(APIView):

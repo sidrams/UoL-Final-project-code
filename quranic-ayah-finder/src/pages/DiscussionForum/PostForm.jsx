@@ -58,6 +58,8 @@ export default function PostForm () {
         console.log(form_data)
         update ? updatePost(form_data) : createPost(form_data)
     }
+
+
     // request to create a post
     const createPost = async (form_data) => {
         fetch(`http://127.0.0.1:8000/createPost`, {
@@ -100,16 +102,14 @@ export default function PostForm () {
             ...form,
             [e.target.name] : e.target.value
         })
-        console.log(form)
     }
 
-    // handle all form values
+    // handle image files
     const handleImageChange = (e) => {
         setForm({
             ...form,
             image : e.target.files[0]
         })
-        console.log(form)
     }
 
     return (
@@ -152,13 +152,15 @@ export default function PostForm () {
                         </p>
 
                         <p>
+                            {/* if new post or image to be updated */}
                             <label for="image" className="w-[20%]">Image :</label> 
-                            
                             {(!update || uploadNewImg) && <input type="file"
                                 id="image" 
                                 accept="image/*"  onChange={handleImageChange} />
                             }
                             {
+                                // if post is being updated, ask the user if they want to update image
+                                // and set 'uploadNewImg' accordingly
                                 form.image && !uploadNewImg && update &&
                                 <div className="flex flex-col items-center  ">
                                     <p>{(form.image.substring(form.image.lastIndexOf('/')+1) + ' currently uploaded')}</p>

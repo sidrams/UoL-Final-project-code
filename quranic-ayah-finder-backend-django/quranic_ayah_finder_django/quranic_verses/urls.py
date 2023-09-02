@@ -7,6 +7,9 @@ from . import views
 # router.register(r'createPost',PostViewSet)
 
 urlpatterns = [
+    # all endpoints
+    path('', views.AllEndpoints.as_view(), name='all_endpoints'),
+
     # search related url
     re_path(r'^search/$', views.Search_list, name='search'),
 
@@ -31,9 +34,7 @@ urlpatterns = [
     # posts and comments related endpoints
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),
     re_path(r'^api/posts/([0-9]*)$', views.Posts_detail, name='posts_details'),
-    # re_path(r'^createPost$', views.createPost, name='create-post'),
     re_path(r'^createPost$', views.CreatePostViewSet.as_view(), name='create-post'),
-    # re_path(r'^updatePost/([0-9]*)$', views.updatePost, name='update-post'),
     re_path(r'^updatePost/([0-9]*)$', views.PostViewSet.as_view(), name='update-post'),
     re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
     path('api/comments/posts/<int:pk>', views.CommentsViewSet.as_view(), name="comments_for_posts"),
