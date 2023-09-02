@@ -6,11 +6,11 @@ import { Link } from "react-router-dom"
 import BackButton from "../../components/Buttons/BackButton"
 import SavedSearchesComponent from "../../components/ProfileSavedSearches/SavedSearchesComponent"
 
+// 'Saved Searches' PAGE UNDER PROFILE
 export default function ProfileSavedSearches() {
-    // const { username } = useParams() // username of the user to view the profile 
     const { loggedUser, setLoggedUser } = useContext(Context) // get logged in user
-    const csrftoken = Cookies.get('csrftoken');
     const [savedSearches, setSavedSearches] = useState() // profile data
+    const csrftoken = Cookies.get('csrftoken');
     
     // handle search bar input
     const [inputText, setInputText] = useState('') 

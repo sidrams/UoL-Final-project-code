@@ -186,8 +186,8 @@ class SaveSearchDetailViewset(APIView):
         serializer = UserSavedVerseSerializer(search)
         return Response(serializer.data)
     
-    def post(self, request):
-        search = UserSavedVerse.objects.create(user=request.user)
+    def post(self, request, pk):
+        search = UserSavedVerse.objects.create(id=pk)
         data = request.data
         serializer = UserSavedVerseSerializer(data=data, instance=search, partial=True)
         if serializer.is_valid():
@@ -196,6 +196,13 @@ class SaveSearchDetailViewset(APIView):
         else:
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, pk):
+        search = UserSavedVerse.objects.get(id=pk)
+        search.delete()
+        return Response('post deleted',status=status.HTTP_200_OK)
+
+
 # LOGIN CODE -------------------------------------------------------
 # user registeration
 class UserRegister(APIView):

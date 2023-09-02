@@ -6,13 +6,10 @@ import Tafsir from "../../components/VerseDetails/Tafsir";
 import Translations from "../../components/VerseDetails/Translations";
 import Locations from "../../components/VerseDetails/Locations";
 import BackButton from "../../components/Buttons/BackButton";
-
-// saving verse related
-// import { BsBookmarkFill } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
-// import SaveSearchComponent from "./SaveSearchComponent";
 
+// SHOW THE DETAILS OF THE CHOSEN VERSE FROM USER'S SAVED SEARCHES
 export default function ProfileSavedSearchesVerseDetails() {
     const { id } = useParams()
     const navigate = useNavigate()
@@ -26,11 +23,8 @@ export default function ProfileSavedSearchesVerseDetails() {
     const [verseByWords, setVerseByWords] = useState() // each word with translation and transliteration
     const [tafsir, setTafsir] = useState() //tafsir
 
-    // const [showSaveVerse, setShowSaveVerse] = useState(false) // show the component to allow user to save post 
-    
     const getQueries =(chapterID, verseID) => [
         {
-            // query : 'https://api.quran.com/api/v4/verses/by_key/'+chapterID+':'+verseID+'?language=en&words=true&translations=131&tafsirs=169&word_fields=text_uthmani&fields=chapter_id&tafsirs=169',
             query : 'https://api.quran.com/api/v4/verses/by_key/'+chapterID+':'+verseID+'?language=en&words=true&translations=131,95,85,203,207,17,19&tafsirs=169&word_fields=text_uthmani&fields=chapter_id&tafsirs=169&fields=text_uthmani,translations,image_url,image_width,audio&translation_fields=resource_name',
             setVar : (data) => {console.log(data.verse);setVerseByWords(data.verse)} 
         },
@@ -63,17 +57,17 @@ export default function ProfileSavedSearchesVerseDetails() {
         })
         .then((response) => response.json())
         .then((json) =>{
-            setChosenVerse(json)
-            console.log(json)
+            setChosenVerse(json) // set chosen verse
+            // set chapter id and verse id respectively for queries
             setChapterID(json.verse_key.split(':')[0])
             setVerseID(json.verse_key.split(':')[1])
+            // call the function to fetch data by calling all API queries
             getData(json.verse_key.split(':'))
         })
         .catch(error => console.log(error))
     }, [])
 
     // fetch data for all sections 
-    // useEffect(() => {
     const getData = (IDs) => {
         const queries = getQueries(IDs[0],IDs[1])
         console.log(queries)
@@ -89,25 +83,36 @@ export default function ProfileSavedSearchesVerseDetails() {
             .catch(error => console.log(error))
         })
     }
-    // , [])
 
     // get 21st for 21, etc...
     const getOrdinalNum = (n) => {
         return n + (n > 0 ? ["th", "st", "nd", "rd"][(n % 100 > 10 && n % 100 < 14) || n % 10 > 3 ? 0 : n % 10] : '');
     }
-    console.log(verseByWords)
 
     return(
         chosenVerse && 
         <div className="text-left  flex m-auto gap-4 p-0 w-[90%]"> 
         <div className="w-[95%] m-auto">
+            {/* go back button */}
             <div className='flex justify-between'>
                 <BackButton onClick={() => navigate('/profile/savedSearches')} />
-                {/* <BackButton onClick={() => setShowSaveVerse(true)} text={'save ayah'} icon={<BsBookmarkFill />} /> */}
             </div>
+            {/* arabic text of the verse */}
             <div className="mb-4 text-center text-3xl p-6">
                 {verseByWords && verseByWords.text_uthmani}
             </div>
+
+            {   // USER NOTES
+                chosenVerse &&
+                (
+                    <div className="mb-4 bg-custom-gray p-6 shadow">
+                        <h2>Your Notes</h2>
+                        <p className="text-sm text-slate-500 my-1" >
+                            {chosenVerse.user_notes}
+                        </p>
+                    </div>
+                )
+            }
 
             {   // LOCATION
                 verseByWords && chapter &&
@@ -162,12 +167,5 @@ export default function ProfileSavedSearchesVerseDetails() {
             }
         </div>
         </div>
-        // : 
-        // (   // show component to save search if user prompts to
-        //     // <SaveSearchComponent 
-        //     //     setShowSaveVerse={setShowSaveVerse} chosenVerse={chosenVerse} verseByWords={verseByWords} 
-        //     //     setChosenVerse={setChosenVerse} resetSearch={resetSearch} setShowDetails={setShowDetails} />
-        //     ''
-        // )
     )
 }

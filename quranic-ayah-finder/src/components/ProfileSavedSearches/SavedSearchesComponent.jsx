@@ -3,7 +3,9 @@ import TimeDifference from "../Time/TimeDifference";
 import { useContext, useState } from "react";
 import { Context } from "../../Context";
 import SavedSearchToggleMenu from "./SavedSearchToggleMenu";
+import SavedVerseDeleteConfirmation from "./SavedVerseDeleteConfirmation";
 
+// COMPONENT SHOWN ON USER PROFILE FOR 'Saved Searches'
 export default function SavedSearchesComponent({savedSearches, inputText}) {
     const { loggedUser, setLoggedUser } = useContext(Context)
     const [showDelete, setShowDelete] = useState(false) // show delete confirmation modal if prompted
@@ -48,6 +50,9 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
                             (
                                 <SavedSearchToggleMenu search={search} setShowDelete={setShowDelete} />
                             ) 
+                        }
+                        {
+                            showDelete && <SavedVerseDeleteConfirmation search_id={search.id} setShowDelete={setShowDelete} />
                         }
                     </div>
 

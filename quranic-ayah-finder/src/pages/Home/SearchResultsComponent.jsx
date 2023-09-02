@@ -7,6 +7,8 @@ import ResultHeader from "../../components/SearchResults/ResultHeader"
 import PaginatorComponent from "../../components/SearchResults/Paginator"
 import ImageResultHeader from "../../components/SearchResults/ImageResultHeader";
 
+// COMPONENT SHOWN AFTER USER SEARCHES USING TEXT OR IMAGE ON MAIN PAGE 
+// TO SHOW ALL RETRIEVED RESULTS
 export default function SearchResultsComponent({searchedText, fetchData, resetSearch, verseDetails, exactMatch, setExactMatch}) {
     const [chosenVerse, setChosenVerse] = useState() // the verse selected by user to view
     const [showDetails, setShowDetails] = useState(false) // show details component for the chosen verse

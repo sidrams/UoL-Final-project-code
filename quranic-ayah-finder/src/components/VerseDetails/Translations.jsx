@@ -32,15 +32,6 @@ export default function Translations({chosenVerse, verseByWords}) {
                 </>
             )
         }
-        {/* {   // display source/name of the translation displayed
-            chosenVerse.translations && chosenVerse.translations.map((translation,i) => (
-                <p className="text-sm text-slate-500 my-1">
-                    <span dangerouslySetInnerHTML={{__html: translation.text }} >
-                    </span> 
-                    <span className="text-slate-400"> ({translation.name})</span>
-                </p>
-            ))
-        } */}
         </>
     )
 }
