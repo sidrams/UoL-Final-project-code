@@ -20,10 +20,14 @@ export default function Quiz(props) {
     const [endQuiz, setEndQuiz] = useState(false) // show last slide with score when quiz ends
     const [scoreSaved, setScoreSaved] = useState(false) // set to true is user successfully saved the score
     const [showLogin, setShowLogin] = useState(false) // show login component if user wants to save progress
+    const [questionNumber, setQuestionNumber] = useState()
     // show message if no answer selected by user
     const toast = useRef(null); 
-    const show = () => {
+    const show = () => { // message for no answer selected
         toast.current.show({ severity: 'info', summary: '', detail: 'Please select an answer' });
+    };
+    const show2 = () => { // message for user not logged in 
+        toast.current.show({ severity: 'info', summary: '', detail: 'User needs to be logged in to save progress' });
     };
 
     // get questions for the chosen topic
@@ -35,6 +39,7 @@ export default function Quiz(props) {
             .then((json) =>{
                 setQuizQuestions(json.Questions)
                 setCurrentQuestion(json.Questions[0])
+                setQuestionNumber(1)
             })
             .catch(error => console.log(error))
     }, [])
@@ -47,13 +52,14 @@ export default function Quiz(props) {
                 setCurrentQuestion(quizQuestions[index + 1])
                 setChosenAnswer(null)
                 setDisabled(false)
+                setQuestionNumber(questionNumber+1)
             }
             else {
                 setEndQuiz(true)
             }
         } 
         else {
-            // alert('no answer se;ected')
+            // show message if no answer is selected
             show()
         }
         
@@ -80,21 +86,25 @@ export default function Quiz(props) {
 
     // saves progress for a logged in user
     const saveProgress = () => {
-        loggedUser ? 
-        fetch(`http://127.0.0.1:8000/api/UserQuizProgress/topic/`+id, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            credentials: 'include',
-            body: JSON.stringify({"score":score})
-        })
-        .then((response) => setScoreSaved(true))
-        .catch(error => console.log(error))
-
-        : setShowLogin(true); alert('User needs to be Logged in to save progress')
+        if(loggedUser) {
+            fetch(`http://127.0.0.1:8000/api/UserQuizProgress/topic/`+id, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                credentials: 'include',
+                body: JSON.stringify({"score":score})
+            })
+            .then((response) => setScoreSaved(true))
+            .catch(error => console.log(error))
+        }
+        else {
+            // if user not logged in show component and displat message
+            setShowLogin(true); 
+            show2()
+        }
     }
 
     return (
@@ -122,7 +132,7 @@ export default function Quiz(props) {
         {
             currentQuestion ? (!endQuiz ? 
             //  show quiz questions
-            <QuizQuestion currentQuestion={currentQuestion} disabled={disabled} chosenAnswer={chosenAnswer} handleClick={handleClick} nextQuestion={nextQuestion} />
+            <QuizQuestion currentQuestion={currentQuestion} disabled={disabled} chosenAnswer={chosenAnswer} handleClick={handleClick} nextQuestion={nextQuestion} questionNumber={questionNumber} totalQuestions={quizQuestions.length} />
             : 
             // "end of quiz"
             <EndQuizComponent id={id} score={score} scoreSaved={scoreSaved} restartQuiz={restartQuiz} saveProgress={saveProgress} />

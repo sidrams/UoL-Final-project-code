@@ -1,4 +1,4 @@
-export default function QuizQuestion({currentQuestion, disabled, chosenAnswer, handleClick, nextQuestion}) {
+export default function QuizQuestion({currentQuestion, disabled, chosenAnswer, handleClick, nextQuestion, questionNumber, totalQuestions}) {
     // quiz question slide that renders and displays all the questions
 
     // get color for button to be displayed
@@ -10,8 +10,11 @@ export default function QuizQuestion({currentQuestion, disabled, chosenAnswer, h
     return (
         <div className="bg-sea-green p-6 py-8 lg:w-[60%] m-auto rounded max-w-[700px] min-h-[70vh] flex flex-col justify-between">
             {/* question */}
-            <h3 className="font-medium text-2xl m-6">{currentQuestion.question}</h3>
-            
+            <div>
+            <p className="text-sm text-gray-500 font-medium">Question : {questionNumber} / {totalQuestions}</p>
+
+            <h3 className="font-medium text-2xl mx-6 mb-6">{currentQuestion.question}</h3>
+            </div>
             {/* answer options */}
             <div className="flex flex-col gap-4 px-24 my-4">
                 {   // list of answers as an array, displayed
@@ -40,6 +43,7 @@ export default function QuizQuestion({currentQuestion, disabled, chosenAnswer, h
 
             {/* next button */}
             <button onClick={nextQuestion} className="w-[25%] mx-auto mt-[3%]">Next</button>
+
         </div>
     )
     
