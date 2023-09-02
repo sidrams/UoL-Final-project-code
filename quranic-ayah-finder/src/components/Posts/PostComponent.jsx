@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import BackButton from "../Buttons/BackButton";
-import { SlOptionsVertical } from "react-icons/sl";
 import TimeDifference from "../Time/TimeDifference";
 import { BiSolidUserCircle } from "react-icons/bi";
 import { MdModeComment } from "react-icons/md";
@@ -46,13 +44,6 @@ export default function PostComponent({posts, inputText}) {
                         {   // toggle menu with delete option for owners of post
                             loggedUser && loggedUser.id == post.user.id && 
                             (
-                                // <BackButton 
-                                //     icon={<SlOptionsVertical />} 
-                                //     customStyle="p-0 bg-transparent"
-                                //     customIconStyle="text-[1rem]"
-                                //     onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)} } 
-                                //     aria-controls="popup_menu_right" aria-haspopup 
-                                // />
                                 <ForumPostToggleMenu setPost_id={setPost_id} setShowDelete={setShowDelete} post={post} />
                             ) 
                         }

@@ -27,7 +27,6 @@ export default function PostDetails() {
         .then((response) => response.json())
         .then((json) =>{
             setPost(json.post)
-            console.log(json.post)
             setComments(json.comments)
         })
         .catch(error => console.log(error))
@@ -41,7 +40,6 @@ export default function PostDetails() {
         .then((response) => response.json())
         .then((json) =>{
             setFeaturedPosts(json.slice(0,3))
-            console.log(json.slice(0,3))
         })
         .catch(error => console.log(error))
     }, [])
