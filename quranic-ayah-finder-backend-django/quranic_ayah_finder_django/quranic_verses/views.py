@@ -235,7 +235,8 @@ class UserProfileView(APIView):
         serializer = UserSerializer(request.user)
         post = PostsSerializer(Post.objects.filter(user=request.user), many=True)
         userProgress = UserQuizProgressSerializer(UserQuizProgress.objects.filter(user=request.user), many=True)
-        return Response({'user': serializer.data, 'posts': post.data, 'progress':userProgress.data}, status=status.HTTP_200_OK)
+        savedSearches = UserSavedVerseSerializer(UserSavedVerse.objects.filter(user=request.user), many=True)
+        return Response({'user': serializer.data, 'posts': post.data, 'progress':userProgress.data, 'savedSearches':savedSearches.data}, status=status.HTTP_200_OK)
     
 # public user profile 
 class PublicUserProfileView(APIView):
@@ -245,7 +246,8 @@ class PublicUserProfileView(APIView):
         serializer = UserSerializer(user)
         post = PostsSerializer(Post.objects.filter(user=user), many=True)
         userProgress = UserQuizProgressSerializer(UserQuizProgress.objects.filter(user=user), many=True)
-        return Response({'user': serializer.data, 'posts': post.data, 'progress':userProgress.data}, status=status.HTTP_200_OK)
+        savedSearches = UserSavedVerseSerializer(UserSavedVerse.objects.filter(user=user), many=True)
+        return Response({'user': serializer.data, 'posts': post.data, 'progress':userProgress.data, 'savedSearches':savedSearches.data}, status=status.HTTP_200_OK)
 
 # get all posts
 @api_view(['GET', 'POST'])

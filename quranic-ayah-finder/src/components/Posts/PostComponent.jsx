@@ -10,9 +10,8 @@ import { Context } from "../../Context";
 export default function PostComponent({posts, inputText}) {
     const { loggedUser, setLoggedUser } = useContext(Context)
     
-    
     return (
-        // <p>post component</p>
+        // post component
         <div className="w-3/4 mt-8">
         {!posts || posts.length <= 0 ? 
         (

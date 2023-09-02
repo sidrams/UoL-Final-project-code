@@ -3,6 +3,7 @@ import BackButton from "../Buttons/BackButton";
 import { RiNumbersFill } from "react-icons/ri";
 import { useContext } from "react";
 import { Context } from "../../Context";
+import { BsBookmarkFill } from "react-icons/bs";
 
 export default function ProfileHeader() {
     const { username } = useParams()
@@ -11,7 +12,7 @@ export default function ProfileHeader() {
     // username of user and link to user progress page ----------
     return (
         <div className="flex justify-between">
-            <div className='flex flex-col justify-between items-start tracking-wide w-3/4'>
+            <div className='flex flex-col justify-between items-start tracking-wide w-2/3'>
                 <h1 className="text-2xl font-semi text-left cap">
                     {loggedUser.username == username ? 'Your Profile' : ('@'+ username + "'s Profile")}
                 </h1>
@@ -26,6 +27,9 @@ export default function ProfileHeader() {
 
             {/* link to profile scores page */}
             <Link to="/profile/scores"><BackButton text="View All scores" icon={<RiNumbersFill />}/></Link>
+
+            {/* link to saved searches page, only logged in users can see their own searches */}
+            {loggedUser.username == username && <Link to="/profile/savedSearches"><BackButton text="Saved Searches" icon={<BsBookmarkFill />}/></Link>}
         </div>
     )
 }

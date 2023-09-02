@@ -2,8 +2,13 @@ import { MdOutlineQuestionAnswer } from 'react-icons/md'
 import { RiTimeFill } from 'react-icons/ri'
 import { BiSolidMessageAltEdit } from 'react-icons/bi'
 import TimeDifference from '../Time/TimeDifference'
+import { useParams } from 'react-router-dom'
+import { useContext } from 'react'
+import { Context } from '../../Context'
 
 export default function ProfileTiles({profileData}) {
+    const { username } = useParams() // username of the user to view the profile 
+    const { loggedUser, setLoggedUser } = useContext(Context) // get logged in user
     // common classnames
     const classes = {
         section_styles: 'flex flex-col  justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green',
@@ -29,13 +34,15 @@ export default function ProfileTiles({profileData}) {
                 <RiTimeFill />
                     <p className='text-2xl'>
                         {
+                            loggedUser.username == username ?
+                            profileData.savedSearches.length :
                             profileData.progress.length > 0 ? 
                             TimeDifference(profileData.progress[0].time_taken_at) + ' ago' :
                             'NA'
                         }
                     </p>
                 </div>
-                Last Attempted
+                {loggedUser.username == username ? 'Saved Searches':'Last Attempted'}
             </div>
 
             {/* total number of posts shared */}

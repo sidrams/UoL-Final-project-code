@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import {Context} from '../../Context'
+import { useEffect, useState } from "react";
 import BackgroundInfo from "../../components/VerseDetails/BackgroundInfo";
 import ChapterInfo from "../../components/VerseDetails/ChapterInfo";
 import VerseWords from "../../components/VerseDetails/VerseWords";
