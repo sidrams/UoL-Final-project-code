@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import {Context} from '../../Context'
 import { useParams } from "react-router-dom"
 import Cookies from "js-cookie"
@@ -6,6 +6,7 @@ import BackButton from "../../components/Buttons/BackButton";
 import QuizQuestion from "../../components/Quiz/QuizQuestion";
 import EndQuizComponent from "../../components/Quiz/EndQuizComponent";
 import LoginModalComponent from "../../components/Login/LoginModalComponent";
+import { Toast } from 'primereact/toast';
 
 export default function Quiz(props) {
     const { loggedUser, setLoggedUser } = useContext(Context)
@@ -19,6 +20,12 @@ export default function Quiz(props) {
     const [endQuiz, setEndQuiz] = useState(false) // show last slide with score when quiz ends
     const [scoreSaved, setScoreSaved] = useState(false) // set to true is user successfully saved the score
     const [showLogin, setShowLogin] = useState(false) // show login component if user wants to save progress
+    // show message if no answer selected by user
+    const toast = useRef(null); 
+    const show = () => {
+        toast.current.show({ severity: 'info', summary: '', detail: 'Please select an answer' });
+    };
+
     // get questions for the chosen topic
     useEffect(() => {
         fetch('http://127.0.0.1:8000/api/quizQuestions/'+id, {
@@ -34,15 +41,22 @@ export default function Quiz(props) {
 
     // display next question when pressed
     const nextQuestion = () => {
-        const index = quizQuestions.indexOf(currentQuestion);
-        if(index >= 0 && index < quizQuestions.length - 1) {
-            setCurrentQuestion(quizQuestions[index + 1])
-            setChosenAnswer(null)
-            setDisabled(false)
-        }
+        if (chosenAnswer) {
+            const index = quizQuestions.indexOf(currentQuestion);
+            if(index >= 0 && index < quizQuestions.length - 1) {
+                setCurrentQuestion(quizQuestions[index + 1])
+                setChosenAnswer(null)
+                setDisabled(false)
+            }
+            else {
+                setEndQuiz(true)
+            }
+        } 
         else {
-            setEndQuiz(true)
+            // alert('no answer se;ected')
+            show()
         }
+        
     }
 
     // display if clicked answer is correct or incorrect
@@ -93,6 +107,7 @@ export default function Quiz(props) {
         
         {/* header */}
         <div className="flex justify-between w-[70%] m-auto">
+        <Toast ref={toast} />
             <BackButton onClick={() =>history.back()}  />
 
             {/* heading in the format 'Quiz - Topic Name' */}
