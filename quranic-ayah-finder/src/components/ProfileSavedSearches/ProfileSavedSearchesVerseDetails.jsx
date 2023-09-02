@@ -94,7 +94,7 @@ export default function ProfileSavedSearchesVerseDetails() {
         chosenVerse && 
         <div className="text-left  flex m-auto gap-4 p-0 w-[90%]"> 
         <div className="w-[95%] m-auto">
-            {/* go back button */}
+            {/* header section */}
             <div className='flex justify-between'>
                 <BackButton onClick={() => navigate('/profile/savedSearches')} />
                 <div className='flex justify-between'>

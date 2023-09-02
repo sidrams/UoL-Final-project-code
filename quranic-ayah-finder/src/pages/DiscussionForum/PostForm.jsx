@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { Link, redirect, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../../Context";
 import { AiFillCloseCircle } from "react-icons/ai";
 import Cookies from "js-cookie";
+import { Toast } from 'primereact/toast';
 
 export default function PostForm () {
     const { loggedUser, setLoggedUser } = useContext(Context) // get user logged in
@@ -19,6 +20,14 @@ export default function PostForm () {
     })
     const [update, setUpdate] = useState(false) // true if post has to be updated
     const navigate = useNavigate()
+
+    // show any errors in file handling
+    const toastCenter = useRef(null); 
+    const showMessage = (event, ref, severity) => {
+        const label = event
+        console.log('in show message '+label)
+        ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
+    };
 
     // get post data with corresponding id and prefill the form with the data
     if (id) {
@@ -53,10 +62,17 @@ export default function PostForm () {
         // update && 
         form_data.append('user', form.user);
         
-        // upload image if a new image is uploaded
-        (uploadNewImg || !update) && form_data.append('image', form.image, form.image.name);
+        if (image.type.match("image.*") == null) {
+            // image not uploaded in the correct format
+            showMessage('Incorrect File Type. Please upload an image', toastCenter, 'error');
+            return
+        }
+        else {
+            // upload image if a new image is uploaded
+            (uploadNewImg || !update) && form_data.append('image', form.image, form.image.name);
+        }
         console.log(form_data)
-        update ? updatePost(form_data) : createPost(form_data)
+        // update ? updatePost(form_data) : createPost(form_data)
     }
 
 
@@ -115,6 +131,7 @@ export default function PostForm () {
     return (
     <>
     {
+        
         !loggedUser ? 
         (
             <h4>Please <Link to='/login'>Login</Link> to {update ? 'update' : 'add'} posts</h4>
@@ -122,6 +139,8 @@ export default function PostForm () {
         :
         (
             <div className="pb-10">
+                <Toast ref={toastCenter} />
+
                 {/*  show form to create/update post */}
                 <div className="w-[50%] m-auto mb-4 bg-medium-gray p-6 shadow-xl">
                     <div className="flex justify-between items-center border-b border-solid border-slate-300 pb-4">
