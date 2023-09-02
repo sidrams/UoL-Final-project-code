@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 export default function SaveSearchComponent({ chosenVerse, verseByWords, verseDetails, resetSearch, setChosenVerse, setShowSaveVerse, setShowDetails}) {
     // allow to save verses to accounts
     const { loggedUser, setLoggedUser} = useContext(Context) // get logged in user
+    const csrftoken = Cookies.get('csrftoken'); // for making requests to API
     const [userNotes, setUserNotes] = useState('') // store user note
     const [verseSaved, setVerseSaved] = useState(false) // true if the verse has been saved successfully
-    const csrftoken = Cookies.get('csrftoken'); // for making requests to API
     // translation that will be displayed and saved with verse
     const translation = chosenVerse.translations.length > 0 ? chosenVerse.translations[0].text : verseByWords.translations[0].text
 

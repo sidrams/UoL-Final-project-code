@@ -8,7 +8,7 @@ import BackButton from "../Buttons/BackButton";
 
 export default function SavedSearchToggleMenu({search, setShowDelete}) {
     const navigate = useNavigate() // navigate to search after changes
-    const [search_id, setsearch_id] = useState() // set search id for search to be updated/deleted
+    const [search__id, setsearch_id] = useState() // set search id for search to be updated/deleted
     
     const menuRight = useRef(null); // handle toggle menu
     const items = [ // update and delete search - items to show in toggle menu
@@ -19,7 +19,7 @@ export default function SavedSearchToggleMenu({search, setShowDelete}) {
                     label: 'Update',
                     icon: <BiSolidEditAlt />,
                     command: () => {
-                        navigate("/search/update/"+search_id)
+                        navigate("/profile/savedSearches/update/"+search.id)
                     }
                 },
                 {
@@ -34,6 +34,7 @@ export default function SavedSearchToggleMenu({search, setShowDelete}) {
         }
     ]
 
+    console.log(search)
     return (
         <div>
             <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
@@ -41,7 +42,7 @@ export default function SavedSearchToggleMenu({search, setShowDelete}) {
                 icon={<SlOptionsVertical />} 
                 customStyle="p-0 bg-transparent"
                 customIconStyle="text-[1rem]"
-                onClick={(e) => {setsearch_id(search.pk);menuRight.current.toggle(e)} } 
+                onClick={(e) => {setsearch_id(search.id);menuRight.current.toggle(e)} } 
                 aria-controls="popup_menu_right" aria-haspopup 
             />
         </div>

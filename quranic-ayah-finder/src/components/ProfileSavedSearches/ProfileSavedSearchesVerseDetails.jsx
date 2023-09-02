@@ -8,6 +8,7 @@ import Locations from "../../components/VerseDetails/Locations";
 import BackButton from "../../components/Buttons/BackButton";
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import { BiSolidEditAlt } from 'react-icons/bi'
 
 // SHOW THE DETAILS OF THE CHOSEN VERSE FROM USER'S SAVED SEARCHES
 export default function ProfileSavedSearchesVerseDetails() {
@@ -96,12 +97,16 @@ export default function ProfileSavedSearchesVerseDetails() {
             {/* go back button */}
             <div className='flex justify-between'>
                 <BackButton onClick={() => navigate('/profile/savedSearches')} />
+                <div className='flex justify-between'>
+                    <BackButton onClick={() => navigate('/profile/savedSearches/update/'+id)} icon={<BiSolidEditAlt />} text="Edit" />
+                </div>
             </div>
             {/* arabic text of the verse */}
             <div className="mb-4 text-center text-3xl p-6">
                 {verseByWords && verseByWords.text_uthmani}
             </div>
 
+            
             {   // USER NOTES
                 chosenVerse &&
                 (

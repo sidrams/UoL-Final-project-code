@@ -23,7 +23,7 @@ import VerseDetails from './pages/Home/VerseDetails'
 import ProfileScores from './pages/Profile/ProfileScores'
 import ProfileSavedSearches from './pages/Profile/ProfileSavedSearches'
 import ProfileSavedSearchesVerseDetails from './components/ProfileSavedSearches/ProfileSavedSearchesVerseDetails'
-
+import ProfileSavedSearchesUpdate from './components/ProfileSavedSearches/ProfileSavedSearchesUpdate'
 
 function App() {
   const [loggedUser, setLoggedUser] = useState("");
@@ -77,6 +77,7 @@ function App() {
           <Route path="/profile/scores" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileScores />) } />
           <Route path="/profile/savedSearches" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearches />) } />
           <Route path="/profile/savedSearches/details/:id" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearchesVerseDetails />) } />
+          <Route path="/profile/savedSearches/update/:id" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearchesUpdate />) } />
           
           {/* user handling routes */}
           <Route path="/signup" element={loggedUser ? (<Navigate replace to="/" />) : (<SignUp />) } />

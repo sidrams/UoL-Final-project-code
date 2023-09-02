@@ -187,7 +187,7 @@ class SaveSearchDetailViewset(APIView):
         return Response(serializer.data)
     
     def post(self, request, pk):
-        search = UserSavedVerse.objects.create(id=pk)
+        search = UserSavedVerse.objects.get(id=pk, user_id=request.user)
         data = request.data
         serializer = UserSavedVerseSerializer(data=data, instance=search, partial=True)
         if serializer.is_valid():
