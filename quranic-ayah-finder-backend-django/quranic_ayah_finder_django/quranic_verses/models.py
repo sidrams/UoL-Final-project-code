@@ -89,6 +89,12 @@ class GuideContent(models.Model):
 class UserSavedVerse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     verse_key = models.CharField('verse key', max_length=10)
+    translation = models.CharField('verse translation', max_length=200, blank=True, null=True) 
     user_notes = models.CharField('user notes', max_length=2000, blank=True, null=True)
     saved = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated', '-saved']
+    def __str__(self):
+        return self.verse_key

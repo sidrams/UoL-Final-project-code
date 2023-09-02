@@ -8,12 +8,14 @@ import { Context } from "../../Context";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function SaveSearchComponent({ chosenVerse, resetSearch, setChosenVerse, setShowSaveVerse, setShowDetails}) {
+export default function SaveSearchComponent({ chosenVerse, verseByWords, verseDetails, resetSearch, setChosenVerse, setShowSaveVerse, setShowDetails}) {
     // allow to save verses to accounts
     const { loggedUser, setLoggedUser} = useContext(Context) // get logged in user
     const [userNotes, setUserNotes] = useState('') // store user note
     const [verseSaved, setVerseSaved] = useState(false) // true if the verse has been saved successfully
     const csrftoken = Cookies.get('csrftoken'); // for making requests to API
+    // translation that will be displayed and saved with verse
+    const translation = chosenVerse.translations.length > 0 ? chosenVerse.translations[0].text : verseByWords.translations[0].text
 
     // save search request
     const saveSearch = (e) => {
@@ -36,7 +38,8 @@ export default function SaveSearchComponent({ chosenVerse, resetSearch, setChose
                 body: JSON.stringify(
                     {
                     "verse_key": chosenVerse.verse_key, 
-                    "user_notes": userNotes
+                    "user_notes": userNotes,
+                    "translation":translation
                 })
             })
             .then((response) => response.json())
@@ -82,7 +85,7 @@ export default function SaveSearchComponent({ chosenVerse, resetSearch, setChose
                             <h4 className=" text-3xl p-6 pb-3">{chosenVerse.text}</h4>
                             
                             <p className="text-gray-500">
-                                <span dangerouslySetInnerHTML={{__html: chosenVerse.translations[0].text }}></span>
+                                <span dangerouslySetInnerHTML={{__html: translation }}></span> 
                                 ({chosenVerse.verse_key})
                             </p>
                         </div>

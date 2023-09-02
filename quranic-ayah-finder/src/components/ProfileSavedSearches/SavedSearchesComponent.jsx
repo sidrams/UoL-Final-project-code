@@ -6,45 +6,48 @@ import { BiSolidUserCircle } from "react-icons/bi";
 import { MdModeComment } from "react-icons/md";
 import { useContext, useState } from "react";
 import { Context } from "../../Context";
-import ForumPostToggleMenu from "../DiscussionForum/ForumPostToggleMenu";
+import SavedSearchToggleMenu from "./SavedSearchToggleMenu";
 
-export default function PostComponent({posts, inputText}) {
+export default function SavedSearchesComponent({savedSearches, inputText}) {
     const { loggedUser, setLoggedUser } = useContext(Context)
     const [showDelete, setShowDelete] = useState(false) // show delete confirmation modal if prompted
     const [post_id, setPost_id] = useState() // set post to be viewed/edited
-    
+
+    console.log(savedSearches)
     return (
-        // post component
+        // search component
         <div className="w-3/4 mt-8">
-        {!posts || posts.length <= 0 ? 
+        {!savedSearches || savedSearches.length <= 0 ? 
         (
-            <div>No posts to show</div>
+            <div>No savedSearches to show</div>
         ) : 
         (
             <>
             {   // implement search filter
-                posts.filter(post => {
+                savedSearches
+                .filter(search => {
                     if (inputText === '') {
-                    return post;
-                    } else if (
-                        post.title.toLowerCase().includes(inputText) ||
-                        (post.description && post.description.toLowerCase().includes(inputText)) ||
-                        post.user.username.toLowerCase().includes(inputText) ||
-                        toString(post.verse_id).toLowerCase().includes(inputText)
+                    return search;
+                } 
+                else if (
+                        search.user_notes.toLowerCase().includes(inputText) ||
+                        search.translation && search.translation.toLowerCase().includes(inputText) ||
+                        search.verse_key.toLowerCase().includes(inputText)
                     ) {
-                    return post;
+                    return search;
                     }
                 })
-                .map((post,i) => (
-                // render post components
+                .map((search,i) => (
+                // render search components
                 <div key={i} className="mb-4 flex  w-full text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                     <div className="flex justify-between">
-                        <Link to={`/post/${post.pk}`}>
-                            <h4 className="font-bold text-gray-600 xl:text-lg mb-2 hover:text-sea-green"> {post.title} </h4> 
+                        <Link to={`/search/${search.pk}`}>
+                            <h4> Verse {search.verse_key} </h4> 
+                            <h3 className="font-bold text-gray-600 text-lg mb-2 hover:text-sea-green" dangerouslySetInnerHTML={{__html: search.translation }}></h3>
                         </Link>
 
-                        {   // toggle menu with delete option for owners of post
-                            loggedUser && loggedUser.id == post.user.id && 
+                        {   // toggle menu with delete option for owners of search
+                            loggedUser && loggedUser.id == search.user.id && 
                             (
                                 // <BackButton 
                                 //     icon={<SlOptionsVertical />} 
@@ -53,35 +56,35 @@ export default function PostComponent({posts, inputText}) {
                                 //     onClick={(e) => {setPost_id(e.target.value);menuRight.current.toggle(e)} } 
                                 //     aria-controls="popup_menu_right" aria-haspopup 
                                 // />
-                                <ForumPostToggleMenu setPost_id={setPost_id} setShowDelete={setShowDelete} post={post} />
+                                <SavedSearchToggleMenu search={search} setShowDelete={setShowDelete} />
                             ) 
                         }
                     </div>
 
                     <div className="flex gap-4 lg:text-sm">
-                        {   // username
-                            post.user && (
-                                <Link to={'/profile/'+post.user.username} className="text-sea-green hover:font-medium underline flex items-center gap-1">
+                        {/* {   // username
+                            search.user && (
+                                <Link to={'/profile/'+search.user.username} className="text-sea-green hover:font-medium underline flex items-center gap-1">
                                     <BiSolidUserCircle />
-                                    @{post.user.username}
+                                    @{search.user.username}
                                 </Link>
                             )
-                        }
+                        } */}
 
-                        {/* time posted ago */}
-                        <p>{TimeDifference(post.updated)} ago</p>
+                        {/* time searched ago */}
+                        <p>{TimeDifference(search.updated)} ago</p>
 
                         {/* number of comments */}
-                        <Link to={`/post/${post.pk}`} className="text-gray-500 underline flex items-center gap-1">
+                        {/* <Link to={`/search/${search.pk}`} className="text-gray-500 underline flex items-center gap-1">
                             <MdModeComment />
-                            {post.comment_count} {post.comment_count != 1 ? 'comments' : 'comment'}
-                        </Link>
+                            {search.comment_count} {search.comment_count != 1 ? 'comments' : 'comment'}
+                        </Link> */}
                         
-                        {   // edit option ofor owners of post
-                            loggedUser.id == post.user.id && 
+                        {   // edit option ofor owners of search
+                            loggedUser.id == search.user.id && 
                             (
                                 <div>
-                                    <Link to={`/post/update/${post.pk}`} className="text-gray-500 underline">Edit</Link>
+                                    <Link to={`/search/update/${search.pk}`} className="text-gray-500 underline">Edit</Link>
                                 </div>
                             ) 
                         }

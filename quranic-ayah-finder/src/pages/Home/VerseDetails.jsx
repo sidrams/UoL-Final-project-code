@@ -11,7 +11,7 @@ import BackButton from "../../components/Buttons/BackButton";
 import { BsBookmarkFill } from "react-icons/bs";
 import SaveSearchComponent from "./SaveSearchComponent";
 
-export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetails, resetSearch}) {
+export default function VerseDetails({chosenVerse, verseDetails, setChosenVerse, setShowDetails, resetSearch}) {
     const [chapterID, setChapterID] = useState(chosenVerse.verse_key.split(':')[0]) // get chapter id from chosen verse
     const [verseID, setVerseID] = useState(chosenVerse.verse_key.split(':')[1]) // get verse id from chosen verse
     
@@ -128,7 +128,9 @@ export default function VerseDetails({chosenVerse, setChosenVerse, setShowDetail
         </>
         : 
         (   // show component to save search if user prompts to
-            <SaveSearchComponent setShowSaveVerse={setShowSaveVerse} chosenVerse={chosenVerse} setChosenVerse={setChosenVerse} resetSearch={resetSearch} setShowDetails={setShowDetails} />
+            <SaveSearchComponent 
+                setShowSaveVerse={setShowSaveVerse} chosenVerse={chosenVerse} verseByWords={verseByWords} 
+                setChosenVerse={setChosenVerse} resetSearch={resetSearch} setShowDetails={setShowDetails} />
         )
     )
 }
