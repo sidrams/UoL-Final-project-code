@@ -12,6 +12,7 @@ urlpatterns = [
 
     # search related url
     re_path(r'^search/$', views.Search_list, name='search'),
+    re_path(r'^saveSearch/$', views.SaveSearchViewset.as_view(), name='save-search'),
 
     # user related urls
     path('register', views.UserRegister.as_view(), name='register'),

@@ -5,8 +5,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from django.http import HttpResponse
-
 from .models import *
 from django.contrib.auth.models import User
 from .serializers import *
@@ -24,7 +22,7 @@ from rest_framework.views import APIView
 from rest_framework import permissions, status
 from .validations import *
 
-# all endpoints
+# show all possible all endpoints
 class AllEndpoints(APIView):
     endpoints = {
         'Search related url' : [
@@ -140,15 +138,9 @@ class AllEndpoints(APIView):
                 'method': 'POST'
             }
         ],
-
     }
     def get(self, request):
         return Response(self.endpoints)
-
-
-
-
-
 
 
 # main search bar endpoint
@@ -164,6 +156,26 @@ def Search_list(request):
         searched_text = detectText(reimage)
         print(searched_text)
         return Response(data=searched_text)
+    
+class SaveSearchViewset(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+        
+    def get(self, request):
+        search = UserSavedVerse.objects.filter(user=request.user)
+        serializer = UserSavedVerseSerializer(search, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        search = UserSavedVerse.objects.create(user=request.user)
+        data = request.data
+        serializer = UserSavedVerseSerializer(data=data, instance=search, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # LOGIN CODE -------------------------------------------------------
 # user registeration

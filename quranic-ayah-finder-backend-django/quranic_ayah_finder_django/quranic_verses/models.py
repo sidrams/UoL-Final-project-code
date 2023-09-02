@@ -86,3 +86,7 @@ class GuideContent(models.Model):
         return str({'content no ':self.id,'topic ':self.topic_id.topic_name})
 
 
+class UserSavedVerse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    verse_key = models.CharField('verse key', max_length=10)
+    user_notes = models.CharField('user notes', max_length=2000, blank=True, null=True)

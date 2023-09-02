@@ -26,7 +26,7 @@ export default function PostComponent({posts, inputText}) {
                     return post;
                     } else if (
                         post.title.toLowerCase().includes(inputText) ||
-                        post.description.toLowerCase().includes(inputText) ||
+                        (post.description && post.description.toLowerCase().includes(inputText)) ||
                         post.user.username.toLowerCase().includes(inputText) ||
                         toString(post.verse_id).toLowerCase().includes(inputText)
                     ) {

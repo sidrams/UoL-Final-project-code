@@ -21,6 +21,7 @@ import GuideDetails from './pages/Guides/GuideDetails'
 import Profile from './pages/Profile/Profile'
 import VerseDetails from './pages/Home/VerseDetails'
 import ProfileScores from './pages/Profile/ProfileScores'
+import ProfileSavedSearches from './pages/Profile/ProfileSavedSearches'
 
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
           {/* profile routes */}
           <Route path="/profile/:username" element={!loggedUser ? (<Navigate replace to="/login" />) : (<Profile />) } />
           <Route path="/profile/scores" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileScores />) } />
+          <Route path="/profile/savedSearches" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearches />) } />
           
           {/* user handling routes */}
           <Route path="/signup" element={loggedUser ? (<Navigate replace to="/" />) : (<SignUp />) } />

@@ -94,3 +94,9 @@ class GuideContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = GuideContent
         fields = '__all__'
+
+class UserSavedVerseSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = UserSavedVerse
+        fields = '__all__'
