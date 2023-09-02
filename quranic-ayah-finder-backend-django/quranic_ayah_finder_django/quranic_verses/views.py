@@ -177,6 +177,25 @@ class SaveSearchViewset(APIView):
             print('error', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class SaveSearchDetailViewset(APIView):
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+        
+    def get(self, request, pk):
+        search = UserSavedVerse.objects.get(id=pk)
+        serializer = UserSavedVerseSerializer(search)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        search = UserSavedVerse.objects.create(user=request.user)
+        data = request.data
+        serializer = UserSavedVerseSerializer(data=data, instance=search, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            print('error', serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # LOGIN CODE -------------------------------------------------------
 # user registeration
 class UserRegister(APIView):

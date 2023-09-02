@@ -36,7 +36,7 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
                 // render search components
                 <div key={i} className="mb-4 flex  w-full text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                     <div className="flex justify-between">
-                        <Link to={`/search/${search.pk}`}>
+                        <Link to={`/profile/savedSearches/details/`+search.id}>
                             {/* display verse key */}
                             <h4> Verse {search.verse_key} </h4> 
                             {/* display corresponding translation */}
