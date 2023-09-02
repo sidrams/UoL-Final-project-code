@@ -6,9 +6,11 @@ import PostComponent from "../../components/Posts/PostComponent"
 import ProfileHeader from "../../components/Profile/ProfileHeader"
 import AttemptedTopicList from "../../components/ProfileScore/AttemptedTopicList"
 import SearchBar from "../../components/SearchBarSub/SearchBar"
+import { useParams } from "react-router-dom"
 
 export default function Profile() {
-    const { loggedUser, setLoggedUser } = useContext(Context)
+    const { username } = useParams() // username of the user to view the profile 
+    const { loggedUser, setLoggedUser } = useContext(Context) // get logged in user
     const csrftoken = Cookies.get('csrftoken');
     const [profileData, setProfileData] = useState() // profile data
     
@@ -20,7 +22,16 @@ export default function Profile() {
 
     // get profile data
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/profile', {
+        let query = ''
+        if(loggedUser.username == username) 
+            // if user is viewing their own profile
+            query = 'http://127.0.0.1:8000/profile'
+        else 
+            // if user is viewing a public profile
+            query = 'http://127.0.0.1:8000/profile/'+username
+
+        // fetch profile data for the chosen user
+        fetch(query, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -28,13 +39,13 @@ export default function Profile() {
                 'X-CSRFToken': csrftoken,
             },
             credentials: 'include',
-            })
-            .then((response) => response.json())
-            .then((json) =>{
-                setProfileData(json)
-                console.log(json)
-            })
-            .catch(error => console.log(error))
+        })
+        .then((response) => response.json())
+        .then((json) =>{
+            setProfileData(json)
+            console.log(json)
+        })
+        .catch(error => console.log(error))
     }, [])
 
     const getTopicsAttempted = () => {
@@ -62,7 +73,7 @@ export default function Profile() {
                         {/* sub header for post component */}
                         <div className='flex justify-between my-6 tracking-wide text-gray-500 w-3/4'>
                             <h2 className=''>
-                                Showing all posts for <span className='font-bold'>{loggedUser.username}</span>
+                                Showing all posts for <span className='font-bold'>{username}</span>
                             </h2>
 
                             {/* search bar to search user's posts */}

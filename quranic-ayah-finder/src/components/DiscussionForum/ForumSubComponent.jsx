@@ -12,7 +12,7 @@ export default function ForumSubComponent({post}) {
         <div className="flex gap-4 lg:text-sm">
             {   // username
                 post.user && (
-                    <Link to='/profile' className="text-sea-green hover:font-medium underline flex items-center gap-1">
+                    <Link to={'/profile/'+post.user.username} className="text-sea-green hover:font-medium underline flex items-center gap-1">
                         <BiSolidUserCircle />
                         @{post.user.username}
                     </Link>

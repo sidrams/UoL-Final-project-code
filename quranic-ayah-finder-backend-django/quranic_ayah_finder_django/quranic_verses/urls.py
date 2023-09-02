@@ -16,6 +16,8 @@ urlpatterns = [
 	path('logout', views.UserLogout.as_view(), name='logout'),
 	path('user', views.UserView.as_view(), name='user'),
 	path('profile', views.UserProfileView.as_view(), name='user_profile'),
+	path('profile/<str:username>', views.PublicUserProfileView.as_view(), name='public_user_profile'),
+
 
     # guides and quizzes related urls
     path('api/guideTopics', views.GuideTopicViewSet.as_view(), name='guide_topics'),
