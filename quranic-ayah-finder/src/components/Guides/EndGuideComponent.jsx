@@ -25,13 +25,13 @@ export default function EndGuideComponent({id, restartGuide}) {
                         customStyle={customStyle} 
                     />
                     <BackButton 
-                        onClick='' 
+                        onClick={''}
                         text={<Link to={`/guides/topic/${id}/Quiz`} >Take the quiz</Link>} 
                         icon={<MdQuiz />} 
                         customStyle={customStyle}  
                     />
                     <BackButton 
-                        onClick='' 
+                        onClick={''}
                         text={<Link to="/guides">Go back to topics</Link>} 
                         icon={<BsCardHeading />} customStyle={customStyle}  
                     />

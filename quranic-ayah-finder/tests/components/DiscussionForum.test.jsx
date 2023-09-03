@@ -140,12 +140,6 @@ describe('DiscussionForum Component', () => {
         });
       
         it('displays the username with a link to the user profile', () => {
-        //   const post = {
-        //     user: { id: 1, username: 'testUser' },
-        //     updated: new Date(),
-        //     comment_count: 0,
-        //   };
-        //   render(<ForumSubComponent post={post} />);
           const usernameLink = screen.getByText('@testUser');
           expect(usernameLink).toBeInTheDocument();
         });
@@ -156,27 +150,11 @@ describe('DiscussionForum Component', () => {
         });
       
         it('displays the number of comments with a link to the post', () => {
-        //   const post = {
-        //     user: { id: 1, username: 'testUser' },
-        //     updated: new Date(),
-        //     comment_count: 5,
-        //   };
-        //   render(<ForumSubComponent post={post} />);
           const commentsLink = screen.getByText('0 comments');
           expect(commentsLink).toBeInTheDocument();
         });
       
         it('displays an edit link for the logged-in user', () => {
-        //   const post = {
-        //     user: { id: 1, username: 'testUser' },
-        //     updated: new Date(),
-        //     comment_count: 0,
-        //   };
-      
-        //   const { loggedUser } = require('../../src/Context'); // Import the mock loggedUser from the mock Context
-        //   loggedUser.mockReturnValue(mockLoggedUser);
-      
-        //   render(<ForumSubComponent post={post} />);
             const editLink = screen.getByText('Edit');
             expect(editLink).toBeInTheDocument();
         });
