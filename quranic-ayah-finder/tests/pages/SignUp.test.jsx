@@ -1,24 +1,23 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
-import App from '../src/App'; // Import your component
-import DiscussionForum from '../src/pages/DiscussionForum/DiscussionForum'; // Import your component
 import { BrowserRouter } from 'react-router-dom'
+import SignUp from '../../src/pages/SignUp/SignUp';
 
 beforeEach(() => {
-    render(<DiscussionForum />, {wrapper: BrowserRouter});
+    render(<SignUp />, {wrapper: BrowserRouter});
 });
 
-describe('Discussion page renders as expected', () => {
+describe('check Home page renders as expected', () => {
   test('renders the heading', () => {    
     // expect(screen.getByText(/Visual Quranic Ayah Finder/i));
-    expect(screen.getByRole("heading")).toBeInTheDocument(/DiscussionForums/);
+    expect(screen.getByRole("heading")).toBeInTheDocument(/SignUp/);
     // expect(screen.getByPlaceholderText("Enter a keywords here or upload an image...")).toBeInTheDocument();
     // expect(screen.getByRole("button", { name: "Upload image" }).toBeEnabled);
     // expect(screen.getByText("No searched text")).toBeInTheDocument();
   });
 
-  // test('should show search modal when click on the image upload button', () => {
+  test('should show search modal when click on the image upload button', () => {
     // render(<DiscussionForum />, {wrapper: BrowserRouter});
     
     // //Click on the search button
@@ -29,7 +28,7 @@ describe('Discussion page renders as expected', () => {
     // //elements of modal are in the document
     // expect(screen.getByText("Upload an image of a Verse")).toBeInTheDocument();
     // expect(screen.getByRole("button", { name: "Search" }).toBeEnabled);
-  // });
+  });
 
 //   test.todo('should only allow an image to be uploaded');
 

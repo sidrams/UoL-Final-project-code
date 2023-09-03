@@ -38,7 +38,7 @@ export default function Guides() {
         <div className="flex flex-wrap gap-6 justify-center items-center p-[5%]">
             {
                 topics.map((topic,i) => (
-                    <Link to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px]  rounded flex justify-center items-center  ">
+                    <Link key={i} to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px]  rounded flex justify-center items-center  ">
                         <div key={i} className="flex flex-col justify-center items-center gap-4">
                             <p className="text-[7rem]">{<TopicIcons topic={topic.topic_name} />}</p>
                             {topic.topic_name} 

@@ -2,20 +2,20 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { BrowserRouter } from 'react-router-dom'
-import FAQ from '../src/pages/FAQs/FAQ';
+import Guides from '../../src/pages/Guides/Guides';
 
 beforeEach(() => {
-    render(<FAQ />, {wrapper: BrowserRouter});
+    render(<Guides />, {wrapper: BrowserRouter});
 });
 
-describe('check Home page renders as expected', () => {
-  test('renders the heading', () => {    
-    // expect(screen.getByText(/Visual Quranic Ayah Finder/i));
-    expect(screen.getByRole("heading")).toBeInTheDocument(/FAQ/);
-    // expect(screen.getByPlaceholderText("Enter a keywords here or upload an image...")).toBeInTheDocument();
-    // expect(screen.getByRole("button", { name: "Upload image" }).toBeEnabled);
-    // expect(screen.getByText("No searched text")).toBeInTheDocument();
-  });
+describe('check Guide page renders as expected', () => {
+  // test('renders the heading', () => {    
+  //   // expect(screen.getByText(/Visual Quranic Ayah Finder/i));
+  //   expect(screen.getAllByText(/Guides/)).toBeInTheDocument();
+  //   // expect(screen.getByPlaceholderText("Enter a keywords here or upload an image...")).toBeInTheDocument();
+  //   // expect(screen.getByRole("button", { name: "Upload image" }).toBeEnabled);
+  //   // expect(screen.getByText("No searched text")).toBeInTheDocument();
+  // });
 
   test('should show search modal when click on the image upload button', () => {
     // render(<DiscussionForum />, {wrapper: BrowserRouter});

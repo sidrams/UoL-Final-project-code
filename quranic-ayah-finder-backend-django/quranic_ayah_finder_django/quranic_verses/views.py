@@ -30,6 +30,16 @@ class AllEndpoints(APIView):
                 'path': 'search/',
                 'response': 'pass an image on the POST request to access the Google Vision API for text recognition',
                 'method': 'GET*, POST'
+            },
+            {
+                'path': 'saveSearch/',
+                'response': 'save verse search results into user accounts',
+                'method': 'GET, POST'
+            },
+            {
+                'path': 'saveSearch/<int:pk>',
+                'response': 'update, delete and get verse search results of a given result saved',
+                'method': 'GET, POST, DELETE'
             }
         ],
         'User related urls' : [

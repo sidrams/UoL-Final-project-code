@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
-import App from '../src/App'; // Import your component
+import App from '../../src/App'; // Import your component
 import { BrowserRouter } from 'react-router-dom'
 // import ayahImage from '../src/images/surah fatiha ayah 1.png'
-import Image from './mocks/Image';
+import Image from '../mocks/Image';
 import userEvent from '@testing-library/user-event'
 
 const user = userEvent.setup()
-// const fetch = require('node-fetch')
+const fetch = require('node-fetch')
 
 beforeEach(() => {
   render(<App />, {wrapper: BrowserRouter});

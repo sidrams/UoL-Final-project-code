@@ -2,16 +2,16 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import { BrowserRouter } from 'react-router-dom'
-import SignUp from '../src/pages/SignUp/SignUp';
+import FAQ from '../../src/pages/FAQs/FAQ';
 
 beforeEach(() => {
-    render(<SignUp />, {wrapper: BrowserRouter});
+    render(<FAQ />, {wrapper: BrowserRouter});
 });
 
-describe('check Home page renders as expected', () => {
+describe('check FAQ page renders as expected', () => {
   test('renders the heading', () => {    
     // expect(screen.getByText(/Visual Quranic Ayah Finder/i));
-    expect(screen.getByRole("heading")).toBeInTheDocument(/SignUp/);
+    expect(screen.getByText("FAQ (Frequently Asked Questions)")).toBeInTheDocument();
     // expect(screen.getByPlaceholderText("Enter a keywords here or upload an image...")).toBeInTheDocument();
     // expect(screen.getByRole("button", { name: "Upload image" }).toBeEnabled);
     // expect(screen.getByText("No searched text")).toBeInTheDocument();

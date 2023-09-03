@@ -28,7 +28,7 @@ export default function FAQ() {
                                 <Accordion multiple activeIndex={[]}>
                                 {
                                     topicFAQs.map((item,i) => (
-                                        <AccordionTab header={item.question} className='mb-4'>
+                                        <AccordionTab key={i} header={item.question} className='mb-4'>
                                             <p className="m-0">
                                                 {item.answer}
                                             </p>
