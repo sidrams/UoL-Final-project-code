@@ -1,10 +1,10 @@
-from django.test import TestCase
-from quranic_verses.models import *
+# from django.test import TestCase
+# from quranic_verses.models import *
 
-class TestModels(TestCase):
+# class TestModels(TestCase):
 
-    def setUp(self):
-        self.guide1 = Guides.objects.create(
-            name='test',
-            description='description'
-        )
+#     def setUp(self):
+#         self.guide1 = Guides.objects.create(
+#             name='test',
+#             description='description'
+#         )

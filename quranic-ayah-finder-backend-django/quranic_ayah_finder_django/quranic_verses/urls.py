@@ -27,18 +27,18 @@ urlpatterns = [
     # guides and quizzes related urls
     path('api/guideTopics', views.GuideTopicViewSet.as_view(), name='guide_topics'),
     path('api/quizQuestions', views.QuizQuestionsViewSet.as_view(), name='quiz_questions'),
-    path('api/quizQuestions/<int:pk>', views.QuizQuestionsForTopicViewSet.as_view(), name='quiz_questions'),
+    path('api/quizQuestions/<int:pk>', views.QuizQuestionsForTopicViewSet.as_view(), name='quiz_questions_ID'),
     path('api/UserQuizProgress', views.UserQuizProgressViewSet.as_view(), name='quiz_progress_for_user'),
-    path('api/UserQuizProgress/topic/<int:pk>', views.UserQuizProgressTopicViewSet.as_view(), name='quiz_progress_for_user'),
-    path('api/guideContent', views.GuideContentViewSet.as_view(), name='guide contents'),
-    path('api/guideContent/topic/<int:pk>', views.GuideContentTopicViewSet.as_view(), name='guide contents'),
+    path('api/UserQuizProgress/topic/<int:pk>', views.UserQuizProgressTopicViewSet.as_view(), name='quiz_progress_for_user_ID'),
+    path('api/guideContent', views.GuideContentViewSet.as_view(), name='guide_contents'),
+    path('api/guideContent/topic/<int:pk>', views.GuideContentTopicViewSet.as_view(), name='guide_contents_ID'),
 
     # posts and comments related endpoints
     re_path(r'^api/posts/$', views.Posts_Lists, name='posts'),
     re_path(r'^api/posts/([0-9]*)$', views.Posts_detail, name='posts_details'),
-    re_path(r'^createPost$', views.CreatePostViewSet.as_view(), name='create-post'),
-    re_path(r'^updatePost/([0-9]*)$', views.PostViewSet.as_view(), name='update-post'),
-    re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete-post'),
+    re_path(r'^createPost$', views.CreatePostViewSet.as_view(), name='create_post'),
+    re_path(r'^updatePost/([0-9]*)$', views.PostViewSet.as_view(), name='update_post'),
+    re_path(r'^deletePost/([0-9]*)$', views.deletePost, name='delete_post'),
     path('api/comments/posts/<int:pk>', views.CommentsViewSet.as_view(), name="comments_for_posts"),
-    path('api/add/comments/posts/<int:pk>', views.AddCommentsViewSet.as_view(), name="comments_for_posts"),
+    path('api/add/comments/posts/<int:pk>', views.AddCommentsViewSet.as_view(), name="comments_for_posts_ID"),
 ]
