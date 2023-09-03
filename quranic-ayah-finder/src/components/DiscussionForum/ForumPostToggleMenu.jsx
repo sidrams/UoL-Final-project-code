@@ -24,8 +24,9 @@ export default function ForumPostToggleMenu({setPost_id, setShowDelete, post}) {
 
     return (
         <div>
-            <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+            <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" testid='toggle-menu-role' />
             <BackButton 
+                testID='toggle-menu'
                 icon={<SlOptionsVertical />} 
                 customStyle="p-0 bg-transparent"
                 customIconStyle="text-[1rem]"
