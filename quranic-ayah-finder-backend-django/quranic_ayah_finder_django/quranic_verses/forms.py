@@ -5,4 +5,3 @@ class PostForm(ModelForm):
     class Meta:
         model = Post 
         fields = ('title','user', 'description', 'image') 
-        # exclude = ('verse_id',)
