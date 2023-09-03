@@ -103,12 +103,12 @@ export default function Login() {
                         {/* <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} /> */}
                         
                         <p className="flex items-center my-2">
-                            <label className='hidden'>Username:</label>
-                            <input type="text" className="bg-gray-200 shadow w-[70%] m-auto" placeholder="Username" value={form.username} onChange={handleChange} name="username" />
+                            <label for="username" className='hidden'>Username:</label>
+                            <input type="text" className="bg-gray-200 shadow w-[70%] m-auto" placeholder="Username" value={form.username} onChange={handleChange} name="username" id="username" />
                         </p>
                         <p className="flex items-center my-2">
-                            <label className='hidden'>Password::</label>
-                            <input type="password" className="bg-gray-200 shadow w-[70%] m-auto" placeholder="Password" value={form.password} onChange={handleChange} name="password"/>
+                            <label for="password" className='hidden'>Password:</label>
+                            <input type="password" className="bg-gray-200 shadow w-[70%] m-auto" placeholder="Password" value={form.password} onChange={handleChange} name="password" id="password"/>
                         </p>
                        
 

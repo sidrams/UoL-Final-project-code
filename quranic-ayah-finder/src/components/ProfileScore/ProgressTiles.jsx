@@ -56,7 +56,7 @@ export default function ProgressTiles({scoreData}) {
                     <RiTrophyFill />
                     <span>{gethighestScore()}</span>
                 </div>
-                Highest Score acieved
+                Highest Score achieved
             </div>
             
             {/* last attempt of user */}

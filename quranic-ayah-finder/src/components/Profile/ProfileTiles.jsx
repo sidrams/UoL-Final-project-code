@@ -16,6 +16,9 @@ export default function ProfileTiles({profileData}) {
     }
 
     return (
+        // profileData.progress.length > 0 &&
+        // profileData.savedSearches.length > 0 &&
+        // profileData.posts.length > 0 ?
         <div className="flex justify-between text-slate-500">
             {/* total number of quizzes attempted */}
             <div className={classes.section_styles}>
@@ -34,7 +37,7 @@ export default function ProfileTiles({profileData}) {
                 <RiTimeFill />
                     <p className='text-2xl'>
                         {
-                            loggedUser.username == username ?
+                            loggedUser && loggedUser.username == username ?
                             profileData.savedSearches.length :
                             profileData.progress.length > 0 ? 
                             TimeDifference(profileData.progress[0].time_taken_at) + ' ago' :
@@ -42,7 +45,7 @@ export default function ProfileTiles({profileData}) {
                         }
                     </p>
                 </div>
-                {loggedUser.username == username ? 'Saved Searches':'Last Attempted'}
+                {(loggedUser && loggedUser.username == username) ? 'Saved Searches':'Last Attempted'}
             </div>
 
             {/* total number of posts shared */}
@@ -70,5 +73,7 @@ export default function ProfileTiles({profileData}) {
                 Last posted
             </div>
         </div>
+        //    // no data 
+        // <div></div>
     )
 }

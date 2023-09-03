@@ -7,6 +7,7 @@ import { BiSearchAlt2, BiCommentAdd } from 'react-icons/bi'
 import TopicIcons from "../../components/Icons/TopicIcons";
 import ForumPostComponent from "../../components/DiscussionForum/ForumPostComponent";
 import SearchBar from "../../components/SearchBarSub/SearchBar";
+// import fetch from 'node-fetch' // for testing
 
 export default function DiscussionForums() {
     const { loggedUser, setLoggedUSer } = useContext(Context); // get user if logged in
@@ -26,7 +27,6 @@ export default function DiscussionForums() {
             .then((response) => response.json())
             .then((json) =>{
                 setPosts(json)
-                console.log(json)
             })
             .catch(error => console.log(error))
     }, [])

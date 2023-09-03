@@ -68,7 +68,7 @@ export default function SignUp() {
                     <div className="flex justify-between items-center">
                         <div></div>
                         <h1 className="text-3xl text-sea-green font-bold mb-4">
-                            Create Acount
+                            Create Account
                         </h1>
                         <Link to='/'><AiFillCloseCircle className="text-[1.5rem]"/></Link>
                     </div>

@@ -42,7 +42,7 @@ export default function PostComponent({posts, inputText}) {
                         </Link>
 
                         {   // toggle menu with delete option for owners of post
-                            loggedUser && loggedUser.id == post.user.id && 
+                            (loggedUser && loggedUser.id == post.user.id) && 
                             (
                                 <ForumPostToggleMenu setPost_id={setPost_id} setShowDelete={setShowDelete} post={post} />
                             ) 
@@ -69,7 +69,7 @@ export default function PostComponent({posts, inputText}) {
                         </Link>
                         
                         {   // edit option ofor owners of post
-                            loggedUser.id == post.user.id && 
+                            (loggedUser && loggedUser.id == post.user.id) && 
                             (
                                 <div>
                                     <Link to={`/post/update/${post.pk}`} className="text-gray-500 underline">Edit</Link>

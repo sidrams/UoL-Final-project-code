@@ -50,7 +50,7 @@ export default function IndivisualProgressComponent({scoreData, inputText}) {
                             return data;
                             }
                         }).map((score,i) => (
-                            <div className='flex my-10'>
+                            <div className='flex my-10 ' data-testid='progress-component'>
                                 {/* date of attempt */}
                                 <div className='w-[10%] flex flex-col text-slate-400'>
                                     <span className='text-2xl font-bold'>{getDate(score.time_taken_at)}</span>
