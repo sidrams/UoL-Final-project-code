@@ -196,6 +196,7 @@ class SaveSearchDetailViewset(APIView):
         serializer = UserSavedVerseSerializer(search)
         return Response(serializer.data)
     
+    # update saved search
     def post(self, request, pk):
         search = UserSavedVerse.objects.get(id=pk, user_id=request.user)
         data = request.data
@@ -225,7 +226,7 @@ class UserRegister(APIView):
             user = serializer.create(clean_data)
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # user login
 class UserLogin(APIView):
