@@ -62,17 +62,20 @@ export default function PostForm () {
         // update && 
         form_data.append('user', form.user);
         
-        if (image.type.match("image.*") == null) {
-            // image not uploaded in the correct format
-            showMessage('Incorrect File Type. Please upload an image', toastCenter, 'error');
-            return
+        if(form.image) {
+            if (form.image.type.match("image.*") == null) {
+                // image not uploaded in the correct format
+                showMessage('Incorrect File Type. Please upload an image', toastCenter, 'error');
+                return
+            }
+            else {
+                // upload image if a new image is uploaded
+                (uploadNewImg || !update) && form_data.append('image', form.image, form.image.name);
+            }
         }
-        else {
-            // upload image if a new image is uploaded
-            (uploadNewImg || !update) && form_data.append('image', form.image, form.image.name);
-        }
+        
         console.log(form_data)
-        // update ? updatePost(form_data) : createPost(form_data)
+        update ? updatePost(form_data) : createPost(form_data)
     }
 
 

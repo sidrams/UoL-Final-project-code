@@ -8,7 +8,7 @@ export default function PostComponentBody({post}) {
                 (
                     <>
                     <h1 className=" text-2xl font-bold"> {post.title} </h1>
-                    <p className="my-4 text-mid-gray"> {post.description} </p>
+                    <p className="whitespace-pre-line my-4 text-mid-gray"> {post.description} </p>
                     {
                         post.image && 
                         <img src={post.image} alt={post.title} />

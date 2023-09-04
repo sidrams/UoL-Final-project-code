@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import { Context } from "../../Context";
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { Toast } from 'primereact/toast';
 
 export default function Login() {
     const { loggedUser, setLoggedUser } = useContext(Context);
@@ -11,7 +12,14 @@ export default function Login() {
         password: ''
     })
     const csrftoken = Cookies.get('csrftoken');
-
+    
+    // show any errors in file handling
+    const toastCenter = useRef(null); 
+    const showMessage = (event, ref, severity) => {
+        const label = event
+        console.log('in show message '+label)
+        ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
+    };
     // make login request
     const login = () => {
         fetch(`http://127.0.0.1:8000/login`, {
@@ -41,17 +49,19 @@ export default function Login() {
             },
             credentials: 'include',
             })
-            .then((response) => response.json())
+            .then((response) => {response.json()})
             .then((json) =>{
                 json.user ? 
                 setLoggedUser(json.user) :
                 console.log(json)
             })
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.json()))
         })
         
 
-        .catch(error => {console.log(error)})
+        .catch(error => {
+            showMessage('Incorrect username or password', toastCenter, 'error');
+        })
 
     }
 
@@ -91,6 +101,8 @@ export default function Login() {
             : 
             (   // user login form 
                 <div className='lg:w-[50%] xl:w-[40%] lg:min-h-[70vh] xl:min-h-[60vh] m-auto mb-4 bg-custom-gray p-6 shadow-xl flex flex-col justify-evenly'>
+                    <Toast ref={toastCenter} />
+                    
                     <div className="flex justify-between items-center">
                         <div></div>
                         <h1 className="text-3xl text-sea-green font-bold">
