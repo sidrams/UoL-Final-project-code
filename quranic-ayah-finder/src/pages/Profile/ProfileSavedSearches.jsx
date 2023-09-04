@@ -48,7 +48,7 @@ export default function ProfileSavedSearches() {
     }
 
     return (
-        <div className="xl:w-[70%] lg:w-[85%] m-auto flex flex-col gap-4">
+        <div className="xl:w-[80%] lg:w-[85%] m-auto flex flex-col gap-4">
 
             {/* header section */}
             <h2 className="my-3 text-2xl font-semi text-left flex items-center">

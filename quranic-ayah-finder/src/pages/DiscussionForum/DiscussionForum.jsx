@@ -32,7 +32,7 @@ export default function DiscussionForums() {
     }, [])
     
     return (
-        <div className="xl:w-[70%] lg:w-[85%] m-auto">
+        <div className="xl:w-[80%] lg:w-[85%] m-auto">
             {/* header section */}
             <div className="flex justify-between items-center">
                 <h1 className="my-6 text-2xl font-bold">

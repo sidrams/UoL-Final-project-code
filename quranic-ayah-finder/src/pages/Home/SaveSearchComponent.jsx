@@ -95,7 +95,7 @@ export default function SaveSearchComponent({ chosenVerse, verseByWords, verseDe
                             <div className=" w-[80%] flex flex-col items-center">
                                 {/* user notes input section */}
                                 <form onSubmit={saveSearch} className="mt-6 mb-6 flex shadow-lg w-[100%]">
-                                    <input type="text " className="" value={userNotes} onChange={(e) => {setUserNotes(e.target.value)}} placeholder="Add your notes here..."/>
+                                    <input type="text " className="w-full" value={userNotes} onChange={(e) => {setUserNotes(e.target.value)}} placeholder="Add your notes here..."/>
                                 </form>
 
                                 {/* save ayah in user account */}

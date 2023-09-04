@@ -58,7 +58,7 @@ export default function Profile() {
     }
 
     return (
-        <div className="xl:w-[70%] lg:w-[85%] m-auto flex flex-col gap-4">
+        <div className="xl:w-[80%] lg:w-[85%] m-auto flex flex-col gap-4">
 
             {/* username of user and link to user progress page */}
             <ProfileHeader />

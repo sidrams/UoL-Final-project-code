@@ -45,7 +45,7 @@ export default function PostDetails() {
     }, [])
 
     return(
-     <div className="xl:w-[70%] lg:w-[85%] m-auto ">
+     <div className="xl:w-[80%] lg:w-[85%] m-auto ">
         {   // show login component if user wants to post comment and is not logged in
             showLogin && <LoginModalComponent setShowLogin={setShowLogin} />
         }
