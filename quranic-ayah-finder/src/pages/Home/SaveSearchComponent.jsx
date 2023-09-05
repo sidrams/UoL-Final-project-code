@@ -113,7 +113,7 @@ export default function SaveSearchComponent({ chosenVerse, verseByWords, verseDe
                             <div className="flex gap-4 m-auto my-6">
                                 <BackButton onClick={continueSearch} text="Continue Search" icon={<VscDebugRestart />} customStyle="hover:bg-medium-gray hover:text-navy-blue" />
                                 <BackButton onClick={resetSearch} text={<Link to="">Restart Search</Link>} icon={<BsCardHeading />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
-                                <BackButton onClick='' text={<Link to={`/profile/savedSearches`} >View my Searches</Link>} icon={<MdQuiz />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
+                                <BackButton onClick='' text={<Link to={`/profile/savedSearches`} >View my Saved Searches</Link>} icon={<MdQuiz />} customStyle="hover:bg-medium-gray hover:text-navy-blue"  />
                             </div>
                         </div>
                         }

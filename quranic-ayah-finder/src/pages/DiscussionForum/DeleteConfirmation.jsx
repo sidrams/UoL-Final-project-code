@@ -28,8 +28,8 @@ export default function DeleteConfirmation ({setShowDelete, post_id}) {
         .then((json) =>{
             console.log(json)
             if (json == 'Post deleted') setSuccess(true)
-            window.location.reload();
             navigate('/discussionForums')
+            window.location.reload();
         })
         .catch(error => console.log(error))
     }

@@ -27,9 +27,9 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
                     return search;
                 } 
                 else if (
-                        search.user_notes.toLowerCase().includes(inputText) ||
+                        search.user_notes && search.user_notes.toLowerCase().includes(inputText) ||
                         search.translation && search.translation.toLowerCase().includes(inputText) ||
-                        search.verse_key.toLowerCase().includes(inputText)
+                        search.verse_key && search.verse_key.toLowerCase().includes(inputText)
                     ) {
                     return search;
                     }
@@ -56,6 +56,8 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
                         }
                     </div>
 
+                    <p className="mb-4"><em>Notes : {search.user_notes && search.user_notes}</em></p>
+                    
                     <div className="flex gap-4 lg:text-sm">
                         {/* time searched ago */}
                         <p>{TimeDifference(search.updated)} ago</p>
@@ -64,7 +66,7 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
                             loggedUser.id == search.user.id && 
                             (
                                 <div>
-                                    <Link to={`/search/update/${search.pk}`} className="text-gray-500 underline">Edit</Link>
+                                    <Link to={`/profile/savedSearches/update/${search.id}`} className="text-gray-500 underline">Edit</Link>
                                 </div>
                             ) 
                         }
