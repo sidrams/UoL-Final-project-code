@@ -1,8 +1,11 @@
-export default function ResultHeader({verseDetails}) {
+import BackButton from "../Buttons/BackButton";
+
+export default function ResultHeader({verseDetails, resetSearch}) {
     // header for verse details page for the chosen verse
     return (
         <div>
-            <h2 className="mt-6 text-2xl font-bold">
+            <h2 className="mt-6 text-2xl font-bold flex items-center">
+                <BackButton onClick={resetSearch} />
                 Verses search result for '{verseDetails.search.query}'
             </h2>
             

@@ -37,7 +37,7 @@ export default function SearchResultsComponent({searchedText, fetchData, resetSe
                 <>
                 {/* show query key word and number of results */}
                 <div className="flex justify-between">
-                    <ResultHeader verseDetails={verseDetails} />
+                    <ResultHeader verseDetails={verseDetails} resetSearch={resetSearch} />
                     <BackButton onClick={resetSearch} text={'search again'} icon={<VscDebugRestart />} />
                 </div>
                 
