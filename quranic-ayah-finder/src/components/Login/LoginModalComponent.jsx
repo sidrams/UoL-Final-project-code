@@ -21,6 +21,11 @@ export default function LoginModalComponent({setShowLogin}) {
         console.log('in show message '+label)
         ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
     };
+    const showMessageRegister = (event, ref, severity) => {
+        const message = event.split('\n')
+        const label = message[1] ? message[1] : message[0]
+        ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
+    };
 
     // make login request
     const login = () => {
@@ -63,6 +68,44 @@ export default function LoginModalComponent({setShowLogin}) {
     }
 
     // make rewuest to register user
+    // const register = () => {
+    //     fetch(`http://127.0.0.1:8000/register`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'X-CSRFToken': csrftoken,
+    //         },
+    //         credentials: 'include',
+    //         body: JSON.stringify(form),
+    //     })
+    //     // then login user and set logged user accordingly
+    //     .then((response) => {
+    //         response.status(201)?
+    //         fetch(`http://127.0.0.1:8000/login`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json',
+    //                 'X-CSRFToken': csrftoken,
+    //             },
+    //             credentials: 'include',
+    //             body:  
+    //             JSON.stringify(form),
+    //         })  
+    //         .then((response) => response.json())
+    //         .then((json) =>{
+    //             setLoggedUser(json)
+    //         })
+    //         .catch(error => {console.log(error)})
+
+    //         :
+    //         response.text().then(text => { 
+    //             showMessage(text, toastCenter, 'error')
+    //             })
+    //     })
+    //     .catch(error => {console.log(error)})
+    // }
     const register = () => {
         fetch(`http://127.0.0.1:8000/register`, {
             method: 'POST',
@@ -74,26 +117,15 @@ export default function LoginModalComponent({setShowLogin}) {
             credentials: 'include',
             body: JSON.stringify(form),
         })
-        // then login user and set logged user accordingly
         .then((response) => {
-            fetch(`http://127.0.0.1:8000/login`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                credentials: 'include',
-                body:  
-                JSON.stringify(form),
-            })  
-            .then((response) => response.json())
-            .then((json) =>{
-                setLoggedUser(json)
+            response.status == 201 ? 
+            login() :
+            response.text().then((text) => { 
+                showMessageRegister(text, toastCenter, 'error')
             })
-            .catch(error => {console.log(error)})
         })
-        .catch(error => {console.log(error)})
+        .catch(error => {console.log(error.response.data);})
+      
     }
 
     // handle form changes
@@ -107,7 +139,7 @@ export default function LoginModalComponent({setShowLogin}) {
     return (
         !showRegister ?
         // user login form 
-        <div className='lg:w-[50%] xl:w-[40%] lg:min-h-[70vh] xl:min-h-[60vh] m-auto mb-4 bg-custom-gray p-6 shadow-xl flex flex-col justify-evenly'>
+        <div className='lg:w-[60%] xl:w-[50%] lg:min-h-[70vh] xl:min-h-[60vh] m-auto mb-4 bg-custom-gray p-6 shadow-xl flex flex-col justify-evenly'>
             <Toast ref={toastCenter} />
             
             <div className="flex justify-between items-center">
@@ -143,7 +175,7 @@ export default function LoginModalComponent({setShowLogin}) {
 
         // user registeration form
         <>
-        <div className='lg:w-[50%] xl:w-[40%] lg:min-h-[70vh] xl:min-h-[60vh] h-fit m-auto mb-4 bg-custom-gray p-10 shadow-xl flex flex-col justify-between'>
+        <div className='lg:w-[50%] xl:w-[50%] lg:min-h-[70vh] xl:min-h-[60vh] h-fit m-auto mb-4 bg-custom-gray p-10 shadow-xl flex flex-col justify-between'>
             <div className="flex justify-between items-center">
                 <div></div>
                 <h1 className="text-3xl text-sea-green font-bold mb-4">

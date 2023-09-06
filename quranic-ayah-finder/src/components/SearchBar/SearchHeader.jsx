@@ -11,7 +11,7 @@ export default function SearchHeader() {
             <img src={quranVector} alt="vector image of a quran" className="p-[3%]"/>
         </div>
         <div className="w-full text-left text-xl text-[black]">
-            SEARCH FOR A  <span><Typewriter /></span>
+            SEARCH FOR A <Typewriter />
         </div>
         </>
     )

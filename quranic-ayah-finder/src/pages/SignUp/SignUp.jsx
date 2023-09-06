@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 import { Context } from '../../Context';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { Toast } from 'primereact/toast';
 
 export default function SignUp() {
     const [form, setForm] = useState({
@@ -11,6 +12,14 @@ export default function SignUp() {
     })
     const csrftoken = Cookies.get('csrftoken');
     const { loggedUser, setLoggedUser } = useContext(Context)
+ 
+    // show any errors in file handling
+    const toastCenter = useRef(null); 
+    const showMessage = (event, ref, severity) => {
+        const message = event.split('\n')
+        const label = message[1] ? message[1] : message[0]
+        ref.current.show({ severity: severity, summary: "Error", detail: label, life: 3000 });
+    };
 
     const register = () => {
         fetch(`http://127.0.0.1:8000/register`, {
@@ -24,26 +33,34 @@ export default function SignUp() {
             body: JSON.stringify(form),
         })
         .then((response) => {
-            fetch(`http://127.0.0.1:8000/login`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrftoken,
-                },
-                credentials: 'include',
-                body:  
-                JSON.stringify(form),
-            })  
-            .then((response) => response.json())
-            .then((json) =>{
-                console.log("response json is "+json)
-                setLoggedUser(json)
-            })
-            .catch(error => {console.log(error)})
+            response.status == 201 ? 
+            login() :
+            response.text().then(text => { 
+                showMessage(text, toastCenter, 'error')
+                })
         })
+        .catch(error => {console.log(error.response.data);})
       
-        .catch(error => {console.log(error)})
+    }
+
+    const login = () => {
+        fetch(`http://127.0.0.1:8000/login`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            credentials: 'include',
+            body:  
+            JSON.stringify(form),
+        })  
+        .then((response) => response.json())
+        .then((json) =>{
+            console.log("response json is "+json)
+            setLoggedUser(json)
+        })
+        .catch(error => {console.log(error.message)})
     }
 
     const handleChange = (e) => {
@@ -65,6 +82,8 @@ export default function SignUp() {
                 // user registeration form
                 <>
                 <div className='lg:w-[50%] xl:w-[40%] lg:min-h-[70vh] xl:min-h-[60vh] h-fit m-auto mb-4 bg-custom-gray p-10 shadow-xl flex flex-col justify-between'>
+                    <Toast ref={toastCenter} />
+                    
                     <div className="flex justify-between items-center">
                         <div></div>
                         <h1 className="text-3xl text-sea-green font-bold mb-4">

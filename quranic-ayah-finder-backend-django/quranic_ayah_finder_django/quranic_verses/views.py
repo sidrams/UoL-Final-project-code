@@ -228,7 +228,7 @@ class UserRegister(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        # return Response(status=status.HTTP_400_BAD_REQUEST)
 
 # user login
 class UserLogin(APIView):
