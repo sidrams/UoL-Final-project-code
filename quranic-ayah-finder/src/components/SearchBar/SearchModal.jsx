@@ -6,7 +6,7 @@ import "primereact/resources/primereact.min.css";
 
 export default function SearchModal ({setShowResults, setShowModal, searchedText, setSearchedText}) {
     const [image, setImage] = useState() // store the image uploaded by the user
-
+    const [imageUrl, setImageUrl] = useState()
     // show any errors in file handling
     const toastCenter = useRef(null); 
     const showMessage = (event, ref, severity) => {
@@ -53,7 +53,7 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
         >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
             {/*content*/}
-            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none max-h-[70vh]">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                 <h3 className="text-xl font-semibold">
@@ -69,8 +69,9 @@ export default function SearchModal ({setShowResults, setShowModal, searchedText
                 </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
-                    <input type="file" aria-label="image" accept="image/*" onChange={(e) => setImage(e.target.files[0])} />
+                <div className="relative p-6 flex-auto overflow-auto">
+                    <input type="file" aria-label="image" accept="image/*" onChange={(e) => {setImage(e.target.files[0]); setImageUrl(URL.createObjectURL(e.target.files[0]))}} />
+                    {image && <img className="max-h-[150px] max-w-[300px] m-auto" src={imageUrl} />}
                     <button 
                         className="flex mx-auto my-6"
                         onClick={() => {
