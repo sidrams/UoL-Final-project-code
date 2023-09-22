@@ -17,7 +17,7 @@ export default function Searchbar({showResults, setShowResults, searchedText, fe
     return (
         <>
         <SearchHeader />
-        <div className="search-bar bg-[white] p-2 rounded-md my-0 mx-auto flex justify-between lg:w-full">
+        <div className="search-bar bg-[white] p-2 rounded-md my-0 mx-auto flex justify-between lg:w-full w-[80%]">
             <SearchInputComponent 
                 textInput={textInput} 
                 onChange={(e) => {handleChange(e.target.value)}} 

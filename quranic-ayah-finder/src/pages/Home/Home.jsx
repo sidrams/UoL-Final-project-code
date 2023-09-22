@@ -37,7 +37,7 @@ export default function Home() {
             {
                 !showResults ? 
                 (   // main search bar
-                    <div className="search-bar flex flex-col items-center m-auto justify-center min-h-[80vh] w-[50%] z-10 relative  max-w-[640px]">
+                    <div className="search-bar flex flex-col items-center m-auto justify-center lg:min-h-[80vh] min-h-[60vh] lg:w-[50%] w-[100%] z-10 relative  lg:max-w-[640px]">
                         <Searchbar 
                             showResults={showResults} setShowResults={setShowResults} 
                             searchedText={searchedText} 
