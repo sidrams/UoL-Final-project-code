@@ -61,14 +61,14 @@ export default function SaveSearchComponent({ chosenVerse, verseByWords, verseDe
     return (
         <div className="w-[90%] m-auto mb-4 bg-custom-gray p-6 shadow min-h-[60vh]">
             {/* header section - shows save search component or prompts to login */}
-            <div className='flex justify-between items-center'>
+            <div className='flex lg:flex-row flex-col justify-between items-center'>
                 <BackButton onClick={() =>  {setShowSaveVerse(false)}} text="Go Back" />
 
-                <h2 className="text-2xl font-bold text-sea-green text-left tracking-wide">
+                <h2 className="text-2xl font-bold text-sea-green lg:text-left text-center tracking-wide">
                     {loggedUser ? 'Saving Verse to Account' : 'You need to be logged in to save this verse'}
                 </h2>
 
-                <BackButton onClick={() => setShowSaveVerse(false)} text={'Cancel'} icon={<MdOutlineCancel />} />
+                <BackButton onClick={() => setShowSaveVerse(false)} text={'Cancel'} icon={<MdOutlineCancel />} customStyle="lg:block hidden" />
             </div>
 
             {   // if user is not logged in , show component ot allow user to login   

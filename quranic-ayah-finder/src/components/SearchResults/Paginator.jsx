@@ -17,7 +17,7 @@ export default function PaginatorComponent({query, fetchData, total_pages}) {
             <ReactPaginate
                 breakLabel="..."
                 onPageChange={onPageChange}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={4}
                 pageCount={total_pages}
                 renderOnZeroPageCount={null}
                 activeClassName={'item active-page '}

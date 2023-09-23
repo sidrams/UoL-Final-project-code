@@ -99,7 +99,7 @@ input:focus {
   justify-content: center;
   list-style-type: none;
   position: relative;
-  width: 1000px;
+  width: 100%;
 }
 
 .pagination-page {

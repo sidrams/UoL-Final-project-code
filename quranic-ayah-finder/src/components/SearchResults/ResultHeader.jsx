@@ -9,7 +9,7 @@ export default function ResultHeader({verseDetails, resetSearch}) {
                 Verses search result for '{verseDetails.search.query}'
             </h2>
             
-            <p className="text-sm font-medium text-slate-500 my-1 mb-6">
+            <p className="text-sm font-medium text-slate-500 lg:my-1 my-4 mb-6 lg:text-left text-center ">
                 {verseDetails.search.total_results} verses found
             </p>    
         </div>
