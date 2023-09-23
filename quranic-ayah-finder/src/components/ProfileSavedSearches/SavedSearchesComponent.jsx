@@ -13,7 +13,7 @@ export default function SavedSearchesComponent({savedSearches, inputText}) {
     console.log(savedSearches)
     return (
         // search component
-        <div className="w-3/4 mt-8">
+        <div className="lg:w-3/4 w-[95%] lg:mx-0 mx-auto mt-8">
         {!savedSearches || savedSearches.length <= 0 ? 
         (
             <div>No savedSearches to show</div>

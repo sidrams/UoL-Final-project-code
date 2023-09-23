@@ -25,20 +25,20 @@ export default function Guides() {
         <>
         {/* header section */}
         <div>
-            <h1 className="my-6 text-2xl font-bold">
+            <h1 className="my-6 lg:text-2xl text-4xl font-bold">
                 Guides
             </h1>
-            <p className="text-sm font-medium text-slate-500 my-1 mb-6 lg:mx-[20%]">
+            <p className="text-sm font-medium text-slate-500 my-1 mb-6 lg:mx-[20%] mx-4">
                 Explore Quranic content through one of our guides. These comprehensive guides provide with a lot of information 
                 to learn and test your knowledge with the quizzes that follow.
             </p> 
         </div>
 
         {/* display each topic with icon */}
-        <div className="flex flex-wrap gap-6 justify-center items-center p-[5%]">
+        <div className="flex flex-wrap gap-6 justify-center items-center lg:p-[5%]">
             {
                 topics.map((topic,i) => (
-                    <Link key={i} to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px]  rounded flex justify-center items-center  ">
+                    <Link key={i} to={"topic/"+topic.id} onClick={() =>setChosenTopic(topic)}  className="text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green lg:w-[25%] w-[240px] h-[240px]  rounded flex justify-center items-center  ">
                         <div key={i} className="flex flex-col justify-center items-center gap-4">
                             <p className="text-[7rem]">{<TopicIcons topic={topic.topic_name} />}</p>
                             {topic.topic_name} 

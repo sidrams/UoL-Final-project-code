@@ -11,7 +11,7 @@ export default function ProfileTiles({profileData}) {
     const { loggedUser, setLoggedUser } = useContext(Context) // get logged in user
     // common classnames
     const classes = {
-        section_styles: 'flex flex-col  justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 w-[23%] hover:bg-sea-green-opacity hover:text-sea-green',
+        section_styles: 'flex flex-col  justify-center items-center gap-4 text-lg tracking-wider bg-medium-gray shadow p-8 xl:px-12 lg:px-6 lg:w-[23%] w-[40%]  lg:mb-0 mb-2 lg:h-auto h-[150px] hover:bg-sea-green-opacity hover:text-sea-green',
         subsection_styles: 'text-3xl flex justify-center items-center gap-4'
     }
 
@@ -19,7 +19,7 @@ export default function ProfileTiles({profileData}) {
         // profileData.progress.length > 0 &&
         // profileData.savedSearches.length > 0 &&
         // profileData.posts.length > 0 ?
-        <div className="flex justify-between text-slate-500">
+        <div className="flex lg:flex-row flex-wrap lg:justify-between justify-center lg:gap-0 gap-4 text-slate-500">
             {/* total number of quizzes attempted */}
             <div className={classes.section_styles}>
                 <div className={classes.subsection_styles}>

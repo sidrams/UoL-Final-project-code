@@ -73,7 +73,7 @@ function App() {
           <Route path="/post/update/:id" element={<PostForm />} />
 
           {/* profile routes */}
-          <Route path="/profile/:username" element={!loggedUser ? (<Navigate replace to="/login" />) : (<Profile />) } />
+          <Route path="/profile/:username" element={ (<Profile />) } />
           <Route path="/profile/scores" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileScores />) } />
           <Route path="/profile/savedSearches" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearches />) } />
           <Route path="/profile/savedSearches/details/:id" element={!loggedUser ? (<Navigate replace to="/login" />) : (<ProfileSavedSearchesVerseDetails />) } />

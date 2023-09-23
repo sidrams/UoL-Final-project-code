@@ -54,8 +54,8 @@ export default function PostDetails() {
         <Link to='/discussionForums'><BackButton onClick=''  /></Link>
         
         {/* post section */}
-        <div className="pb-10 flex">
-            <div className="w-[70%]">
+        <div className="pb-10 flex lg:flex-row flex-col">
+            <div className="lg:w-[70%] w-[95%] lg:mx-0 mx-auto">
                 {/* post component */}
                 <div  className="mb-0 flex mt-4 tracking-wider bg-custom-gray xl:p-8 p-6 px-8 shadow-md  overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                     <div className="flex justify-between">
@@ -88,7 +88,7 @@ export default function PostDetails() {
             </div>
 
             {/* featured posts section on the side */}
-            <div className="w-[30%] pl-10">
+            <div className="lg:w-[30%] lg:pl-10 w-[95%] lg:mx-0 mx-auto">
                 <h3 className='uppercase tracking-wide text-gray-500 font-medium text-left mt-6'>featured posts</h3>
 
                 <FeaturedPostsSideBar featuredPosts={featuredPosts} setPost={setPost} id={id} comments={comments} />

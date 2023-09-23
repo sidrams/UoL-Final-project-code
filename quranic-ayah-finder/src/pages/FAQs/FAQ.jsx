@@ -8,19 +8,19 @@ export default function FAQ() {
         <h1 className='w-[80%] m-auto my-6 text-2xl font-bold'>
             FAQ (Frequently Asked Questions)
         </h1>
-        <p className="text-sm font-medium text-slate-500 my-1 mb-[5%] lg:mx-[20%]">
+        <p className="text-sm font-medium text-slate-500 my-1 mb-[5%] lg:mx-[20%] mx-4">
             Search Quranic verses through our one of a kind image search bar or explore Quranic content through one of our 
             comprehensive guides and quizzes. These FAQs will help you navigate the application by providing with a lot of information 
             to learn and test your knowledge with the quizzes that follow.
         </p> 
 
-        <div className="card w-[80%] m-auto xl:text-xl lg:text-lg font-medium tracking-wide">
+        <div className="card w-[80%] m-auto xl:text-xl lg:text-lg font-medium tracking-wide pb-6">
             {
                 topics.map((topic,i) => 
                 {
                     const topicFAQs = faqs[topic]
                     return (
-                        <div className='text-slate-600 bg-custom-gray p-10 shadow-md rounded flex flex-col my-10 text-left'>
+                        <div className='text-slate-600 bg-custom-gray lg:p-10 p-4 shadow-md rounded flex flex-col my-10 text-left'>
                             <div className='mb-4'>
                                 <h2>{topic}</h2>
                             </div>

@@ -116,7 +116,7 @@ export default function Quiz(props) {
         }
         
         {/* header */}
-        <div className="flex justify-between w-[70%] m-auto">
+        <div className="flex justify-between lg:w-[70%] w-[85%] m-auto">
         <Toast ref={toast} />
             <BackButton onClick={() =>history.back()}  />
 

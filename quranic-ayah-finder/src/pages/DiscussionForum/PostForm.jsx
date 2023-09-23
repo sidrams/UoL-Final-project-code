@@ -145,7 +145,7 @@ export default function PostForm () {
                 <Toast ref={toastCenter} />
 
                 {/*  show form to create/update post */}
-                <div className="w-[50%] m-auto mb-4 bg-medium-gray p-6 shadow-xl">
+                <div className="lg:w-[50%] w-[95%] m-auto mb-4 bg-medium-gray p-6 shadow-xl">
                     <div className="flex justify-between items-center border-b border-solid border-slate-300 pb-4">
                         <div></div>
 

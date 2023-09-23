@@ -11,8 +11,8 @@ export default function ProfileHeader() {
     
     // username of user and link to user progress page ----------
     return (
-        <div className="flex justify-between">
-            <div className='flex flex-col justify-between items-start tracking-wide w-2/3'>
+        <div className="flex lg:flex-row flex-wrap lg:justify-between lg:ml-0 ml-6 lg:mt-0 mt-4">
+            <div className='flex flex-col justify-between items-start tracking-wide w-2/3 lg:ml-0 ml-4 lg:mb-0 mb-2'>
                 <h1 className="text-2xl font-semi text-left cap">
                     {loggedUser.username == username ? 'Your Profile' : ('@'+ username + "'s Profile")}
                 </h1>

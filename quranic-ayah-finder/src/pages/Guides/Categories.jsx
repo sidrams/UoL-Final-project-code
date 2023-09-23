@@ -39,7 +39,7 @@ export default function Categories() {
             {
                 categories.map((topic,i) => (
                     // state={{ data: data }} 
-                    <Link to={topic} onClick={() =>setChosenTopic(topic)} className="bg-[#55BDB3] text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green w-[25%] h-[240px] rounded flex justify-center items-center max-w-[290px]">
+                    <Link to={topic} onClick={() =>setChosenTopic(topic)} className="bg-[#55BDB3] text-slate-600 bg-custom-gray p-6 py-8 shadow-md hover:bg-medium-gray hover:text-sea-green lg:w-[25%] w-[240px] h-[240px] rounded flex justify-center items-center max-w-[290px]">
                     <div key={i} >
                         {/* <Link to={topic} onClick={() =>setChosenTopic(topic)}> */}
                             <p className="text-[7rem]">{icons[i]}</p>

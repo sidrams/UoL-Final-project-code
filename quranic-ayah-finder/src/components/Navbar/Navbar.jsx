@@ -7,7 +7,7 @@ export default function Navbar() {
     const [open, setOpen] = useState(false)
     
     return(
-        <div className='p-10 max-w-[1280px] m-auto'>
+        <div className='lg:p-10 p-4 pb-8 max-w-[1280px] m-auto'>
         <nav className="nav rounded-xl shadow text-sm font-medium ">
             <Link to="/" className="site-title pl-2 font-normal">Visual Quranic Ayah Finder</Link>
             <FiMenu className='lg:hidden block h-6 w-6 cursor-pointer' onClick={() => setOpen(!open)} />

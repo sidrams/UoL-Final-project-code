@@ -35,7 +35,7 @@ export default function IndivisualProgressComponent({scoreData, inputText}) {
     }
 
     return (
-        <div className='w-3/4'>
+        <div className='lg:w-3/4 w-[95%] lg:mx-0 mx-auto'>
             {   // render each of the saved attempts along with score, last and highest score achieved
                 scoreData.length > 0 ?
                 (

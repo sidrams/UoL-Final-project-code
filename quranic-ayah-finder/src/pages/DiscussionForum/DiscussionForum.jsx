@@ -34,7 +34,7 @@ export default function DiscussionForums() {
     return (
         <div className="xl:w-[80%] lg:w-[85%] m-auto">
             {/* header section */}
-            <div className="flex justify-between items-center">
+            <div className="flex lg:flex-row flex-col justify-between items-center">
                 <h1 className="my-6 text-2xl font-bold">
                     Discussion Forums
                     
@@ -46,15 +46,15 @@ export default function DiscussionForums() {
             {/* create post button */}
             <div>
                 {
-                    loggedUser && <BackButton icon={<BiCommentAdd />} text={<Link to='/post/create'>Create Post</Link>} />
+                    loggedUser && <BackButton icon={<BiCommentAdd />} customStyle={'lg:mx-0 mx-auto lg:mt-0 mt-4'} text={<Link to='/post/create'>Create Post</Link>} />
                 }
                 
             </div>
             
             {/* main section */}
-            <div className="flex">
+            <div className="flex lg:flex-row flex-col">
                 {/* posts section */}
-                <div className="w-3/4">
+                <div className="lg:w-3/4">
                     {!posts || posts.length <= 0 ? 
                     (
                         <div>No posts to show</div>
@@ -65,8 +65,8 @@ export default function DiscussionForums() {
                 </div>
 
                 {/* posts aside bar - show some guide topics */}
-                <div className='w-1/4 tracking-wide text-gray-500 font-medium text-left mt-8'>
-                    <h3 className='uppercase'>Explore Guides</h3>
+                <div className='lg:w-1/4 tracking-wide text-gray-500 font-medium text-left mt-8 lg:mx-0 mx-6'>
+                    <h3 className='uppercase lg:mb-0 mb-2'>Explore Guides</h3>
                     <div className="flex flex-col">
                         {
                             ['Chapters of the Qur’an', 'Fruits in the Quran', 'Dealing with people in the Quran']

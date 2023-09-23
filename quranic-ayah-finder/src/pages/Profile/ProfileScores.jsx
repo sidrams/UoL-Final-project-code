@@ -64,7 +64,8 @@ export default function ProfileScores() {
                     <ProgressTiles scoreData={scoreData} />
 
                     <div className='flex flex-col w-full'>
-                        <div className='flex justify-between my-6 tracking-wide text-gray-500 w-3/4'>
+                        {/* <div className='flex lg:flex-nowrap flex-wrap justify-between my-6 tracking-wide text-gray-500 w-3/4'> */}
+                        <div className='flex lg:flex-nowrap flex-wrap justify-between my-6 lg:px-0 px-6 lg:gap-0 gap-2 tracking-wide text-gray-500 lg:w-3/4'>
                             <h2 className=''>
                                 Showing all progress for <span className='font-bold'>{loggedUser.username}</span>
                             </h2>
@@ -73,7 +74,7 @@ export default function ProfileScores() {
                         </div>
 
                         {/* all progress components */}
-                        <div className='flex'>
+                        <div className='flex lg:flex-nowrap flex-wrap'>
                             
                             {/* indivisual progress components */}
                             <IndivisualProgressComponent scoreData={scoreData} inputText={inputText} />

@@ -8,15 +8,15 @@ export default function QuizQuestion({currentQuestion, disabled, chosenAnswer, h
     }
     
     return (
-        <div className="bg-sea-green p-6 py-8 lg:w-[60%] m-auto rounded max-w-[700px] min-h-[70vh] flex flex-col justify-between">
+        <div className="bg-sea-green p-6 py-8 lg:w-[60%] w-[85%] m-auto rounded max-w-[700px] lg:min-h-[70vh] min-h-[60vh] flex flex-col justify-between">
             {/* question */}
             <div>
             <p className="text-sm text-gray-500 font-medium">Question : {questionNumber} / {totalQuestions}</p>
 
-            <h3 className="font-medium text-2xl mx-6 mb-6">{currentQuestion.question}</h3>
+            <h3 className="font-medium text-2xl lg:mx-6 mb-6">{currentQuestion.question}</h3>
             </div>
             {/* answer options */}
-            <div className="flex flex-col gap-4 px-24 my-4">
+            <div className="flex flex-col gap-4 lg:px-24 lg:my-4">
                 {   // list of answers as an array, displayed
                     [currentQuestion.answer_1, currentQuestion.answer_2, currentQuestion.answer_3, currentQuestion.answer_4]
                     .map((question,i) => (

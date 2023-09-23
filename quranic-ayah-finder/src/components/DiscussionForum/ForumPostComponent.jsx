@@ -39,7 +39,7 @@ export default function ForumPostComponent({posts, inputText}) {
             .slice(first, first + rows)
             .map((post,i) => (
                 // render post components
-                <div key={i} className="mb-4 flex my-10 w-[90%] text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
+                <div key={i} className="mb-4 flex my-10 lg:mx-0 mx-auto w-[90%] text-slate-400  tracking-wider bg-custom-gray xl:p-8 p-6 shadow-md w-[70%] overflow-auto rounded flex flex-col justify-center text-left hover:bg-medium-gray ">
                     <div className="flex justify-between">
                         {/* post title */}
                         <Link to={`/post/${post.pk}`}>

@@ -29,7 +29,7 @@ export default function TimeDifference(postDate) {
     // months
     else if (timeDiffInMin < (60*24*30*12)) {
         const timeDiffInMonths = Math.round(timeDiffInMin/(60*24*30))
-        return timeDiffInMonths + (timeDiffInWeeks != 1 ? ' months':' month')
+        return timeDiffInMonths + (timeDiffInMonths != 1 ? ' months':' month')
     }
     // year
     else {

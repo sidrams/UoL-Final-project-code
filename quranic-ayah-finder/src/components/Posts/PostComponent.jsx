@@ -13,7 +13,7 @@ export default function PostComponent({posts, inputText}) {
     
     return (
         // post component
-        <div className="w-3/4 mt-8">
+        <div className="lg:w-3/4 w-[95%] lg:mx-0 mx-auto lg:mt-8">
         {!posts || posts.length <= 0 ? 
         (
             <div>No posts to show</div>

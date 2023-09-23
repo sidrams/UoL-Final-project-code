@@ -60,14 +60,14 @@ export default function GuideDetails() {
     return (
         <>
         {/* header section */}
-        <div className="flex justify-between w-[70%] m-auto">
+        <div className="flex lg:flex-row flex-col justify-between lg:w-[70%] m-auto">
             <div className="w-[30%] flex justify-start">
                 {
                     !lastGuide && 
                     <BackButton onClick={() =>history.back()} text="Back to categories" />
                 }
             </div>
-            <h1 className="my-6 text-2xl font-semi">
+            <h1 className="my-6 lg:text-2xl text-4xl font-semi">
                 {currentGuide && (currentGuide.topic_id.topic_name)}
             </h1>
             <div className="w-[30%]"></div>
@@ -79,13 +79,13 @@ export default function GuideDetails() {
             (!lastGuide ? 
             (   // "quiz has not ended"
                 <>
-                <div className="flex flex-wrap gap-4 justify-center items-center">
+                <div className="flex flex-wrap lg:gap-4 justify-center items-center">
                     {/* left arrow */}
                     <button onClick={prevGuide} disabled={firstGuide} className="p-2 rounded-full h-fit "> <CiCircleChevLeft size={'2.5em'} color="#55BDB3" /> </button>
                     
                     {/* main content component */}
-                    <div className="whitespace-pre-line text-slate-600 bg-custom-gray p-8 shadow-md w-[70%] h-[300px] h-[50vh] overflow-auto rounded flex justify-center items-center">
-                        {currentGuide.content}
+                    <div className="whitespace-pre-line text-slate-600 bg-custom-gray p-8 shadow-md w-[70%] h-[60vh] overflow-auto rounded flex justify-center items-center">
+                            <p className="lg:mt-2 mt-[100%]">{currentGuide.content}</p>
                     </div>
 
                     {/* right arrow */}
@@ -95,7 +95,7 @@ export default function GuideDetails() {
             )
             : 
             (
-                // "end of quiz"
+                // "end of guide"
                 <EndGuideComponent id={id} restartGuide={restartGuide} />
             )) : ''
         }

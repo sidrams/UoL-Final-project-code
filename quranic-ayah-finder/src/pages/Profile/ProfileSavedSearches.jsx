@@ -63,7 +63,8 @@ export default function ProfileSavedSearches() {
                     <>
                     <div className='flex flex-col w-full'>
                         {/* sub header for post component */}
-                        <div className='flex justify-between my-3 tracking-wide text-gray-500 w-3/4'>
+                        <div className='flex lg:flex-nowrap flex-wrap justify-between my-6 lg:px-0 px-6 lg:gap-0 gap-2 tracking-wide text-gray-500 lg:w-3/4'>
+                        {/* <div className='flex justify-between my-3 tracking-wide text-gray-500 w-3/4'> */}
                             <h2 className=''>
                                 Showing all {savedSearches.length} verses saved by <span className='font-bold'>{loggedUser.username}</span>
                             </h2>
